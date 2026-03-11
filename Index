@@ -8,10 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #C9A84C;
-    --gold-light: #E8D5A3;
-    --gold-dark: #A07830;
-    --cream: #E8E0D0;
+    --gold: #7A5C10;
+    --gold-light: #C9A884;
+    --gold-dark: #5A4008;
+    --cream: #FAF7F0;
     --white: #F5F0E8;
     --dark: #0D0D10;
     --gray: #1A1A22;
@@ -48,32 +48,40 @@
   .lang-btn.active { background: var(--gold); color: var(--dark); }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: center; padding: 1rem 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(154,117,32,0.25); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: center; padding: 1.1rem 2rem; background: rgba(248,244,234,0.98); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(154,117,32,0.25); }
   .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; justify-content: center; }
-  .nav-links a { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: color 0.3s; }
+  .nav-links a { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: #2a2318; text-decoration: none; transition: color 0.3s; }
   .nav-links a:hover { color: var(--gold-dark); }
+
+  /* PASSWORD LANGUAGE PICKER */
+  .pw-lang-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; margin: 0.5rem 0 1.5rem; }
+  .pw-lang-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(201,168,76,0.7); }
+  .pw-lang-btns { display: flex; gap: 1rem; }
+  .pw-lang-btn { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; background: transparent; border: 1px solid rgba(201,168,76,0.3); color: rgba(232,213,163,0.75); padding: 0.55rem 1.6rem; cursor: pointer; transition: all 0.3s; letter-spacing: 0.05em; }
+  .pw-lang-btn:hover { border-color: rgba(201,168,76,0.7); color: #E8D5A3; background: rgba(201,168,76,0.08); }
+  .pw-lang-btn.active { border-color: var(--gold); color: var(--gold-light); background: rgba(201,168,76,0.18); font-weight: 600; }
 
   /* HERO */
   #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 5rem; position: relative; overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.05) 0%, transparent 50%), var(--cream); }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.05) 0%, transparent 50%), #FAF7F0; }
   .hero-corner { position: absolute; width: 100px; height: 100px; opacity: 0.2; }
   .hero-corner.tl { top: 5rem; left: 2rem; }
   .hero-corner.tr { top: 5rem; right: 2rem; transform: scaleX(-1); }
   .hero-content { position: relative; z-index: 1; }
   .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; animation: fadeUp 1s ease 0.2s both; }
-  .hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 300; color: var(--dark); line-height: 1; animation: fadeUp 1s ease 0.4s both; }
+  .hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9rem); font-weight: 300; color: var(--dark); line-height: 1; animation: fadeUp 1s ease 0.4s both; }
   .hero-names .amp { font-style: italic; color: var(--gold); }
   .hero-names .surname { display: block; font-size: 0.33em; letter-spacing: 0.45em; font-style: normal; color: var(--gray); margin-top: 0.6rem; font-family: 'Cinzel', serif; font-weight: 400; }
   .hero-date-row { display: flex; align-items: center; gap: 1.5rem; margin: 2rem 0; animation: fadeUp 1s ease 0.6s both; }
   .hero-date-row .hline { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); max-width: 100px; }
   .hero-date { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.4em; color: #5C3D08; text-transform: uppercase; font-weight: 600; }
-  .hero-loc { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--gray); margin-bottom: 3rem; animation: fadeUp 1s ease 0.8s both; }
+  .hero-loc { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--gray); margin-bottom: 3rem; animation: fadeUp 1s ease 0.8s both; text-align: center; width: 100%; }
 
   /* COUNTDOWN */
-  .countdown { display: flex; gap: 1.8rem; justify-content: center; animation: fadeUp 1s ease 1s both; margin-bottom: 3rem; }
-  .cd-item { text-align: center; min-width: 65px; }
-  .cd-num { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 300; color: var(--dark); line-height: 1; }
-  .cd-lbl { font-family: 'Cinzel', serif; font-size: 0.48rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-top: 0.3rem; }
+  .countdown { display: flex; gap: clamp(1.5rem,4vw,4rem); justify-content: center; align-items: center; animation: fadeUp 1s ease 1s both; margin: 2rem 0 3.5rem; }
+  .cd-item { text-align: center; min-width: clamp(70px,10vw,110px); }
+  .cd-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem,8vw,6rem); font-weight: 300; color: var(--dark); line-height: 1; }
+  .cd-lbl { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-top: 0.3rem; }
   .cd-sep { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); align-self: flex-start; padding-top: 0.4rem; font-style: italic; }
   .scroll-hint { animation: fadeUp 1s ease 1.2s both; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--gold); opacity: 0.5; }
   .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); animation: pulse 2s ease-in-out infinite; }
@@ -121,7 +129,7 @@
   .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   .f-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
   .f-lbl { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.3em; color: var(--gold-dark); text-transform: uppercase; }
-  .f-input, .f-sel, .f-ta { background: var(--cream); border: 1px solid var(--border); border-bottom: 1px solid var(--gold); color: var(--dark); font-family: 'EB Garamond', serif; font-size: 1rem; padding: 0.6rem 0.8rem; outline: none; transition: all 0.3s; width: 100%; }
+  .f-input, .f-sel, .f-ta { background: #FAF7F0; border: 1px solid var(--border); border-bottom: 1px solid var(--gold); color: var(--dark); font-family: 'EB Garamond', serif; font-size: 1rem; padding: 0.6rem 0.8rem; outline: none; transition: all 0.3s; width: 100%; }
   .f-input:focus, .f-sel:focus, .f-ta:focus { background: var(--white); border-color: var(--gold); }
   .f-ta { resize: vertical; min-height: 75px; }
   .radio-g { display: flex; gap: 1.5rem; padding: 0.4rem 0; }
@@ -163,7 +171,7 @@
   .apt-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--dark); margin-bottom: 1rem; font-style: italic; }
   .apt-d { font-size: 0.87rem; color: var(--gray); line-height: 1.6; margin-bottom: 0.35rem; }
   .apt-d strong { color: var(--dark); font-weight: 400; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; }
-  .shuttle-box { margin-top: 2.5rem; border: 1px solid var(--border); background: var(--cream); padding: 2rem; }
+  .shuttle-box { margin-top: 2.5rem; border: 1px solid var(--border); background: #FAF7F0; padding: 2rem; }
   .shuttle-title { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
   .shuttle-body { font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
 
@@ -203,9 +211,9 @@
     .cd-num { font-size: 2rem; }
     .rsvp-box { padding: 2rem 1.2rem; }
   }
-<style>
 </style>
 
+<style>
 
 /* ── Cinematic Intro ── */
 #cinematic-intro {
@@ -243,13 +251,23 @@
   <div class="pw-ornament"><span data-lang="en">Private Event</span><span data-lang="ru">Частное мероприятие</span></div>
   <div class="pw-title">Miguel <span style="color:var(--gold);font-style:normal">&</span> Ekaterina</div>
   <div class="pw-divider"></div>
+
+  <!-- Language picker on password screen -->
+  <div class="pw-lang-wrap">
+    <div class="pw-lang-label"><span data-lang="en">Choose your language</span><span data-lang="ru">Выберите язык</span></div>
+    <div class="pw-lang-btns">
+      <button class="pw-lang-btn active" id="pw-lang-en" onclick="setPwLang('en')">🇺🇸 &nbsp;English</button>
+      <button class="pw-lang-btn" id="pw-lang-ru" onclick="setPwLang('ru')">🇷🇺 &nbsp;Русский</button>
+    </div>
+  </div>
+
   <div class="pw-subtitle">
     <span data-lang="en">Please enter the password to continue</span>
     <span data-lang="ru">Введите пароль для продолжения</span>
   </div>
   <div class="pw-input-wrap">
     <div class="pw-label"><span data-lang="en">Password</span><span data-lang="ru">Пароль</span></div>
-    <input type="password" id="pw-input" placeholder="••••••" autocomplete="off">
+    <input type="password" id="pw-input" placeholder="••••••" autocomplete="off" onkeydown="if(event.key==='Enter')checkPw()">
     <div id="pw-error">
       <span data-lang="en">Incorrect password. Try again.</span>
       <span data-lang="ru">Неверный пароль. Попробуйте снова.</span>
@@ -258,7 +276,6 @@
   <button class="pw-btn" onclick="checkPw()">
     <span data-lang="en">Enter</span><span data-lang="ru">Войти</span>
   </button>
-
 </div>
 
 <div id="cinematic-intro" style="display:none">
@@ -280,7 +297,7 @@
       <div class="cf-date">Blue Venado · Riviera Maya · November 10, 2026</div>
     </div>
   </div>
-  <button id="ci-skip" onclick="endIntro()">Skip ›</button>
+  <button id="ci-skip" onclick="endIntroAndScroll()"><span data-lang="en">Next ›</span><span data-lang="ru">Далее ›</span></button>
 </div>
 
 <script>
@@ -630,28 +647,24 @@ function animate(ts){
     showEl('ci-finale');
   }
   if(t>=25) endIntro();
-
-  /* waiting for password */
+  else requestAnimationFrame(animate);
 }
-requestAnimationFrame(animate);
 
 window.startCinematicIntro=function(){
-  // Canvas must be visible before measuring dimensions
-  requestAnimationFrame(function(){
-    requestAnimationFrame(function(){
-      W = cvs.width  = window.innerWidth;
-      H = cvs.height = window.innerHeight;
-      startTime = null;
-      introEnded = false;
-      showed1979=false; showed1990=false; showedAustin=false;
-      showedSeren=false; showedFinale=false;
-      trail1=[]; trail2=[];
-      merged=false; mergeT=0;
-      mexicoAlpha=0; russiaAlpha=0;
-      lastCity=''; cityLblTimer=0;
-      requestAnimationFrame(animate);
-    });
-  });
+  // Use setTimeout to ensure the intro div is fully visible and laid out
+  setTimeout(function(){
+    W = cvs.width  = window.innerWidth  || document.documentElement.clientWidth  || 1280;
+    H = cvs.height = window.innerHeight || document.documentElement.clientHeight || 720;
+    startTime = null;
+    introEnded = false;
+    showed1979=false; showed1990=false; showedAustin=false;
+    showedSeren=false; showedFinale=false;
+    trail1=[]; trail2=[];
+    merged=false; mergeT=0;
+    mexicoAlpha=0; russiaAlpha=0;
+    lastCity=''; cityLblTimer=0;
+    requestAnimationFrame(animate);
+  }, 100);
 };
 window.endIntro=function(){
   if(introEnded) return; introEnded=true;
@@ -685,16 +698,16 @@ window.endIntro=function(){
 <div id="hero">
   <div class="hero-bg"></div>
   <svg class="hero-corner tl" viewBox="0 0 100 100" fill="none">
-    <path d="M5 5L5 55M5 5L55 5" stroke="#C9A84C" stroke-width="1"/>
-    <circle cx="5" cy="5" r="2.5" fill="#C9A84C"/>
-    <path d="M20 5L20 20L5 20" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
-    <path d="M36 5L36 36L5 36" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.5"/>
+    <path d="M5 5L5 55M5 5L55 5" stroke="#8B6914" stroke-width="1"/>
+    <circle cx="5" cy="5" r="2.5" fill="#8B6914"/>
+    <path d="M20 5L20 20L5 20" stroke="#8B6914" stroke-width="0.5" fill="none"/>
+    <path d="M36 5L36 36L5 36" stroke="#8B6914" stroke-width="0.5" fill="none" opacity="0.5"/>
   </svg>
   <svg class="hero-corner tr" viewBox="0 0 100 100" fill="none">
-    <path d="M5 5L5 55M5 5L55 5" stroke="#C9A84C" stroke-width="1"/>
-    <circle cx="5" cy="5" r="2.5" fill="#C9A84C"/>
-    <path d="M20 5L20 20L5 20" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
-    <path d="M36 5L36 36L5 36" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.5"/>
+    <path d="M5 5L5 55M5 5L55 5" stroke="#8B6914" stroke-width="1"/>
+    <circle cx="5" cy="5" r="2.5" fill="#8B6914"/>
+    <path d="M20 5L20 20L5 20" stroke="#8B6914" stroke-width="0.5" fill="none"/>
+    <path d="M36 5L36 36L5 36" stroke="#8B6914" stroke-width="0.5" fill="none" opacity="0.5"/>
   </svg>
 
   <div class="hero-content">
@@ -1303,6 +1316,20 @@ window.endIntro=function(){
 </footer>
 
 <script>
+
+// Language picker on password screen
+function setPwLang(lang) {
+  document.querySelectorAll('.pw-lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pw-lang-' + lang).classList.add('active');
+  setLang(lang);
+}
+
+// End intro and scroll to top
+function endIntroAndScroll() {
+  endIntro();
+  setTimeout(() => { window.scrollTo({top: 0, behavior: 'smooth'}); }, 200);
+}
+
 // PASSWORD
 const PW = "boda2026";
 function checkPw() {
