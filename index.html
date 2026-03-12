@@ -43,7 +43,7 @@
   .pw-hint { font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(201,168,76,0.25); font-size: 0.8rem; }
 
   /* LANG */
-  #lang-toggle { position: fixed; top: 1.2rem; right: 1.5rem; z-index: 100; display: flex; border: 1px solid var(--border); }
+  #lang-toggle { position: fixed; top: 1.2rem; right: 1.5rem; z-index: 200; display: flex; border: 1px solid var(--border); background: rgba(254,252,248,0.97); }
   .lang-btn { background: transparent; border: none; color: #1a1008; font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.2em; padding: 0.45rem 0.8rem; cursor: pointer; transition: all 0.3s; }
   .lang-btn.active { background: var(--gold); color: var(--dark); }
 
@@ -1003,7 +1003,15 @@ window.endIntro=function(){
         <div class="sp-cap"><span data-lang="en">The views from Volchiha are unmatched 🏔️</span><span data-lang="ru">Виды с Волчихи — ни с чем не сравнить 🏔️</span></div>
       </div>
     </div>
+
+    <div class="sp-card" style="grid-column:span 3; grid-row:span 2;">
+      <img src="images/photo_21b.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Thirty Seconds to Mars, MTY</span><span data-lang="ru">Thirty Seconds to Mars, MTY</span></div>
+        <div class="sp-cap"><span data-lang="en">Best night ever 🎸</span><span data-lang="ru">Лучшая ночь в жизни 🎸</span></div>
+      </div>
   </div></div>
+    </div>
   <div style="text-align:center; padding:2.5rem 1.5rem 0;">
     <div style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#3D3020; font-size:1.25rem; font-weight:600; letter-spacing:0.03em;">
       <span data-lang="en">And the best chapter is still ahead of us.</span>
@@ -1827,53 +1835,8 @@ window.endIntro=function(){
 <!-- TRAVEL -->
 <div id="travel" style="background:#FEFCF8; padding: 5rem 0 0;">
 
-  <!-- VENUE PHOTOS BANNER -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,200px);overflow:hidden;margin-bottom:0;">
-    <div style="overflow:hidden;position:relative;">
-      <img src="images/venue_01.jpg" alt="Muelle del Mar" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
-        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Muelle del Mar</span>
-      </div>
-    </div>
-    <div style="overflow:hidden;position:relative;">
-      <img src="images/venue_hero.jpg" alt="Playa Paraíso" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
-        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Playa Paraíso</span>
-      </div>
-    </div>
-    <div style="overflow:hidden;position:relative;">
-      <img src="images/venue_03.jpg" alt="Mar Turquesa" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
-        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Mar Turquesa</span>
-      </div>
-    </div>
-    <div style="overflow:hidden;position:relative;">
-      <img src="images/venue_02.jpg" alt="Atardecer" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
-        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Atardecer</span>
-      </div>
-    </div>
-    <div style="overflow:hidden;position:relative;">
-      <img src="images/venue_04.jpg" alt="Palmera" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
-        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Palmera</span>
-      </div>
-    </div>
-    <div style="overflow:hidden;position:relative;">
-      <img src="images/venue_05.webp" alt="Blu Venado" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
-        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Blu Venado</span>
-      </div>
-    </div>
-    <div style="overflow:hidden;position:relative;">
-      <img src="images/venue_06.jpg" alt="La Fiesta" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
-        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">La Fiesta</span>
-      </div>
-    </div>
-  </div>
 
-  <!-- VENUE DESCRIPTION STRIP -->
+    <!-- VENUE DESCRIPTION STRIP -->
   <div style="background:linear-gradient(135deg,#2C1E0A,#1a1205);padding:2.5rem 2rem;text-align:center;">
     <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:rgba(255,245,220,0.9);max-width:700px;margin:0 auto;line-height:1.7;">
       <span data-lang="en">Nestled in the pristine Punta Venado Eco Park · Private white-sand beach · Crystal Caribbean waters · Tropical palapa · 8km south of Playa del Carmen</span>
@@ -2064,11 +2027,4 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 
 </body>
-</html    <div class="sp-card" style="grid-column:span 3; grid-row:span 2;">
-      <img src="images/photo_21b.jpg" alt="" loading="lazy">
-      <div class="sp-overlay">
-        <div class="sp-loc"><span data-lang="en">Thirty Seconds to Mars, MTY</span><span data-lang="ru">Thirty Seconds to Mars, MTY</span></div>
-        <div class="sp-cap"><span data-lang="en">Best night ever 🎸</span><span data-lang="ru">Лучшая ночь в жизни 🎸</span></div>
-      </div>
-    </div>
->
+</html>
