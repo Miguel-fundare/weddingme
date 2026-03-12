@@ -1705,6 +1705,67 @@ window.endIntro=function(){
         </div>
       </div>
 
+    <!-- MOBILE-ONLY ATTIRE LAYOUT: Women pics → Women text → Men pics → Men text -->
+    <div class="dc-mobile-section">
+
+      <!-- Women illustrations 2-col -->
+      <div class="dc-mob-illu-row">
+        <div class="dc-mob-illu-item" data-source="woman1"></div>
+        <div class="dc-mob-illu-item" data-source="woman2"></div>
+      </div>
+
+      <!-- Women text -->
+      <div class="dc-mob-text-card">
+        <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.4em;color:#8B6914;text-transform:uppercase;margin-bottom:1.2rem;">
+          <span data-lang="en">For Women</span><span data-lang="ru">Для женщин</span>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#1a1008;line-height:1.9;">
+          <div style="margin-bottom:1.2rem;">
+            <p data-lang="en">✓ &nbsp;White dresses are welcome</p>
+            <p data-lang="en">✓ &nbsp;Short or midi lengths in light fabrics</p>
+            <p data-lang="en">✓ &nbsp;Linen, cotton, chiffon, resort styles</p>
+            <p data-lang="ru">✓ &nbsp;Белые платья приветствуются</p>
+            <p data-lang="ru">✓ &nbsp;Короткие или миди из лёгких тканей</p>
+            <p data-lang="ru">✓ &nbsp;Лён, хлопок, шифон, курортные фасоны</p>
+          </div>
+          <div style="height:1px;background:rgba(139,105,20,0.15);margin:1rem 0;"></div>
+          <div style="opacity:0.65;font-size:0.95rem;">
+            <p style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:#8B6914;text-transform:uppercase;margin-bottom:0.6rem;">
+              <span data-lang="en">Please avoid</span><span data-lang="ru">Пожалуйста, избегайте</span>
+            </p>
+            <p data-lang="en">✗ &nbsp;Long gowns or bridal-style dresses</p>
+            <p data-lang="en">✗ &nbsp;Heavy lace or embellishments</p>
+            <p data-lang="en">✗ &nbsp;Dresses resembling a wedding gown</p>
+            <p data-lang="ru">✗ &nbsp;Длинных вечерних платьев</p>
+            <p data-lang="ru">✗ &nbsp;Кружева или сильных украшений</p>
+            <p data-lang="ru">✗ &nbsp;Платьев в свадебном стиле</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Men illustrations 2-col -->
+      <div class="dc-mob-illu-row" style="margin-top:2rem;">
+        <div class="dc-mob-illu-item" data-source="man1"></div>
+        <div class="dc-mob-illu-item" data-source="man2"></div>
+      </div>
+
+      <!-- Men text -->
+      <div class="dc-mob-text-card">
+        <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.4em;color:#8B6914;text-transform:uppercase;margin-bottom:1.2rem;">
+          <span data-lang="en">For Men</span><span data-lang="ru">Для мужчин</span>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#1a1008;line-height:1.9;">
+          <p data-lang="en">✓ &nbsp;White shirts or linen suits</p>
+          <p data-lang="en">✓ &nbsp;Light beach-formal attire</p>
+          <p data-lang="en">✓ &nbsp;White pants</p>
+          <p data-lang="en">✓ &nbsp;Loafers or dress sandals</p>
+          <p data-lang="ru">✓ &nbsp;Белые рубашки или льняные костюмы</p>
+          <p data-lang="ru">✓ &nbsp;Лёгкий пляжный формальный стиль</p>
+          <p data-lang="ru">✓ &nbsp;Белые брюки</p>
+          <p data-lang="ru">✓ &nbsp;Лоферы или нарядные сандалии</p>
+        </div>
+      </div>
+
     </div>
 
     <!-- Bottom tagline -->
@@ -2139,8 +2200,20 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
   /* ── Attire desktop grids hidden on mobile, mobile version shown ── */
   .dc-illu-grid, .dc-guide-grid { display: none !important; }
-  .dc-mobile-only { display: block !important; }
-  #dresscode > div > div:nth-child(2) { overflow: hidden; }
+  .dc-mobile-section { display: block !important; }
+  .dc-mob-illu-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .dc-mob-text-card {
+    background: white;
+    border: 1px solid rgba(139,105,20,0.2);
+    padding: 1.5rem;
+    border-top: 3px solid #8B6914;
+    margin-bottom: 1rem;
+  }
 
   /* ── Fix venue description strip overflow ─────────── */
   #travel { overflow-x: hidden !important; }
@@ -2221,50 +2294,22 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 })();
 </script>
 
+
+
 <script>
 (function(){
-  if(window.innerWidth > 768) return;
-  
-  var wrap = document.querySelector('#dresscode .dc-wrapper') || 
-             document.querySelector('#dresscode > div > div:nth-child(2)');
-  if(!wrap) {
-    // fallback: find the div containing dc-illu-grid
-    var illu = document.querySelector('.dc-illu-grid');
-    if(illu) wrap = illu.parentElement;
+  function fillAttireMobile(){
+    var women = document.querySelectorAll('.dc-woman');
+    var men   = document.querySelectorAll('.dc-man');
+    var slots = document.querySelectorAll('.dc-mob-illu-item');
+    // slots: [woman1, woman2, man1, man2]
+    var sources = [women[0], women[1], men[0], men[1]];
+    slots.forEach(function(slot, i){
+      if(sources[i]) slot.innerHTML = sources[i].innerHTML;
+    });
   }
-  if(!wrap) return;
-
-  // Get all 4 illustration divs
-  var illuDivs = document.querySelectorAll('.dc-illu');
-  var womanCards = Array.from(document.querySelectorAll('.dc-woman'));
-  var manCards   = Array.from(document.querySelectorAll('.dc-man'));
-  
-  // Get text cards
-  var guideDiv = document.querySelector('.dc-guide-grid');
-  var womanText = guideDiv ? guideDiv.children[0] : null;
-  var manText   = guideDiv ? guideDiv.children[1] : null;
-  
-  // Create mobile container
-  var mob = document.createElement('div');
-  mob.className = 'dc-mobile-only';
-  mob.style.cssText = 'display:none;';  // hidden until CSS shows it
-  
-  // Women section
-  var wGrid = document.createElement('div');
-  wGrid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;';
-  womanCards.forEach(function(c){ wGrid.appendChild(c.cloneNode(true)); });
-  
-  // Men section
-  var mGrid = document.createElement('div');
-  mGrid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;';
-  manCards.forEach(function(c){ mGrid.appendChild(c.cloneNode(true)); });
-  
-  mob.appendChild(wGrid);
-  if(womanText){ var wt = womanText.cloneNode(true); wt.style.marginBottom='2rem'; mob.appendChild(wt); }
-  mob.appendChild(mGrid);
-  if(manText){ mob.appendChild(manText.cloneNode(true)); }
-  
-  wrap.appendChild(mob);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fillAttireMobile);
+  else fillAttireMobile();
 })();
 </script>
 </body>
