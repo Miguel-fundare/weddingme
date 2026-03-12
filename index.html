@@ -1298,7 +1298,7 @@ window.endIntro=function(){
           <span style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;color:#1a1205;font-weight:700;">10:00 PM</span>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr auto;gap:1rem;padding:1.2rem 1.5rem 1rem;">
+        <div class="drink-inner" style="display:grid;grid-template-columns:1fr auto;gap:1rem;padding:1.2rem 1.5rem 1rem;">
           <div>
             <!-- Title -->
             <div style="font-family:'Cinzel',serif;font-size:1.05rem;color:#C9A84C;letter-spacing:0.05em;font-weight:700;line-height:1.2;margin-bottom:0.5rem;text-shadow:0 0 20px rgba(201,168,76,0.5);">
@@ -1473,7 +1473,7 @@ window.endIntro=function(){
     <!-- Illustrations row -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-bottom:4rem;align-items:end;" class="dc-illu-grid">
       <!-- Woman 1 - Short dress -->
-      <div style="text-align:center;">
+      <div class="dc-woman dc-illu" style="text-align:center;">
         <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
           <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
   <!-- Hair -->
@@ -1520,7 +1520,7 @@ window.endIntro=function(){
         </div>
       </div>
       <!-- Woman 2 - Midi -->
-      <div style="text-align:center;">
+      <div class="dc-woman dc-illu" style="text-align:center;">
         <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
           <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
   <!-- Hair - loose waves -->
@@ -1563,7 +1563,7 @@ window.endIntro=function(){
         </div>
       </div>
       <!-- Man 1 - Suit -->
-      <div style="text-align:center;">
+      <div class="dc-man dc-illu" style="text-align:center;">
         <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
           <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
   <!-- Hair -->
@@ -1607,7 +1607,7 @@ window.endIntro=function(){
         </div>
       </div>
       <!-- Man 2 - Casual -->
-      <div style="text-align:center;">
+      <div class="dc-man dc-illu" style="text-align:center;">
         <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
           <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
   <!-- Hair -->
@@ -1879,7 +1879,7 @@ window.endIntro=function(){
       <div class="map-grid" style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
         <div style="border-radius:4px;overflow:hidden;border:2px solid rgba(139,105,20,0.25);box-shadow:0 4px 20px rgba(139,105,20,0.1);">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3741.8234!2d-87.1953!3d20.5123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4e5c3b9d3b4a5d%3A0xa1b2c3d4e5f60001!2sBlue%20Venado%20Beach%20Club!5e0!3m2!1sen!2smx!4v1710000000002!5m2!1sen!2smx"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d951.3!2d-87.20257!3d20.49682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4e5b7c5e3c9a1f%3A0x4b2c8d3e7f1a9b0c!2sBlue%20Venado%20Beach%20Club!5e0!3m2!1sen!2smx!4v1741730000000!5m2!1sen!2smx"
             width="100%" height="350" style="border:0;display:block;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
@@ -2120,37 +2120,151 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     z-index: 300 !important;
   }
 
+
+  /* ── Drinking competition: stack on mobile ─────────── */
+  .drink-inner {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+  }
+  .drink-inner > div:last-child {
+    justify-content: center !important;
+    display: flex !important;
+    min-width: unset !important;
+    padding: 0.5rem 0 1rem !important;
+  }
+  .drink-inner > div:last-child svg {
+    width: 160px !important;
+  }
+
+  /* ── Attire desktop grids hidden on mobile, mobile version shown ── */
+  .dc-illu-grid, .dc-guide-grid { display: none !important; }
+  .dc-mobile-only { display: block !important; }
+  #dresscode > div > div:nth-child(2) { overflow: hidden; }
+
   /* ── Fix venue description strip overflow ─────────── */
   #travel { overflow-x: hidden !important; }
   .section-inner { padding-left: 1rem !important; padding-right: 1rem !important; }
 
   /* ── Fix photo banners on mobile ─────────────────── */
-  .photo-banner { height: 160px !important; }
+  .photo-banner { height: 220px !important; }
+  .photo-banner-track img { margin-right: 4px !important; }
 
   /* ── Fix drinking competition card overflow ───────── */
   #itinerary .section-inner { overflow: hidden !important; }
 }
 </style>
 
-<div id="mob-lightbox" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.95);align-items:center;justify-content:center;" onclick="this.style.display='none'">
-  <img id="mob-lb-img" src="" style="max-width:95vw;max-height:90vh;object-fit:contain;">
-</div>
+
 <script>
+// Mobile gallery: tap to open swipeable modal
 (function(){
-  function initLightbox(){
-    if(window.innerWidth > 768) return;
-    document.querySelectorAll('.sp-card').forEach(card => {
-      card.addEventListener('click', function(){
-        const src = this.querySelector('img')?.src;
-        if(!src) return;
-        const lb = document.getElementById('mob-lightbox');
-        document.getElementById('mob-lb-img').src = src;
-        lb.style.display = 'flex';
+  if(window.innerWidth > 768) return;
+  
+  // Collect all sp-card images
+  function initMobileGallery(){
+    const cards = Array.from(document.querySelectorAll('.sp-card'));
+    const imgs = cards.map(c => ({
+      src: c.querySelector('img')?.src || '',
+      loc: c.querySelector('.sp-loc span[data-lang="en"]')?.textContent || ''
+    }));
+    
+    // Create modal
+    const modal = document.createElement('div');
+    modal.id = 'gal-modal';
+    modal.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999;background:#000;flex-direction:column;';
+    
+    modal.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0.8rem 1rem;background:rgba(0,0,0,0.8);">
+        <span id="gal-loc" style="color:#C9A84C;font-family:Cinzel,serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;"></span>
+        <button onclick="document.getElementById('gal-modal').style.display='none'" style="background:none;border:1px solid rgba(201,168,76,0.5);color:#C9A84C;font-size:1.2rem;padding:0.2rem 0.8rem;cursor:pointer;">✕</button>
+      </div>
+      <div style="flex:1;position:relative;overflow:hidden;">
+        <img id="gal-img" src="" style="width:100%;height:100%;object-fit:contain;">
+        <button id="gal-prev" style="position:absolute;left:0.5rem;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:1px solid rgba(201,168,76,0.4);color:#C9A84C;font-size:1.5rem;padding:0.5rem 0.8rem;cursor:pointer;">‹</button>
+        <button id="gal-next" style="position:absolute;right:0.5rem;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:1px solid rgba(201,168,76,0.4);color:#C9A84C;font-size:1.5rem;padding:0.5rem 0.8rem;cursor:pointer;">›</button>
+      </div>
+      <div style="text-align:center;padding:0.5rem;color:rgba(255,255,255,0.4);font-size:0.7rem;" id="gal-counter"></div>
+    `;
+    document.body.appendChild(modal);
+    
+    let cur = 0;
+    function show(i){
+      cur = ((i % imgs.length) + imgs.length) % imgs.length;
+      document.getElementById('gal-img').src = imgs[cur].src;
+      document.getElementById('gal-loc').textContent = imgs[cur].loc;
+      document.getElementById('gal-counter').textContent = (cur+1) + ' / ' + imgs.length;
+    }
+    
+    document.getElementById('gal-prev').onclick = () => show(cur - 1);
+    document.getElementById('gal-next').onclick = () => show(cur + 1);
+    
+    // Swipe support
+    let tx = 0;
+    modal.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+    modal.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if(Math.abs(dx) > 50) dx > 0 ? show(cur-1) : show(cur+1);
+    }, {passive:true});
+    
+    cards.forEach((card, i) => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        show(i);
+        modal.style.display = 'flex';
       });
     });
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', initLightbox);
-  else initLightbox();
+  
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMobileGallery);
+  else initMobileGallery();
+})();
+</script>
+
+<script>
+(function(){
+  if(window.innerWidth > 768) return;
+  
+  var wrap = document.querySelector('#dresscode .dc-wrapper') || 
+             document.querySelector('#dresscode > div > div:nth-child(2)');
+  if(!wrap) {
+    // fallback: find the div containing dc-illu-grid
+    var illu = document.querySelector('.dc-illu-grid');
+    if(illu) wrap = illu.parentElement;
+  }
+  if(!wrap) return;
+
+  // Get all 4 illustration divs
+  var illuDivs = document.querySelectorAll('.dc-illu');
+  var womanCards = Array.from(document.querySelectorAll('.dc-woman'));
+  var manCards   = Array.from(document.querySelectorAll('.dc-man'));
+  
+  // Get text cards
+  var guideDiv = document.querySelector('.dc-guide-grid');
+  var womanText = guideDiv ? guideDiv.children[0] : null;
+  var manText   = guideDiv ? guideDiv.children[1] : null;
+  
+  // Create mobile container
+  var mob = document.createElement('div');
+  mob.className = 'dc-mobile-only';
+  mob.style.cssText = 'display:none;';  // hidden until CSS shows it
+  
+  // Women section
+  var wGrid = document.createElement('div');
+  wGrid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;';
+  womanCards.forEach(function(c){ wGrid.appendChild(c.cloneNode(true)); });
+  
+  // Men section
+  var mGrid = document.createElement('div');
+  mGrid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;';
+  manCards.forEach(function(c){ mGrid.appendChild(c.cloneNode(true)); });
+  
+  mob.appendChild(wGrid);
+  if(womanText){ var wt = womanText.cloneNode(true); wt.style.marginBottom='2rem'; mob.appendChild(wt); }
+  mob.appendChild(mGrid);
+  if(manText){ mob.appendChild(manText.cloneNode(true)); }
+  
+  wrap.appendChild(mob);
 })();
 </script>
 </body>
