@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miguel & Ekaterina — Wedding 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #7A5C10;
+    --gold-light: #C9A884;
+    --gold-dark: #5A4008;
+    --cream: #FEFCF8;
+    --white: #FDFBF6;
+    --dark: #2C2415;
+    --gray: #3D3020;
+    --border: rgba(139,105,20,0.2);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'EB Garamond', serif; background: #FEFCF8; color: #2C2415; overflow-x: hidden; }
+
+  /* PASSWORD */
+  #password-screen {
+    position: fixed; inset: 0; background: linear-gradient(160deg, #2C1E0A 0%, #1A1205 50%, #0D0A04 100%);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999; flex-direction: column; gap: 1.8rem;
+    transition: opacity 0.8s ease;
+  }
+  #password-screen.hidden { opacity: 0; pointer-events: none; }
+  .pw-ornament { color: #E8D5A3; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; font-weight: 600; }
+  .pw-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 300; color: var(--gold-light); text-align: center; letter-spacing: 0.05em; font-style: italic; }
+  .pw-divider { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .pw-subtitle { font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.3em; color: rgba(255,245,220,0.9); text-transform: uppercase; font-weight: 600; text-align: center; }
+  .pw-input-wrap { display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+  .pw-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.3em; color: rgba(255,245,220,0.95); text-transform: uppercase; font-weight: 700; }
+  #pw-input { background: transparent; border: none; border-bottom: 1px solid var(--gold); color: var(--gold-light); font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; text-align: center; padding: 0.5rem 1rem; outline: none; width: 220px; letter-spacing: 0.3em; }
+  #pw-input::placeholder { color: rgba(201,168,76,0.25); }
+  #pw-error { color: #c97a7a; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; opacity: 0; transition: opacity 0.3s; }
+  #pw-error.show { opacity: 1; }
+  .pw-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; padding: 0.85rem 2.5rem; cursor: pointer; transition: all 0.3s; }
+  .pw-btn:hover { background: var(--gold); color: var(--dark); }
+  .pw-hint { font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(201,168,76,0.25); font-size: 0.8rem; }
+
+  /* LANG */
+  #lang-toggle { position: fixed; top: 1.2rem; right: 1.5rem; z-index: 100; display: flex; border: 1px solid var(--border); }
+  .lang-btn { background: transparent; border: none; color: #1a1008; font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.2em; padding: 0.45rem 0.8rem; cursor: pointer; transition: all 0.3s; }
+  .lang-btn.active { background: var(--gold); color: var(--dark); }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: center; padding: 1.1rem 2rem; background: rgba(254,252,248,0.97); box-shadow: 0 1px 20px rgba(139,105,20,0.08); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(139,105,20,0.15); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; justify-content: center; }
+  .nav-links a { font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.2em; text-transform: uppercase; color: #1a1008; text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold-dark); }
+
+  /* PASSWORD LANGUAGE PICKER */
+  .pw-lang-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; margin: 0.5rem 0 1.5rem; }
+  .pw-lang-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,245,220,0.95); font-weight: 700; }
+  .pw-lang-btns { display: flex; gap: 1rem; }
+  .pw-lang-btn { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; background: transparent; border: 1px solid rgba(201,168,76,0.3); color: rgba(232,213,163,0.75); padding: 0.55rem 1.6rem; cursor: pointer; transition: all 0.3s; letter-spacing: 0.05em; }
+  .pw-lang-btn:hover { border-color: rgba(201,168,76,0.7); color: #E8D5A3; background: rgba(201,168,76,0.08); }
+  .pw-lang-btn.active { border-color: var(--gold); color: var(--gold-light); background: rgba(201,168,76,0.18); font-weight: 600; }
+
+  /* HERO */
+  #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 5rem; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(139,105,20,0.06) 0%, transparent 70%), radial-gradient(ellipse at 20% 80%, rgba(173,216,230,0.12) 0%, transparent 60%), #FEFCF8; }
+  .hero-corner { position: absolute; width: 100px; height: 100px; opacity: 0.2; }
+  .hero-corner.tl { top: 5rem; left: 2rem; }
+  .hero-corner.tr { top: 5rem; right: 2rem; transform: scaleX(-1); }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; animation: fadeUp 1s ease 0.2s both; }
+  .hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9rem); font-weight: 300; color: var(--dark); line-height: 1; animation: fadeUp 1s ease 0.4s both; }
+  .hero-names .amp { font-style: italic; color: var(--gold); }
+  .hero-names .surname { display: block; font-size: 0.33em; letter-spacing: 0.45em; font-style: normal; color: var(--gray); margin-top: 0.6rem; font-family: 'Cinzel', serif; font-weight: 400; }
+  .hero-date-row { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin: 2rem auto; max-width: 700px; animation: fadeUp 1s ease 0.6s both; }
+  .hero-date-row .hline { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); max-width: 100px; }
+  .hero-date { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.35em; color: #5C3D08; text-transform: uppercase; font-weight: 700; }
+  .hero-loc { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; color: var(--gray); margin-bottom: 3rem; animation: fadeUp 1s ease 0.8s both; text-align: center; width: 100%; }
+
+  /* COUNTDOWN */
+  .countdown { display: flex; gap: clamp(1.5rem,4vw,4rem); justify-content: center; align-items: center; animation: fadeUp 1s ease 1s both; margin: 2rem 0 3.5rem; }
+  .cd-item { text-align: center; min-width: clamp(70px,10vw,110px); }
+  .cd-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem,8vw,6rem); font-weight: 300; color: var(--dark); line-height: 1; }
+  .cd-lbl { font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.3em; color: #7A5C10; text-transform: uppercase; margin-top: 0.5rem; font-weight: 600; }
+  .cd-sep { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); align-self: flex-start; padding-top: 0.4rem; font-style: italic; }
+  .scroll-hint { animation: fadeUp 1s ease 1.2s both; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: #7A5C10; opacity: 0.7; }
+  .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); animation: pulse 2s ease-in-out infinite; }
+  .scroll-lbl { font-family: 'Cinzel', serif; font-size: 0.48rem; letter-spacing: 0.4em; text-transform: uppercase; }
+
+  /* SECTIONS */
+  .section-wrap { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-wrap.full { max-width: 100%; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+  .sec-head { text-align: center; margin-bottom: 4rem; }
+  .sec-eye { color: #5A3E08; font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.45em; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; }
+  .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; font-style: italic; color: #2C2415; }
+  .sec-div { display: flex; align-items: center; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+  .sec-div .dl { width: 55px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .sec-div .dr { width: 55px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .sec-div .dm { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+  .sec-note { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gray); margin-top: 1.5rem; font-size: 1.05rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+  /* STORY */
+  .story-tl { display: flex; flex-direction: column; gap: 3rem; position: relative; }
+  .story-tl::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); }
+  .s-item { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: center; gap: 1.5rem; }
+  .s-item:nth-child(odd) .s-text { text-align: right; }
+  .s-item:nth-child(even) .s-text { order: 3; text-align: left; }
+  .s-item:nth-child(even) .s-empty { order: 1; }
+  .s-dot { width: 12px; height: 12px; background: var(--gold); border-radius: 50%; margin: 0 auto; box-shadow: 0 0 0 4px #1A1A22, 0 0 0 5px var(--gold-light); order: 2; z-index: 1; }
+  .s-year { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .s-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--dark); margin-bottom: 0.4rem; }
+  .s-body { font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
+
+  /* ITINERARY */
+  .it-cards { display: grid; gap: 1.2rem; }
+  .it-card { display: grid; grid-template-columns: 75px 1fr; gap: 1.5rem; padding: 1.5rem; border: 1px solid rgba(139,105,20,0.18); background: #FEFCF8; box-shadow: 0 2px 12px rgba(139,105,20,0.06); position: relative; overflow: hidden; transition: border-color 0.3s; }
+  .it-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--gold-light)); }
+  .it-card:hover { border-color: var(--gold); }
+  .it-time { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--gold); text-align: center; padding-top: 0.2rem; }
+  .it-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--dark); margin-bottom: 0.25rem; }
+  .it-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+
+  /* RSVP */
+  .rsvp-box { background: #FEFCF8; border: 1px solid rgba(139,105,20,0.2); box-shadow: 0 4px 30px rgba(139,105,20,0.08); padding: 3rem; max-width: 580px; margin: 0 auto; position: relative; }
+  .rsvp-box::before, .rsvp-box::after { content: ''; position: absolute; width: 28px; height: 28px; border-color: var(--gold); border-style: solid; }
+  .rsvp-box::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .rsvp-box::after { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+  .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .f-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .f-lbl { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.3em; color: var(--gold-dark); text-transform: uppercase; }
+  .f-input, .f-sel, .f-ta { background: #FAF7F0; border: 1px solid var(--border); border-bottom: 1px solid var(--gold); color: var(--dark); font-family: 'EB Garamond', serif; font-size: 1rem; padding: 0.6rem 0.8rem; outline: none; transition: all 0.3s; width: 100%; }
+  .f-input:focus, .f-sel:focus, .f-ta:focus { background: var(--white); border-color: var(--gold); }
+  .f-ta { resize: vertical; min-height: 75px; }
+  .radio-g { display: flex; gap: 1.5rem; padding: 0.4rem 0; }
+  .radio-o { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+  .radio-o input { accent-color: var(--gold); }
+  .radio-o span { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.15em; color: var(--gray); }
+  .sub-btn { width: 100%; background: var(--dark); border: none; color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; padding: 1.1rem 2rem; cursor: pointer; transition: all 0.3s; margin-top: 0.8rem; }
+  .sub-btn:hover { background: var(--gold); color: var(--dark); }
+  .rsvp-ok { text-align: center; display: none; padding: 2rem; }
+  .rsvp-ok .ok-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .rsvp-ok p { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--dark); }
+
+  /* GIFTS */
+  .gifts-g { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.5rem; }
+  .gift-c { border: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; background: var(--white); transition: all 0.3s; cursor: pointer; }
+  .gift-c:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.1); }
+  .gift-ico { font-size: 2rem; margin-bottom: 1rem; }
+  .gift-n { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.28em; color: var(--dark); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .gift-d { font-size: 0.85rem; color: var(--gray); line-height: 1.5; }
+
+  /* HOTELS */
+  .hotels-g { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 1.5rem; }
+  .hotel-c { border: 1px solid var(--border); background: var(--white); overflow: hidden; transition: border-color 0.3s; }
+  .hotel-c:hover { border-color: var(--gold); }
+  .hotel-h { background: var(--dark); padding: 1.5rem; }
+  .hotel-stars { color: var(--gold); font-size: 0.75rem; margin-bottom: 0.3rem; }
+  .hotel-n { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--gold-light); font-style: italic; }
+  .hotel-b { padding: 1.5rem; }
+  .hotel-d { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.55rem; }
+  .hotel-d .hi { color: var(--gold); font-size: 0.85rem; flex-shrink: 0; }
+  .hotel-d span { font-size: 0.86rem; color: var(--gray); line-height: 1.4; }
+  .hotel-badge { display: inline-block; background: rgba(201,168,76,0.08); border: 1px solid var(--border); color: var(--gold-dark); font-family: 'Cinzel', serif; font-size: 0.48rem; letter-spacing: 0.2em; padding: 0.3rem 0.7rem; text-transform: uppercase; margin-top: 0.5rem; }
+
+  /* AIRPORTS */
+  .apt-g { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 1.5rem; }
+  .apt-c { border: 1px solid var(--border); background: var(--white); padding: 2rem; position: relative; overflow: hidden; }
+  .apt-c::after { content: '✈'; position: absolute; right: 1.2rem; top: 1.2rem; font-size: 1.5rem; color: var(--gold); opacity: 0.25; }
+  .apt-code { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.2rem; }
+  .apt-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--dark); margin-bottom: 1rem; font-style: italic; }
+  .apt-d { font-size: 0.87rem; color: var(--gray); line-height: 1.6; margin-bottom: 0.35rem; }
+  .apt-d strong { color: var(--dark); font-weight: 400; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .shuttle-box { margin-top: 2.5rem; border: 1px solid var(--border); background: #FAF7F0; padding: 2rem; }
+  .shuttle-title { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+  .shuttle-body { font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 4rem 2rem; background: linear-gradient(180deg, #2C1E0A 0%, #1A1205 100%); border-top: 1px solid rgba(139,105,20,0.3); }
+  .ft-names { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 400; font-style: italic; color: #FEFCF8; }
+  .ft-surname { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.45em; color: rgba(201,168,76,0.35); margin-top: 0.25rem; text-transform: uppercase; }
+  .ft-line { width: 55px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto; }
+  .ft-date { font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.38em; color: rgba(255,245,220,0.9); text-transform: uppercase; font-weight: 700; }
+  .ft-love { font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(255,245,220,0.7); font-size: 0.9rem; margin-top: 2rem; font-weight: 500; }
+
+  /* WHITE BG SECTION */
+  .white-bg { background: #F8F4EE; }
+
+  /* LANG */
+  [data-lang="ru"] { display: none; }
+  body.lang-ru [data-lang="en"] { display: none; }
+  body.lang-ru [data-lang="ru"] { display: block; }
+  body.lang-ru span[data-lang="ru"] { display: inline; }
+  body.lang-ru span[data-lang="en"] { display: none; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 0.2; } }
+  .fi { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fi.vis { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    nav { display: none; }
+    .story-tl::before { left: 18px; }
+    .s-item { grid-template-columns: 36px 1fr; }
+    .s-dot { order: 1; margin: 0; }
+    .s-text { order: 2; text-align: left !important; }
+    .s-empty { display: none; }
+    .f-row { grid-template-columns: 1fr; }
+    .countdown { gap: 1rem; }
+    .cd-num { font-size: 2rem; }
+    .rsvp-box { padding: 2rem 1.2rem; }
+  }
+</style>
+
+<style>
+
+/* ── Cinematic Intro ── */
+#cinematic-intro {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #000; display: none;
+  transition: opacity 2.5s ease;
+}
+#cinematic-intro.fade-out { opacity: 0; pointer-events: none; }
+#ci-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#ci-texts { position: absolute; inset: 0; pointer-events: none; }
+.ci-t { position: absolute; opacity: 0; transition: opacity 1.4s ease; pointer-events: none; text-align: center; transform: translateX(-50%); }
+.ci-t.on { opacity: 1; }
+.ci-year { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 3.5vw, 2.5rem); letter-spacing: 0.5em; color: #fff; text-shadow: 0 0 24px rgba(201,168,76,1), 0 0 50px rgba(201,168,76,0.5), 0 2px 10px #000; }
+.ci-city { font-family: 'Cinzel', serif; font-size: clamp(0.85rem, 2vw, 1.3rem); letter-spacing: 0.3em; color: #F5DFA0; text-shadow: 0 0 16px rgba(201,168,76,0.8), 0 2px 8px #000; background: rgba(0,0,0,0.55); padding: 0.2rem 0.7rem; transition: opacity 0.7s ease; }
+#ci-austin-txt { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 3vw, 2.2rem); letter-spacing: 0.4em; color: #fff; text-align:center; white-space: nowrap; text-shadow: 0 0 35px rgba(201,168,76,1), 0 0 70px rgba(201,168,76,0.6), 0 2px 12px #000; }
+#ci-seren { left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(92vw, 640px); text-align: center; background: radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, transparent 85%); padding: 2.5rem 2rem; }
+#ci-seren .cs-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 9vw, 6rem); font-weight: 300; font-style: italic; color: #fff; letter-spacing: 0.06em; line-height: 1; margin-bottom: 1rem; text-shadow: 0 0 50px rgba(201,168,76,0.9), 0 0 100px rgba(201,168,76,0.4); }
+#ci-seren .cs-div { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #C9A84C, transparent); margin: 0 auto 1.2rem; }
+#ci-seren .cs-body { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 3vw, 1.55rem); color: rgba(255,240,200,0.95); font-style: italic; line-height: 1.75; text-shadow: 0 1px 10px #000; }
+#ci-seren .cs-prob { font-family: 'Cinzel', serif; font-size: clamp(0.6rem, 1.3vw, 0.78rem); letter-spacing: 0.35em; color: #F5DFA0; margin-top: 2rem; line-height: 2.1; text-shadow: 0 1px 8px #000; }
+#ci-finale { left: 50%; bottom: 22%; width: min(92vw, 700px); text-align: center; }
+#ci-finale .cf-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 8vw, 6rem); font-weight: 300; font-style: italic; color: #fff; line-height: 1; text-shadow: 0 0 60px rgba(201,168,76,0.8), 0 0 120px rgba(201,168,76,0.3); }
+#ci-finale .cf-amp { color: #C9A84C; font-style: normal; }
+#ci-finale .cf-date { font-family: 'Cinzel', serif; font-size: clamp(0.6rem, 1.5vw, 0.85rem); letter-spacing: 0.55em; color: rgba(232,213,163,0.9); margin-top: 0.8rem; text-transform: uppercase; text-shadow: 0 1px 8px #000; }
+#ci-finale .cf-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, #C9A84C, transparent); margin: 0.9rem auto; }
+#ci-skip { position: absolute; bottom: 1.8rem; right: 2rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(201,168,76,0.6); color: rgba(232,213,163,0.9); font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.3em; padding: 0.55rem 1.4rem; cursor: pointer; text-transform: uppercase; transition: all 0.3s; }
+#ci-skip:hover { background: rgba(201,168,76,0.25); border-color: #C9A84C; color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="password-screen">
+  <div class="pw-ornament"><span data-lang="en">Private Event</span><span data-lang="ru">Частное мероприятие</span></div>
+  <div class="pw-title">Miguel <span style="color:var(--gold);font-style:normal">&</span> Ekaterina</div>
+  <div class="pw-divider"></div>
+
+  <!-- Language picker on password screen -->
+  <div class="pw-lang-wrap">
+    <div class="pw-lang-label"><span data-lang="en">Choose your language</span><span data-lang="ru">Выберите язык</span></div>
+    <div class="pw-lang-btns">
+      <button class="pw-lang-btn active" id="pw-lang-en" onclick="setPwLang('en')">🇺🇸 &nbsp;English</button>
+      <button class="pw-lang-btn" id="pw-lang-ru" onclick="setPwLang('ru')">🇷🇺 &nbsp;Русский</button>
+    </div>
+  </div>
+
+  <div class="pw-subtitle">
+    <span data-lang="en">Please enter the password to continue</span>
+    <span data-lang="ru">Введите пароль для продолжения</span>
+  </div>
+  <div class="pw-input-wrap">
+    <div class="pw-label"><span data-lang="en">Password</span><span data-lang="ru">Пароль</span></div>
+    <input type="password" id="pw-input" placeholder="••••••" autocomplete="off" onkeydown="if(event.key==='Enter')checkPw()">
+    <div id="pw-error">
+      <span data-lang="en">Incorrect password. Try again.</span>
+      <span data-lang="ru">Неверный пароль. Попробуйте снова.</span>
+    </div>
+  </div>
+  <button class="pw-btn" onclick="checkPw()">
+    <span data-lang="en">Enter</span><span data-lang="ru">Войти</span>
+  </button>
+</div>
+
+<div id="cinematic-intro" style="display:none">
+  <canvas id="ci-canvas"></canvas>
+  <div id="ci-texts">
+    <div class="ci-t ci-year" id="ci-y1979">1979</div>
+    <div class="ci-t ci-year" id="ci-y1990">1990</div>
+    <div class="ci-t ci-city" id="ci-city-lbl"></div>
+    <div class="ci-t" id="ci-austin-txt"><div>Austin</div><div style="font-size:0.7em;margin-top:0.3em;letter-spacing:0.35em;">July 2024</div></div>
+    <div class="ci-t" id="ci-seren">
+      <div class="cs-title">Serendipity</div>
+      <div class="cs-div"></div>
+      <div class="cs-body">Some people win the lottery.<br>Something even more unlikely happened.</div>
+      <div class="cs-prob">Probability of this meeting<br><span style="font-size:1.65em;letter-spacing:0.1em;color:#fff;">1 in 50,000,000</span></div>
+    </div>
+    <div class="ci-t" id="ci-finale">
+      <div class="cf-names">Miguel <span class="cf-amp">&amp;</span> Ekaterina</div>
+      <div class="cf-line"></div>
+      <div class="cf-date">Blue Venado · Riviera Maya · November 10, 2026</div>
+    </div>
+  </div>
+  <button id="ci-skip" onclick="endIntroAndScroll()"><span data-lang="en">Next ›</span><span data-lang="ru">Далее ›</span></button>
+</div>
+
+<script>
+(function() {
+
+/* ── LAND DOTS ─────────────────────────────────────────── */
+const LAND = [
+  [71,-140],[70,-132],[68,-122],[65,-118],[62,-140],[60,-135],[58,-135],[55,-128],[50,-122],[48,-120],[45,-120],[42,-120],[38,-120],[34,-118],[32,-116],
+  [70,-100],[65,-95],[60,-90],[55,-85],[50,-85],[48,-88],[45,-93],[42,-87],[40,-80],[38,-78],[35,-80],[33,-80],[30,-84],[28,-82],
+  [70,-80],[65,-65],[60,-65],[55,-60],[52,-57],[48,-70],[45,-63],[45,-75],[43,-74],[40,-74],[37,-76],[35,-78],
+  [50,-95],[50,-100],[50,-105],[50,-110],[50,-115],[60,-110],[60,-100],[60,-95],[60,-80],[60,-75],
+  [25,-100],[22,-100],[20,-99],[18,-94],[16,-92],[15,-90],[12,-87],[10,-85],[9,-83],[8,-77],
+  [22,-80],[25,-77],[28,-82],[30,-81],[33,-79],[35,-78],[37,-76],[18,-67],[20,-72],[22,-78],[25,-80],
+  [10,-75],[8,-74],[5,-75],[2,-78],[0,-78],[-3,-80],[-5,-80],[10,-65],[8,-64],[5,-60],[2,-60],[0,-60],
+  [-5,-55],[-5,-35],[0,-50],[-2,-45],[-5,-45],[-10,-40],[-12,-38],[-5,-78],[-10,-75],[0,-75],
+  [-15,-70],[-15,-50],[-20,-40],[-20,-45],[-20,-65],[-22,-43],[-25,-65],[-25,-50],
+  [-30,-65],[-30,-52],[-32,-56],[-33,-53],[-35,-65],[-35,-55],[-38,-70],[-40,-65],[-42,-65],[-45,-68],[-50,-68],[-52,-68],[-55,-68],
+  [71,28],[70,25],[68,22],[67,16],[65,14],[63,10],[60,8],[58,8],[56,8],[54,9],[52,8],[50,8],[48,8],[47,8],
+  [60,10],[58,10],[56,12],[54,12],[56,15],[58,15],[52,12],[50,12],[48,14],[46,14],[44,12],[42,12],[40,14],[38,14],[37,14],
+  [50,20],[52,20],[54,20],[56,22],[58,25],[60,25],[62,26],[64,26],[48,18],[46,18],[44,16],[42,18],[42,22],[40,22],[38,22],[38,26],
+  [41,28],[42,28],[44,28],[46,24],[48,22],[55,10],[55,14],[55,22],[55,25],
+  [52,6],[50,4],[48,2],[46,4],[44,4],[42,2],[40,-2],[38,-6],[36,-6],[36,-2],[37,0],[37,4],[38,0],
+  [51,0],[52,1],[53,-1],[55,-3],[57,-3],[56,-4],[64,26],[66,28],[68,28],[70,28],[65,18],[67,18],[65,22],[63,22],
+  [37,10],[35,12],[32,14],[28,18],[22,18],[15,18],[10,18],[5,5],[5,0],[5,-5],[2,-10],
+  [10,2],[0,10],[0,15],[0,20],[0,25],[0,30],[0,35],[0,38],[-2,33],
+  [-5,12],[-5,15],[-10,14],[-10,20],[-10,25],[-10,30],[-10,35],[-15,12],[-15,20],[-15,30],[-15,35],[-15,38],
+  [-20,14],[-20,20],[-20,28],[-22,18],[-22,30],[-25,28],[-25,32],[-28,26],[-28,30],[-28,18],
+  [-30,20],[-30,28],[-32,26],[-34,18],[-34,22],[-34,26],
+  [15,30],[18,35],[20,38],[22,38],[25,38],[28,35],[30,32],[32,35],[35,35],[37,37],
+  [5,38],[8,38],[10,40],[12,42],[15,42],[10,44],[5,40],[2,40],
+  [38,30],[40,35],[37,35],[35,36],[33,36],[32,35],[30,32],[28,32],[22,40],[18,42],[15,44],[12,44],
+  [25,50],[28,50],[30,48],[32,48],[35,48],[38,48],[40,48],[42,48],[45,42],[48,40],[50,42],[52,44],
+  [22,60],[25,60],[28,58],[30,58],[32,52],[28,55],
+  [37,58],[40,60],[42,62],[45,60],[48,58],[50,55],[52,55],[55,55],[55,60],[58,58],[60,55],
+  [40,65],[42,68],[45,68],[48,68],[50,68],[52,68],[55,68],
+  [38,68],[40,72],[42,75],[45,75],[48,75],[50,75],[52,75],[55,75],[58,72],
+  [55,80],[58,80],[60,80],[62,78],[65,80],[68,80],[70,80],[55,90],[58,90],[60,90],[65,90],[68,88],
+  [55,100],[58,100],[60,100],[65,100],[68,100],[70,100],[55,110],[58,110],[60,110],[65,110],[70,108],
+  [55,120],[58,120],[60,122],[65,120],[68,118],[70,118],[55,128],[58,130],[60,128],[62,125],[65,130],[68,130],[70,128],
+  [48,132],[50,130],[50,135],[52,140],[55,132],[55,140],[57,142],[50,142],
+  [35,70],[32,72],[30,72],[28,78],[25,80],[22,80],[20,83],[18,84],[15,80],[12,78],[10,79],[8,77],
+  [25,85],[28,84],[30,82],[30,90],[28,92],[25,92],[22,88],[20,88],[22,92],[25,90],
+  [28,95],[30,96],[28,100],[25,102],[20,96],[18,96],[15,102],[12,103],[10,99],[8,98],
+  [25,110],[22,108],[20,106],[18,106],[15,108],[12,109],[10,107],[8,104],[5,103],[2,102],[0,104],[0,108],
+  [-14,130],[-16,130],[-18,130],[-20,130],[-25,130],[-28,130],[-30,130],[-32,128],
+  [-34,116],[-32,116],[-28,114],[-24,114],[-20,116],[-18,122],[-15,128],[-12,132],
+  [-12,136],[-14,140],[-16,145],[-18,146],[-20,148],[-22,150],[-25,150],[-28,152],
+  [-30,153],[-32,152],[-35,150],[-37,148],[-38,146],[-38,144],[-36,140],[-35,138],
+  [72,-25],[72,-40],[75,-42],[77,-55],[75,-60],[73,-55],[70,-55],[70,-25],[68,-28],[72,-28],
+];
+
+/* ── MEXICO OUTLINE ──────────────────────────────────────
+   Clockwise from NW corner                               */
+const MEXICO = [
+  // US border west→east
+  [32.7,-117.1],[32.5,-114.8],[31.9,-111.0],[31.3,-108.2],[31.7,-106.4],
+  // Big Bend south
+  [30.3,-105.0],[29.7,-104.5],[29.3,-100.9],[28.7,-100.3],[27.5,-99.5],
+  [26.4,-99.1],[26.1,-97.9],[25.9,-97.5],
+  // Gulf coast south
+  [24.5,-97.6],[23.0,-97.8],[22.2,-97.9],[21.2,-97.3],[20.3,-96.7],
+  [19.5,-96.0],[19.2,-95.8],[18.8,-96.5],[18.6,-95.2],[18.5,-93.2],
+  [18.4,-91.3],[18.4,-88.3],
+  // Yucatan peninsula
+  [18.5,-87.7],[19.5,-87.5],[20.5,-87.3],[21.3,-87.2],[21.5,-86.9],
+  [21.3,-89.5],[21.0,-90.3],[20.0,-90.5],[19.8,-90.8],[18.9,-91.0],
+  [18.0,-91.2],[17.3,-91.6],
+  // Guatemala border
+  [16.1,-89.2],[15.9,-89.2],[15.9,-92.2],
+  // Pacific coast north
+  [15.2,-92.5],[14.7,-92.6],[15.7,-96.5],[16.2,-98.5],[17.0,-100.5],
+  [18.0,-102.7],[18.7,-103.9],[19.3,-104.7],[20.0,-105.2],[20.8,-105.7],
+  [21.5,-105.7],[22.5,-105.8],[23.2,-106.5],[24.0,-107.3],[24.8,-108.0],
+  // Sonora coast + jump Baja tip area
+  [27.0,-110.0],[28.0,-110.5],[29.5,-112.0],[30.5,-112.8],[30.9,-113.6],
+  [31.7,-116.1],[32.7,-117.1]
+];
+const BAJA = [
+  [32.6,-117.1],[32.4,-117.0],[31.9,-116.5],[30.8,-115.8],[29.5,-114.8],
+  [28.0,-114.3],[27.0,-113.5],[26.2,-112.9],[25.2,-112.0],[24.2,-110.8],
+  [23.1,-110.0],[22.9,-109.9],[23.5,-109.5],[24.0,-110.0],[25.0,-111.0],
+  [26.0,-111.3],[27.0,-110.7],[28.0,-110.2],[29.0,-113.5],[30.5,-113.8],
+  [31.5,-116.5],[32.6,-117.1]
+];
+
+/* ── RUSSIA OUTLINE (simplified) ────────────────────────
+   Roughly W→N→E→S                                       */
+const RUSSIA = [
+  // Kola Peninsula / Murmansk coast
+  [68.9,32.5],[70.0,36.0],[70.5,42.0],[71.5,50.0],[72.0,55.0],
+  [72.5,60.0],[72.5,68.0],[72.0,73.0],[72.0,79.0],
+  // Arctic to Ural clip edge (eastern boundary at 90E)
+  [73.0,95.0],[70.5,95.0],
+  // Southern border at 90E down through Kazakhstan
+  [55.5,95.0],[52.0,88.0],[50.5,82.0],[49.5,82.5],
+  [51.0,72.0],[51.5,61.0],[51.5,55.0],[54.0,51.0],
+  [53.5,48.0],[55.0,44.5],[54.5,41.5],
+  // Western border & Black Sea
+  [55.0,37.5],[57.0,34.5],[60.0,30.5],
+  [62.0,29.5],[65.0,30.0],[68.0,32.0],[68.9,32.5]
+];
+
+/* ── WAYPOINTS ───────────────────────────────────────── */
+const L1 = [
+  [25.67,-100.32,  1.0,'Monterrey'],
+  [45.0,  -50.0,   2.5,''],
+  [51.75,  -1.26,  3.8,'Oxford'],
+  [51.90,   0.89,  4.8,'Colchester'],
+  [40.42,  -3.70,  5.8,'Madrid'],
+  [25.0,   60.0,   7.2,''],
+  [13.76, 100.50,  8.2,'Bangkok'],
+  [25.0,  -60.0,   9.8,''],
+  [19.43, -99.13, 10.8,'Mexico City'],
+  [35.0,  -50.0,  12.0,''],
+  [48.86,   2.35, 13.0,'Paris'],
+  [30.27, -97.74, 14.5,'Austin'],
+];
+const L2 = [
+  [56.41,  61.92,  5.5,'Kamensk-Uralsky'],
+  [55.75,  37.62,  7.8,'Moscow'],
+  [48.86,   2.35, 10.2,'Paris'],
+  [40.71, -74.01, 12.2,'New York'],
+  [30.27, -97.74, 14.5,'Austin'],
+];
+
+/* ── SETUP ───────────────────────────────────────────── */
+const cvs = document.getElementById('ci-canvas');
+const ctx = cvs.getContext('2d');
+let W, H;
+function resize(){
+  const rect = cvs.getBoundingClientRect();
+  W = cvs.width  = rect.width  || window.innerWidth  || document.documentElement.clientWidth  || 800;
+  H = cvs.height = rect.height || window.innerHeight || document.documentElement.clientHeight || 600;
+}
+window.addEventListener('resize', resize); resize();
+
+// Zoomed projection — focuses on Mexico→Europe→Russia corridor
+const PROJ_LON_MIN=-120, PROJ_LON_MAX=110, PROJ_LAT_MIN=8, PROJ_LAT_MAX=76;
+function proj(lat,lon){
+  const x=(lon-PROJ_LON_MIN)/(PROJ_LON_MAX-PROJ_LON_MIN)*W;
+  const y=(1-(lat-PROJ_LAT_MIN)/(PROJ_LAT_MAX-PROJ_LAT_MIN))*H;
+  return [x,y];
+}
+
+/* ── EASING ─────────────────────────────────────────── */
+function eio(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+
+/* ── PATH INTERPOLATION ─────────────────────────────── */
+function getPosOnPath(path, t){
+  const start=path[0][2], end=path[path.length-1][2];
+  if(t<=start) return {lat:path[0][0],lon:path[0][1],segIdx:0};
+  if(t>=end)   return {lat:path[path.length-1][0],lon:path[path.length-1][1],segIdx:path.length-1};
+  for(let i=0;i<path.length-1;i++){
+    const ta=path[i][2],tb=path[i+1][2];
+    if(t>=ta&&t<=tb){
+      const f=eio(clamp((t-ta)/(tb-ta),0,1));
+      let dlon=path[i+1][1]-path[i][1];
+      if(dlon>180) dlon-=360; if(dlon<-180) dlon+=360;
+      return {lat:path[i][0]+(path[i+1][0]-path[i][0])*f, lon:path[i][1]+dlon*f,
+              segIdx:i, label:i<path.length-2?path[i+1][3]:null, progress:f};
+    }
+  }
+  return {lat:path[path.length-1][0],lon:path[path.length-1][1]};
+}
+
+/* ── DRAW COUNTRY ────────────────────────────────────── */
+function drawCountry(pts, col, alpha, glowColor){
+  if(alpha<=0) return;
+  const coords = pts.map(([lat,lon])=>proj(lat,lon));
+
+  // glow shadow
+  ctx.save();
+  ctx.shadowColor = glowColor;
+  ctx.shadowBlur = 18;
+  ctx.beginPath();
+  coords.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+  ctx.closePath();
+  ctx.strokeStyle = `rgba(${col},${alpha})`;
+  ctx.lineWidth = 3.0;
+  ctx.stroke();
+
+  // fill with very subtle tint
+  ctx.beginPath();
+  coords.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+  ctx.closePath();
+  ctx.fillStyle = `rgba(${col},${alpha*0.07})`;
+  ctx.fill();
+  ctx.restore();
+}
+
+/* ── GLOW ────────────────────────────────────────────── */
+function drawGlow(x,y,r,col,alpha){
+  const g=ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,`rgba(${col},${alpha})`);
+  g.addColorStop(0.3,`rgba(${col},${alpha*0.55})`);
+  g.addColorStop(1,`rgba(${col},0)`);
+  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.fillStyle=g; ctx.fill();
+}
+
+/* ── AMBIENT PARTICLES ───────────────────────────────── */
+const PARTS=Array.from({length:90},()=>({
+  x:Math.random(),y:Math.random(),s:0.3+Math.random()*0.9,
+  a:Math.random(),va:(Math.random()-0.5)*0.003,
+  vx:(Math.random()-0.5)*0.0002,vy:(Math.random()-0.5)*0.0001,
+}));
+
+const TRAIL_LEN=100;
+let trail1=[],trail2=[];
+let merged=false, mergeT=0;
+let startTime=null, introEnded=false, mapAlpha=0;
+let showed1979=false,showed1990=false,showedAustin=false,showedSeren=false,showedFinale=false;
+let cityLblTimer=0, lastCity='';
+let mexicoAlpha=0, russiaAlpha=0;
+
+/* ── TEXT HELPERS ─────────────────────────────────────── */
+function showEl(id){ const e=document.getElementById(id); if(e) e.classList.add('on'); }
+function hideEl(id){ const e=document.getElementById(id); if(e) e.classList.remove('on'); }
+
+/* ── MAIN LOOP ───────────────────────────────────────── */
+function animate(ts){
+  if(introEnded) return;
+  if(!startTime) startTime=ts;
+  const t=(ts-startTime)/1000;
+
+  ctx.clearRect(0,0,W,H);
+
+  // Background
+  const bg=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.85);
+  bg.addColorStop(0,'#06101f'); bg.addColorStop(1,'#000408');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+  mapAlpha=clamp(t/2.2,0,0.9);
+
+  // Ambient particles
+  PARTS.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy; p.a+=p.va;
+    if(p.x<0)p.x=1; if(p.x>1)p.x=0;
+    if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+    if(p.a<0||p.a>1){p.va*=-1;} p.a=clamp(p.a,0,1);
+    ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.s,0,Math.PI*2);
+    ctx.fillStyle=`rgba(201,168,76,${p.a*0.1*mapAlpha})`; ctx.fill();
+  });
+
+  // Land dots
+  LAND.forEach(([lat,lon])=>{
+    const [x,y]=proj(lat,lon);
+    ctx.beginPath(); ctx.arc(x,y,2.0,0,Math.PI*2);
+    ctx.fillStyle=`rgba(80,130,200,${0.32*mapAlpha})`; ctx.fill();
+  });
+
+  // Grid
+  ctx.strokeStyle=`rgba(40,70,120,${0.12*mapAlpha})`; ctx.lineWidth=0.5;
+  for(let lon=-120;lon<=110;lon+=30){
+    const gx=(lon-PROJ_LON_MIN)/(PROJ_LON_MAX-PROJ_LON_MIN)*W;
+    ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke();
+  }
+  for(let lat=10;lat<=75;lat+=15){
+    const gy=(1-(lat-PROJ_LAT_MIN)/(PROJ_LAT_MAX-PROJ_LAT_MIN))*H;
+    ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
+  }
+
+  // ── Country outlines ──
+  mexicoAlpha = t>=0.8 ? clamp((t-0.8)/1.5,0, t<8?0.7:Math.max(0,0.7-(t-8)*0.15)) : 0;
+  russiaAlpha = t>=5.0 ? clamp((t-5.0)/1.5,0, t<12?0.65:Math.max(0,0.65-(t-12)*0.12)) : 0;
+
+  drawCountry(MEXICO,'180,220,255', mexicoAlpha*mapAlpha, 'rgba(100,180,255,0.6)');
+  drawCountry(BAJA,'180,220,255', mexicoAlpha*mapAlpha*0.8, 'rgba(100,180,255,0.4)');
+  drawCountry(RUSSIA,'255,200,120', russiaAlpha*mapAlpha, 'rgba(255,180,80,0.6)');
+
+  // ── Light 1 (Miguel) ──
+  const p1on=t>=L1[0][2];
+  let pos1=null;
+  if(p1on){
+    pos1=getPosOnPath(L1,t);
+    const [x1,y1]=proj(pos1.lat,pos1.lon);
+    const a1=merged?Math.max(0,1-(mergeT-0.5)*2.5):clamp((t-L1[0][2])/0.8,0,1);
+    trail1.push([x1,y1]);
+    if(trail1.length>TRAIL_LEN) trail1.shift();
+    trail1.forEach((pt,i)=>{
+      const tf=i/trail1.length;
+      ctx.beginPath(); ctx.arc(pt[0],pt[1],1.8*tf,0,Math.PI*2);
+      ctx.fillStyle=`rgba(150,210,255,${tf*0.45*a1})`; ctx.fill();
+    });
+    if(!merged){
+      drawGlow(x1,y1,110,'180,220,255',0.18*a1);
+      drawGlow(x1,y1,38,'200,230,255',0.5*a1);
+      drawGlow(x1,y1,10,'255,255,255',0.95*a1);
+      ctx.beginPath(); ctx.arc(x1,y1,4.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${a1})`; ctx.fill();
+    }
+    // city label
+    if(pos1.label&&pos1.label!==lastCity&&(pos1.progress||0)>0.82){
+      lastCity=pos1.label; cityLblTimer=t+1.8;
+      const lbl=document.getElementById('ci-city-lbl');
+      if(lbl) lbl.textContent=pos1.label;
+    }
+  }
+
+  // ── Light 2 (Ekaterina) ──
+  const p2on=t>=L2[0][2];
+  let pos2=null;
+  if(p2on){
+    pos2=getPosOnPath(L2,t);
+    const [x2,y2]=proj(pos2.lat,pos2.lon);
+    const a2=merged?Math.max(0,1-(mergeT-0.5)*2.5):clamp((t-L2[0][2])/0.8,0,1);
+    trail2.push([x2,y2]);
+    if(trail2.length>TRAIL_LEN) trail2.shift();
+    trail2.forEach((pt,i)=>{
+      const tf=i/trail2.length;
+      ctx.beginPath(); ctx.arc(pt[0],pt[1],1.8*tf,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,200,100,${tf*0.45*a2})`; ctx.fill();
+    });
+    if(!merged){
+      drawGlow(x2,y2,110,'255,210,100',0.18*a2);
+      drawGlow(x2,y2,38,'255,220,130',0.5*a2);
+      drawGlow(x2,y2,10,'255,240,200',0.95*a2);
+      ctx.beginPath(); ctx.arc(x2,y2,4.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,235,160,${a2})`; ctx.fill();
+    }
+  }
+
+  // ── MERGE ──
+  if(t>=14.5&&!merged){ merged=true; mergeT=0; }
+  if(merged){
+    mergeT=Math.min(mergeT+0.016,6);
+    const [ax,ay]=proj(30.27,-97.74);
+    const burstR=eio(clamp(mergeT/0.7,0,1))*Math.min(W,H)*0.4;
+    const burstA=Math.max(0,1-mergeT/1.6)*0.4;
+    drawGlow(ax,ay,burstR,'201,168,76',burstA);
+    const orbA=clamp((mergeT-0.3)/0.5,0,1);
+    drawGlow(ax,ay,100,'201,168,76',0.2*orbA);
+    drawGlow(ax,ay,38,'232,213,163',0.5*orbA);
+    drawGlow(ax,ay,12,'255,255,220',0.9*orbA);
+    ctx.beginPath(); ctx.arc(ax,ay,4.5,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,248,210,${orbA})`; ctx.fill();
+  }
+
+  // ── City label ──
+  const lbl=document.getElementById('ci-city-lbl');
+  if(lbl&&pos1){
+    if(t<cityLblTimer&&lbl.textContent){
+      const [lx,ly]=proj(pos1.lat,pos1.lon);
+      lbl.style.left=(lx/W*100)+'%'; lbl.style.top=((ly-26)/H*100)+'%';
+      lbl.classList.add('on');
+    } else { lbl.classList.remove('on'); }
+  }
+
+  // ── TEXT EVENTS ──
+  if(!showed1979&&t>=1.2){
+    showed1979=true;
+    const [mx,my]=proj(25.67,-100.32);
+    const e=document.getElementById('ci-y1979');
+    if(e){e.style.left='14%'; e.style.top='62%';}
+    showEl('ci-y1979'); setTimeout(()=>hideEl('ci-y1979'),3800);
+  }
+  if(!showed1990&&t>=5.7){
+    showed1990=true;
+    const [rx,ry]=proj(56.41,61.92);
+    const e=document.getElementById('ci-y1990');
+    if(e){e.style.left=((rx-30)/W*100)+'%'; e.style.top=((ry-55)/H*100)+'%';}
+    showEl('ci-y1990'); setTimeout(()=>hideEl('ci-y1990'),3800);
+  }
+  if(!showedAustin&&t>=14.8&&merged){
+    showedAustin=true;
+    const [ax,ay]=proj(30.27,-97.74);
+    const e=document.getElementById('ci-austin-txt');
+    if(e){e.style.left='15%'; e.style.top='60%'; e.style.transform='translateX(-50%)';}
+    showEl('ci-austin-txt');
+  }
+  if(!showedSeren&&t>=16.5){
+    showedSeren=true; showEl('ci-seren');
+  }
+  if(!showedFinale&&t>=21.5){
+    showedFinale=true;
+    hideEl('ci-seren'); hideEl('ci-austin-txt');
+    showEl('ci-finale');
+  }
+  if(t>=25) endIntro();
+  else requestAnimationFrame(animate);
+}
+
+window.startCinematicIntro=function(){
+  // Use setTimeout to ensure the intro div is fully visible and laid out
+  setTimeout(function(){
+    W = cvs.width  = window.innerWidth  || document.documentElement.clientWidth  || 1280;
+    H = cvs.height = window.innerHeight || document.documentElement.clientHeight || 720;
+    startTime = null;
+    introEnded = false;
+    showed1979=false; showed1990=false; showedAustin=false;
+    showedSeren=false; showedFinale=false;
+    trail1=[]; trail2=[];
+    merged=false; mergeT=0;
+    mexicoAlpha=0; russiaAlpha=0;
+    lastCity=''; cityLblTimer=0;
+    requestAnimationFrame(animate);
+  }, 100);
+};
+window.endIntro=function(){
+  if(introEnded) return; introEnded=true;
+  const w=document.getElementById('cinematic-intro');
+  if(w){ w.classList.add('fade-out'); setTimeout(()=>{ w.style.display='none'; },2600); }
+};
+
+})();
+</script>
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<!-- LANGUAGE TOGGLE -->
+<div id="lang-toggle">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="#story"><span data-lang="en">Our Story</span><span data-lang="ru">История</span></a></li>
+    <li><a href="#itinerary"><span data-lang="en">Itinerary</span><span data-lang="ru">Расписание</span></a></li>
+    <li><a href="#game"><span data-lang="en">Game</span><span data-lang="ru">Игра</span></a></li><li><a href="#dresscode"><span data-lang="en">Dress Code</span><span data-lang="ru">Дресс-код</span></a></li><li><a href="#rsvp">RSVP</a></li>
+    <li><a href="#gifts"><span data-lang="en">Gifts</span><span data-lang="ru">Подарки</span></a></li>
+    <li><a href="#hotels"><span data-lang="en">Hotels</span><span data-lang="ru">Отели</span></a></li>
+    <li><a href="#travel"><span data-lang="en">Travel</span><span data-lang="ru">Перелёт</span></a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <!-- Hero background photo with Ken Burns + Parallax -->
+  <div id="hero-photo-wrap" style="position:absolute;inset:0;overflow:hidden;">
+    <img id="hero-photo" src="images/venue_hero.jpg"
+      style="position:absolute;width:110%;height:110%;object-fit:cover;object-position:center;
+             top:-5%;left:-5%;
+             animation: kenBurns 20s ease-in-out infinite alternate;
+             will-change:transform;"
+      alt="venue">
+  </div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(254,252,248,0.10) 0%,rgba(254,252,248,0.45) 60%,rgba(254,252,248,0.90) 100%);pointer-events:none;"></div>
+<style>
+@keyframes kenBurns {
+  0%   { transform: scale(1.0) translate(0%, 0%); }
+  25%  { transform: scale(1.06) translate(-1.5%, 0.5%); }
+  50%  { transform: scale(1.1) translate(1%, -1%); }
+  75%  { transform: scale(1.06) translate(0.5%, 1.5%); }
+  100% { transform: scale(1.0) translate(-1%, 0.5%); }
+}
+</style>
+<script>
+(function(){
+  const img = document.getElementById('hero-photo');
+  let lastY = window.scrollY;
+  function onScroll(){
+    const y = window.scrollY;
+    const shift = y * 0.25;
+    img.style.top = (-5 + shift * 0.03) + '%';
+    lastY = y;
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+})();
+</script>
+  <svg class="hero-corner tl" viewBox="0 0 100 100" fill="none">
+    <path d="M5 5L5 55M5 5L55 5" stroke="#8B6914" stroke-width="1"/>
+    <circle cx="5" cy="5" r="2.5" fill="#8B6914"/>
+    <path d="M20 5L20 20L5 20" stroke="#8B6914" stroke-width="0.5" fill="none"/>
+    <path d="M36 5L36 36L5 36" stroke="#8B6914" stroke-width="0.5" fill="none" opacity="0.5"/>
+  </svg>
+  <svg class="hero-corner tr" viewBox="0 0 100 100" fill="none">
+    <path d="M5 5L5 55M5 5L55 5" stroke="#8B6914" stroke-width="1"/>
+    <circle cx="5" cy="5" r="2.5" fill="#8B6914"/>
+    <path d="M20 5L20 20L5 20" stroke="#8B6914" stroke-width="0.5" fill="none"/>
+    <path d="M36 5L36 36L5 36" stroke="#8B6914" stroke-width="0.5" fill="none" opacity="0.5"/>
+  </svg>
+
+
+  <!-- Beach wave decoration -->
+  <div style="position:absolute;bottom:0;left:0;right:0;overflow:hidden;line-height:0;pointer-events:none;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width:100%;height:50px;display:block;">
+      <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1350,25 1440,30 L1440,60 L0,60Z" fill="rgba(139,105,20,0.06)"/>
+      <path d="M0,40 C400,15 800,55 1200,35 C1320,28 1380,42 1440,38 L1440,60 L0,60Z" fill="rgba(139,105,20,0.04)"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span data-lang="en">We Are Getting Married</span>
+      <span data-lang="ru">Мы Женимся</span>
+    </div>
+    <div class="hero-names">
+      Miguel <span class="amp">&</span> Ekaterina
+
+    </div>
+    <div class="hero-date-row">
+      <div class="hline"></div>
+      <div class="hero-date" id="hero-date-txt">Mexico · 2026</div>
+      <div class="hline"></div>
+    </div>
+    <div class="hero-loc">
+      <span data-lang="en">Blue Venado Beach Club · Riviera Maya, México</span>
+      <span data-lang="ru">Blue Venado Beach Club · Ривьера Майя, Мексика</span>
+    </div>
+    <div class="countdown">
+      <div class="cd-item"><div class="cd-num" id="cd-d">—</div><div class="cd-lbl"><span data-lang="en">Days</span><span data-lang="ru">Дней</span></div></div>
+      <div class="cd-sep">·</div>
+      <div class="cd-item"><div class="cd-num" id="cd-h">—</div><div class="cd-lbl"><span data-lang="en">Hours</span><span data-lang="ru">Часов</span></div></div>
+      <div class="cd-sep">·</div>
+      <div class="cd-item"><div class="cd-num" id="cd-m">—</div><div class="cd-lbl"><span data-lang="en">Min</span><span data-lang="ru">Минут</span></div></div>
+      <div class="cd-sep">·</div>
+      <div class="cd-item"><div class="cd-num" id="cd-s">—</div><div class="cd-lbl"><span data-lang="en">Sec</span><span data-lang="ru">Секунд</span></div></div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <div class="scroll-lbl"><span data-lang="en">Scroll</span><span data-lang="ru">Вниз</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<div id="story" class="section-wrap" style="background: linear-gradient(180deg, #F8F4EC 0%, #F0EBE0 100%); padding: 5rem 0;">
+  <div class="sec-head fi" style="padding: 0 1.5rem 3rem;">
+    <div class="sec-eye"><span data-lang="en">How It All Began</span><span data-lang="ru">Как Всё Началось</span></div>
+    <h2 class="sec-title"><span data-lang="en">Our Story</span><span data-lang="ru">Наша История</span></h2>
+    <div class="sec-div"><div class="dl"></div><div class="dm"></div><div class="dr"></div></div>
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#3D3020; font-size:1.2rem; font-weight:600; margin-top:1rem; letter-spacing:0.02em;">
+      <span data-lang="en">A few of our favourite spots around the world.</span>
+      <span data-lang="ru">Несколько наших любимых мест по всему миру.</span>
+    </p>
+  </div>
+  <style>
+  .sp-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:175px; gap:4px; padding:0 4px; max-width:1600px; margin:0 auto; }
+  .sp-card { position:relative; overflow:hidden; cursor:pointer; }
+  .sp-card img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.9s cubic-bezier(.25,.46,.45,.94); filter:brightness(0.83) saturate(0.88); }
+  .sp-card:hover img { transform:scale(1.08); filter:brightness(0.58) saturate(1.15); }
+  .sp-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.0) 50%,transparent 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:0.85rem 1rem; }
+  .sp-loc { font-family:'Cinzel',serif; font-size:clamp(0.42rem,0.9vw,0.62rem); letter-spacing:0.22em; color:var(--gold-light); text-transform:uppercase; line-height:1.4; margin-bottom:0.1rem; }
+  .sp-cap { font-family:'Cormorant Garamond',serif; font-size:clamp(0.78rem,1.3vw,0.98rem); font-style:italic; color:rgba(255,255,255,0.92); line-height:1.3; max-height:0; overflow:hidden; opacity:0; transition:max-height 0.5s ease,opacity 0.4s ease; }
+  .sp-card:hover .sp-cap { max-height:4rem; opacity:1; }
+  @media(max-width:700px) {
+    .sp-grid { grid-template-columns:repeat(2,1fr); grid-auto-rows:140px; gap:3px; }
+    .sp-card { grid-column:span 1 !important; grid-row:span 1 !important; }
+    .sp-card:first-child { grid-column:span 2 !important; grid-row:span 2 !important; }
+  }
+  </style>
+  <div class="sp-grid fi">
+
+    <div class="sp-card" style="grid-column:span 7; grid-row:span 3;">
+      <img src="images/photo_01.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Playa Miramar, Tamaulipas</span><span data-lang="ru">Пляж Мирамар, Тамаулипас</span></div>
+        <div class="sp-cap"><span data-lang="en">Crystal clear as always 🌊</span><span data-lang="ru">Чистейшее море Тамаулипаса 🌊</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 5; grid-row:span 2;">
+      <img src="images/photo_02.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Cola de Caballo, Monterrey</span><span data-lang="ru">Кола-де-Кабальо, Монтеррей</span></div>
+        <div class="sp-cap"><span data-lang="en">Just a regular Saturday near MTY 💦</span><span data-lang="ru">Обычная суббота у водопада 💦</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 5; grid-row:span 2;">
+      <img src="images/photo_03.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Disneyworld, Orlando FL</span><span data-lang="ru">Диснейворлд, Орландо FL</span></div>
+        <div class="sp-cap"><span data-lang="en">Just a regular Tuesday at Disneyworld ✨</span><span data-lang="ru">Обычный вторник в Диснейворлде ✨</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 3;">
+      <img src="images/photo_04.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Torre de Telecomunicaciones, Cd. Obregón</span><span data-lang="ru">Телебашня, Сьюдад-Обрегон</span></div>
+        <div class="sp-cap"><span data-lang="en">Cd. Obregón landmark hits different 🥐</span><span data-lang="ru">Телебашня Обрегона — туристическое место 🥐</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 2;">
+      <img src="images/photo_05.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Torre Banorte, San Pedro Garza García</span><span data-lang="ru">Башня Банорте, Сан-Педро ГГГ</span></div>
+        <div class="sp-cap"><span data-lang="en">MTY skyline at night never gets old 🌃</span><span data-lang="ru">Ночная Монтеррей — просто огонь 🌃</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 5; grid-row:span 3;">
+      <img src="images/photo_06.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Hotel Holiday Inn, Monclova, Coah.</span><span data-lang="ru">Отель Холидей Инн, Монклова, Коа.</span></div>
+        <div class="sp-cap"><span data-lang="en">Monclova rooftop views are something else 🌅</span><span data-lang="ru">Вид с крыши в Монклове — незабываемо 🌅</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 5; grid-row:span 2;">
+      <img src="images/photo_07.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Carretera 85, Nuevo Laredo</span><span data-lang="ru">Шоссе 85, Нуэво-Ларедо</span></div>
+        <div class="sp-cap"><span data-lang="en">Nothing but open road on Hwy 85 🏍️</span><span data-lang="ru">Трасса 85 — бескрайние просторы 🏍️</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 3; grid-row:span 2;">
+      <img src="images/photo_08.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Parque Chipinque, Dic.</span><span data-lang="ru">Парк Чипинке, декабрь</span></div>
+        <div class="sp-cap"><span data-lang="en">Chipinque in December is magical ❄️</span><span data-lang="ru">Чипинке в декабре — просто сказка ❄️</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 2;">
+      <img src="images/photo_09.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Estadio BBVA, Guadalupe NL</span><span data-lang="ru">Стадион BBVA, Гвадалупе NL</span></div>
+        <div class="sp-cap"><span data-lang="en">Best stadium in the world. Sorry, but yeah.</span><span data-lang="ru">Лучший стадион в мире. Факт.</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 5; grid-row:span 2;">
+      <img src="images/photo_10.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Centro Comercial Cumbres, MTY</span><span data-lang="ru">ТЦ Кумбрес, Монтеррей</span></div>
+        <div class="sp-cap"><span data-lang="en">The new wing at Cumbres is out of this world 🚀</span><span data-lang="ru">Новое крыло в ТЦ Кумбрес — просто космос 🚀</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 3; grid-row:span 2;">
+      <img src="images/photo_11.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Arboleda San Pedro Garza García</span><span data-lang="ru">Арболеда Сан-Педро Гарса Гарсиа</span></div>
+        <div class="sp-cap"><span data-lang="en">Arboleda architecture hits different 🏛️</span><span data-lang="ru">Архитектура Арболеды — мирового уровня 🏛️</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 2;">
+      <img src="images/photo_12.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Globo Aerostático, Ramos Arizpe NL</span><span data-lang="ru">Воздушный шар, Рамос Арисpe NL</span></div>
+        <div class="sp-cap"><span data-lang="en">Ramos Arizpe looks incredible from up here 🎈</span><span data-lang="ru">Рамос Арисе сверху — просто красота 🎈</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 5; grid-row:span 2;">
+      <img src="images/photo_13.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Viñedos de Cadereyta, NL</span><span data-lang="ru">Виноградники Кадеретья, NL</span></div>
+        <div class="sp-cap"><span data-lang="en">Cadereyta wine country is underrated 🍷</span><span data-lang="ru">Кадеретья — жемчужина виноделия 🍷</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 2;">
+      <img src="images/photo_14.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Malecón de Tampico, Tamaulipas</span><span data-lang="ru">Набережная Тампико, Тамаулипас</span></div>
+        <div class="sp-cap"><span data-lang="en">Tampico waterfront is so romantic 💏</span><span data-lang="ru">Набережная Тампико — романтика 💏</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 3; grid-row:span 2;">
+      <img src="images/photo_15.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Plaza Morelos, San Pedro GGG</span><span data-lang="ru">Площадь Морелос, Сан-Педро</span></div>
+        <div class="sp-cap"><span data-lang="en">San Pedro nightlife on another level 🦊</span><span data-lang="ru">Ночная жизнь Сан-Педро 🦊</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 3;">
+      <img src="images/photo_16.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Верхняя Пышма, Свердловская обл.</span><span data-lang="ru">Verkhnyaya Pyshma, Sverdlovsk</span></div>
+        <div class="sp-cap"><span data-lang="en">The sign up here is iconic 🎬</span><span data-lang="ru">Та самая надпись в Верхней Пышме 🎬</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 2;">
+      <img src="images/photo_17.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Xochimilco, CDMX</span><span data-lang="ru">Сочимилько, Мехико</span></div>
+        <div class="sp-cap"><span data-lang="en">Xochimilco canals hitting different 🛶</span><span data-lang="ru">Каналы Сочимилько — это романтика 🛶</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 2;">
+      <img src="images/photo_18.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Mercado La Ciudadela, CDMX</span><span data-lang="ru">Рынок Сиудадела, Мехико</span></div>
+        <div class="sp-cap"><span data-lang="en">Best carpet market in the world 🪅</span><span data-lang="ru">Лучший ковровый рынок мира 🪅</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 3;">
+      <img src="images/photo_19.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Пляж Исеть, Каменск-Уральский</span><span data-lang="ru">Пляж Исеть, Каменск-Уральский</span></div>
+        <div class="sp-cap"><span data-lang="en">Beach season in Kamensk is always warm 🏖️</span><span data-lang="ru">Сезон открыт! Пляж Исеть 🏖️</span></div>
+      </div>
+    </div>
+    <div class="sp-card" style="grid-column:span 4; grid-row:span 2;">
+      <img src="images/photo_20.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Гора Волчиха, Ревда</span><span data-lang="ru">Гора Волчиха, Ревда</span></div>
+        <div class="sp-cap"><span data-lang="en">The views from Volchiha are unmatched 🏔️</span><span data-lang="ru">Виды с Волчихи — ни с чем не сравнить 🏔️</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; padding:2.5rem 1.5rem 0;">
+    <div style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#3D3020; font-size:1.25rem; font-weight:600; letter-spacing:0.03em;">
+      <span data-lang="en">And the best chapter is still ahead of us.</span>
+      <span data-lang="ru">И лучшая глава ещё впереди.</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════ PROPOSAL GAME ═══════════ -->
+<style>
+#game { background: linear-gradient(180deg, #F5F0E5 0%, #EDE6D8 100%); padding: 5rem 1.5rem; }
+.game-inner { max-width: 900px; margin: 0 auto; }
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-top: 3rem;
+}
+.g-card {
+  position: relative; cursor: pointer;
+  border: 2px solid transparent;
+  overflow: hidden; transition: border-color 0.3s, transform 0.2s;
+}
+.g-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.g-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+.g-card.correct { border-color: #6fcf97; box-shadow: 0 0 20px rgba(111,207,151,0.3); }
+.g-card.wrong { border-color: #eb5757; opacity: 0.55; }
+.g-card img { width:100%; aspect-ratio:3/4; object-fit:cover; display:block; transition: transform 0.4s; }
+.g-card:hover img { transform: scale(1.04); }
+.g-ov {
+  position: absolute; inset:0;
+  background: linear-gradient(to top, rgba(26,18,9,0.88) 0%, transparent 55%);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:1rem;
+}
+.g-num {
+  position:absolute; top:0.7rem; left:0.7rem;
+  font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.3em;
+  color:var(--gold); background:rgba(0,0,0,0.6); padding:0.2rem 0.5rem;
+  backdrop-filter:blur(4px);
+}
+.g-loc { font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; margin-bottom:0.3rem; }
+.g-desc { font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:rgba(255,255,255,0.9); font-style:italic; line-height:1.3; }
+.g-bar-wrap { margin-top:0.5rem; height:3px; background:rgba(201,168,76,0.15); border-radius:2px; overflow:hidden; display:none; }
+.g-bar-fill { height:100%; background:var(--gold); border-radius:2px; transition:width 0.9s ease; width:0%; }
+.g-pct { font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.2em; color:var(--gold); margin-top:0.25rem; display:none; }
+.g-badge { display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:3rem; z-index:10; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8)); }
+.g-actions { padding:1.8rem 0 0; text-align:center; }
+.g-vote-btn {
+  background:#8B6914; border:2px solid #8B6914; color:#FEFCF8;
+  font-family:'Cinzel',serif; font-size:0.78rem; font-weight:700; letter-spacing:0.35em; text-transform:uppercase;
+  padding:1.1rem 3.5rem; cursor:pointer; transition:all 0.3s;
+}
+.g-vote-btn:hover:not(:disabled) { background:var(--gold); color:var(--dark); }
+.g-vote-btn:disabled { opacity:0.25; cursor:not-allowed; }
+.g-hint { font-family:'Cormorant Garamond',serif; font-style:italic; color:#3D3020; font-size:1.2rem; font-weight:600; margin-top:0.7rem; }
+.g-reveal { display:none; padding-top:2rem; text-align:center; }
+.g-reveal-msg {
+  font-family:'Cormorant Garamond',serif; font-size:clamp(1.2rem,3vw,1.8rem);
+  font-weight:300; font-style:italic; color:var(--gold-light); margin-bottom:0.5rem; padding:0 1rem; line-height:1.4;
+}
+.g-reveal-sub { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.4em; color:rgba(139,105,20,0.55); text-transform:uppercase; margin-bottom:1.5rem; }
+.g-stats { display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; }
+.g-stat-n { font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:var(--gold); font-weight:300; }
+.g-stat-l { font-family:'Cinzel',serif; font-size:0.48rem; letter-spacing:0.25em; color:rgba(139,105,20,0.55); text-transform:uppercase; margin-top:0.2rem; }
+@media(max-width:500px) { .game-grid { gap:0.5rem; } .g-desc { font-size:0.88rem; } }
+</style>
+
+<div id="game">
+  <div class="game-inner">
+    <div class="sec-head fi">
+      <div class="sec-eye"><span data-lang="en">Can You Tell?</span><span data-lang="ru">Сможешь угадать?</span></div>
+      <h2 class="sec-title"><span data-lang="en">Guess the Real Proposal 💍</span><span data-lang="ru">Угадай настоящее предложение 💍</span></h2>
+      <div class="sec-div"><div class="dl"></div><div class="dm"></div><div class="dr"></div></div>
+      <p class="sec-note" style="color:#3D3020; font-size:1.3rem; font-weight:500;"><span data-lang="en">One of these actually happened. The others are… creative.</span><span data-lang="ru">Одно из этих предложений настоящее. Остальные — творческий вымысел.</span></p>
+    </div>
+
+    <div class="game-grid">
+      <div class="g-card" id="gc-1" onclick="gVote(1)">
+        <img src="images/photo_21.jpg" alt="Proposal 1" loading="lazy">
+        <div class="g-ov">
+          <div class="g-num">01</div>
+          <div class="g-loc"><span data-lang="en">New York City</span><span data-lang="ru">Нью-Йорк</span></div>
+          <div class="g-desc"><span data-lang="en">Central Park in the snow</span><span data-lang="ru">Центральный парк в снегу</span></div>
+          <div class="g-bar-wrap" id="gb-1"><div class="g-bar-fill" id="gf-1"></div></div>
+          <div class="g-pct" id="gp-1"></div>
+        </div>
+        <div class="g-badge" id="gbdg-1"></div>
+      </div>
+      <div class="g-card" id="gc-2" onclick="gVote(2)">
+        <img src="images/photo_22.jpg" alt="Proposal 2" loading="lazy">
+        <div class="g-ov">
+          <div class="g-num">02</div>
+          <div class="g-loc"><span data-lang="en">Cappadocia, Turkey</span><span data-lang="ru">Каппадокия, Турция</span></div>
+          <div class="g-desc"><span data-lang="en">Sunrise with hot air balloons</span><span data-lang="ru">Рассвет с воздушными шарами</span></div>
+          <div class="g-bar-wrap" id="gb-2"><div class="g-bar-fill" id="gf-2"></div></div>
+          <div class="g-pct" id="gp-2"></div>
+        </div>
+        <div class="g-badge" id="gbdg-2"></div>
+      </div>
+      <div class="g-card" id="gc-3" onclick="gVote(3)">
+        <img src="images/photo_23.jpg" alt="Proposal 3" loading="lazy">
+        <div class="g-ov">
+          <div class="g-num">03</div>
+          <div class="g-loc">Costco</div>
+          <div class="g-desc"><span data-lang="en">Love in the wholesale aisle</span><span data-lang="ru">Любовь между паллетами</span></div>
+          <div class="g-bar-wrap" id="gb-3"><div class="g-bar-fill" id="gf-3"></div></div>
+          <div class="g-pct" id="gp-3"></div>
+        </div>
+        <div class="g-badge" id="gbdg-3"></div>
+      </div>
+      <div class="g-card" id="gc-4" onclick="gVote(4)">
+        <img src="images/photo_24.jpg" alt="Proposal 4" loading="lazy">
+        <div class="g-ov">
+          <div class="g-num">04</div>
+          <div class="g-loc"><span data-lang="en">Home</span><span data-lang="ru">Дома</span></div>
+          <div class="g-desc"><span data-lang="en">Surprise with a Tiffany box</span><span data-lang="ru">Сюрприз с коробочкой Tiffany</span></div>
+          <div class="g-bar-wrap" id="gb-4"><div class="g-bar-fill" id="gf-4"></div></div>
+          <div class="g-pct" id="gp-4"></div>
+        </div>
+        <div class="g-badge" id="gbdg-4"></div>
+      </div>
+    </div>
+
+    <div class="g-actions" id="g-actions">
+      <button class="g-vote-btn" id="g-vote-btn" onclick="gSubmit()" disabled>
+        <span data-lang="en">Submit My Vote</span><span data-lang="ru">Проголосовать</span>
+      </button>
+      <div class="g-hint"><span data-lang="en">Select a photo above to cast your vote</span><span data-lang="ru">Выбери фото выше</span></div>
+    </div>
+
+    <div class="g-reveal" id="g-reveal">
+      <div class="g-reveal-msg" id="g-rmsg"></div>
+      <div class="g-reveal-sub"><span data-lang="en">Results so far</span><span data-lang="ru">Результаты голосования</span></div>
+      <div class="g-stats">
+        <div><div class="g-stat-n" id="g-total">0</div><div class="g-stat-l"><span data-lang="en">Total Votes</span><span data-lang="ru">Всего голосов</span></div></div>
+        <div><div class="g-stat-n" id="g-cpct">0%</div><div class="g-stat-l"><span data-lang="en">Guessed Right</span><span data-lang="ru">Угадали</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const ANSWER = 2; // Cappadocia — CHANGE IF NEEDED
+  const msgs = {
+    en: {
+      correct: "🎉 You got it! The real proposal was in Cappadocia at sunrise, surrounded by hundreds of hot air balloons. She said yes before he finished asking.",
+      wrong: {
+        1: "❄️ Beautiful guess — but Central Park was just a winter walk. The real moment had a much more dramatic backdrop!",
+        3: "🛒 Ha! Give Miguel credit for creativity... but no. Though the hot dogs are $1.50.",
+        4: "💙 The Tiffany box is real — but the actual proposal happened somewhere far more cinematic!"
+      }
+    },
+    ru: {
+      correct: "🎉 Правильно! Настоящее предложение было в Каппадокии на рассвете, в окружении сотен воздушных шаров. Она сказала «да», не дав ему договорить.",
+      wrong: {
+        1: "❄️ Красивая попытка — но Центральный парк был просто прогулкой. Настоящий момент был куда более кинематографичным!",
+        3: "🛒 Ха! Уважаем оригинальность... но нет. Хотя хот-доги там за $1.50.",
+        4: "💙 Коробочка Tiffany настоящая — но само предложение произошло в куда более эпичном месте!"
+      }
+    }
+  };
+  let sel=null, voted=false;
+  let gvotes={1:14,2:9,3:38,4:11};
+
+  window.gVote = function(n){
+    if(voted) return;
+    sel=n;
+    document.querySelectorAll('.g-card').forEach(c=>c.classList.remove('selected'));
+    document.getElementById('gc-'+n).classList.add('selected');
+    document.getElementById('g-vote-btn').disabled=false;
+  };
+
+  window.gSubmit = function(){
+    if(!sel||voted) return;
+    voted=true; gvotes[sel]++;
+    const total=Object.values(gvotes).reduce((a,b)=>a+b,0);
+    for(let i=1;i<=4;i++){
+      const pct=Math.round(gvotes[i]/total*100);
+      document.getElementById('gb-'+i).style.display='block';
+      document.getElementById('gp-'+i).style.display='block';
+      document.getElementById('gp-'+i).textContent=pct+'%';
+      setTimeout(()=>{document.getElementById('gf-'+i).style.width=pct+'%';},120);
+      const card=document.getElementById('gc-'+i);
+      card.style.cursor='default';
+      if(i===ANSWER){
+        card.classList.add('correct');
+        document.getElementById('gbdg-'+i).textContent='✅';
+        document.getElementById('gbdg-'+i).style.display='block';
+      } else if(i===sel&&i!==ANSWER){
+        card.classList.add('wrong');
+        document.getElementById('gbdg-'+i).textContent='❌';
+        document.getElementById('gbdg-'+i).style.display='block';
+      }
+    }
+    document.getElementById('g-actions').style.display='none';
+    document.getElementById('g-reveal').style.display='block';
+    document.getElementById('g-total').textContent=total;
+    document.getElementById('g-cpct').textContent=Math.round(gvotes[ANSWER]/total*100)+'%';
+    const lang=document.body.classList.contains('lang-ru')?'ru':'en';
+    const m=msgs[lang];
+    document.getElementById('g-rmsg').textContent=sel===ANSWER?m.correct:(m.wrong[sel]||'Not quite!');
+  };
+})();
+</script>
+
+<!-- ITINERARY -->
+<div id="itinerary" class="white-bg" style="padding: 6rem 2rem;">
+  <div class="section-inner">
+    <div class="sec-head fi">
+      <div class="sec-eye"><span data-lang="en">The Wedding Day</span><span data-lang="ru">День Свадьбы</span></div>
+      <h2 class="sec-title"><span data-lang="en">Itinerary</span><span data-lang="ru">Расписание Дня</span></h2>
+      <div class="sec-div"><div class="dl"></div><div class="dm"></div><div class="dr"></div></div>
+    </div>
+    <div class="it-cards">
+      <div class="it-card fi">
+        <div class="it-time">4:00<br>PM</div>
+        <div>
+          <div class="it-title"><span data-lang="en">Ceremony</span><span data-lang="ru">Церемония</span></div>
+          <div class="it-desc"><span data-lang="en">Ceremony on the private beach of Blue Venado. Please be seated by 3:45 PM. Dress code: formal elegance — light colors welcome.</span><span data-lang="ru">Церемония на частном пляже Blue Venado. Просим занять места к 15:45. Дресс-код: элегантно, светлые тона приветствуются.</span></div>
+        </div>
+      </div>
+      <div class="it-card fi">
+        <div class="it-time">5:30<br>PM</div>
+        <div>
+          <div class="it-title"><span data-lang="en">Cocktail Hour</span><span data-lang="ru">Коктейльный Час</span></div>
+          <div class="it-desc"><span data-lang="en">Drinks, canapés and photos with the newlyweds in the garden.</span><span data-lang="ru">Напитки, канапе и фотосессия с молодожёнами в саду.</span></div>
+        </div>
+      </div>
+      <div class="it-card fi">
+        <div class="it-time">7:00<br>PM</div>
+        <div>
+          <div class="it-title"><span data-lang="en">Dinner & Reception</span><span data-lang="ru">Ужин и Банкет</span></div>
+          <div class="it-desc"><span data-lang="en">A curated dinner celebrating both Mexican and Russian culinary traditions, with toasts and live music.</span><span data-lang="ru">Торжественный ужин, объединяющий мексиканские и российские традиции, с тостами и живой музыкой.</span></div>
+        </div>
+      </div>
+      <div class="it-card fi">
+        <div class="it-time">9:00<br>PM</div>
+        <div>
+          <div class="it-title"><span data-lang="en">Cake & Dancing</span><span data-lang="ru">Торт и Танцы</span></div>
+          <div class="it-desc"><span data-lang="en">First dance, cake cutting, and a night of celebration. Dance floor open until midnight.</span><span data-lang="ru">Первый танец, разрезание торта и вечер праздника. Танцпол открыт до полуночи.</span></div>
+        </div>
+      </div>
+
+      <!-- DRINKING COMPETITION CARD -->
+      <div class="it-card fi" id="drinking-card" style="border:2px solid #8B6914;background:linear-gradient(135deg,#2C1E0A 0%,#1a1205 100%);position:relative;overflow:visible;padding:0;">
+        <!-- Flame flicker animation -->
+        <style>
+          @keyframes flicker{0%,100%{opacity:1;transform:scaleY(1);}50%{opacity:0.85;transform:scaleY(0.93);}}
+          @keyframes shake{0%,100%{transform:rotate(-1deg);}50%{transform:rotate(1deg);}}
+          @keyframes pulse-gold{0%,100%{box-shadow:0 0 20px rgba(201,168,76,0.4),0 0 40px rgba(201,168,76,0.2);}50%{box-shadow:0 0 30px rgba(201,168,76,0.7),0 0 60px rgba(201,168,76,0.35);}}
+          #drinking-card{animation:pulse-gold 2.5s ease-in-out infinite;}
+          .drink-drunk{animation:shake 1.8s ease-in-out infinite;}
+          .drink-drunk:nth-child(2){animation-direction:reverse;animation-duration:2.1s;}
+          .flame{animation:flicker 0.4s ease-in-out infinite;}
+        </style>
+
+        <!-- Header badge -->
+        <div style="background:linear-gradient(90deg,#8B6914,#C9A84C,#8B6914);padding:0.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.35em;color:#1a1205;font-weight:900;text-transform:uppercase;">⚡ SPECIAL EVENT ⚡</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;color:#1a1205;font-weight:700;">10:00 PM</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr auto;gap:1rem;padding:1.2rem 1.5rem 1rem;">
+          <div>
+            <!-- Title -->
+            <div style="font-family:'Cinzel',serif;font-size:1.05rem;color:#C9A84C;letter-spacing:0.05em;font-weight:700;line-height:1.2;margin-bottom:0.5rem;text-shadow:0 0 20px rgba(201,168,76,0.5);">
+              🏆 DRINKING COMPETITION
+            </div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-style:italic;color:white;margin-bottom:0.6rem;line-height:1.1;">
+              <span style="color:#CC0000;">🇷🇺 Russia</span>
+              <span style="color:#C9A84C;font-size:1rem;font-style:normal;margin:0 0.5rem;">vs</span>
+              <span style="color:#006847;">🇲🇽 México</span>
+            </div>
+            <div style="font-family:'EB Garamond',serif;font-size:0.88rem;color:rgba(255,245,220,0.8);line-height:1.6;margin-bottom:0.8rem;">
+              <span data-lang="en">Who drinks more — vodka or tequila? The eternal question gets answered tonight. Prizes for winners, legends for all.</span>
+              <span data-lang="ru">Кто больше пьёт — водка или текила? Сегодня вечером наконец-то выясним. Призы для победителей, легенды для всех.</span>
+            </div>
+
+            <!-- Grand Prizes badge -->
+            <div style="background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.4);padding:0.5rem 0.8rem;display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:0.9rem;">
+              <span style="font-size:1rem;">🎁</span>
+              <span style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.25em;color:#C9A84C;font-weight:700;text-transform:uppercase;">Grand Prizes Await</span>
+              <span style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.25em;color:#C9A84C;font-weight:700;text-transform:uppercase;">· ¡Habrá Grandes Premios!</span>
+            </div>
+
+            <!-- RSVP button -->
+            <div>
+              <a href="#rsvp" onclick="document.querySelector('#rsvp').scrollIntoView({behavior:'smooth'})"
+                 style="display:inline-block;background:linear-gradient(135deg,#8B6914,#C9A84C);color:#1a1205;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:900;padding:0.7rem 1.4rem;text-decoration:none;border-radius:2px;transition:all 0.3s;"
+                 onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+                ✍️ RSVP — <span data-lang="en">Count Me In!</span><span data-lang="ru">Я участвую!</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- DRUNK ILLUSTRATION SVG -->
+          <div style="display:flex;align-items:flex-end;gap:0.3rem;min-width:130px;">
+            <svg viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:130px;height:auto;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+
+              <!-- === MEXICAN DRUNK (left) === -->
+              <g class="drink-drunk" style="transform-origin:40px 150px;">
+                <!-- Sombrero -->
+                <ellipse cx="40" cy="28" rx="28" ry="7" fill="#8B2500" stroke="#C94000" stroke-width="1"/>
+                <ellipse cx="40" cy="25" rx="14" ry="14" fill="#C94000" stroke="#FF6600" stroke-width="1"/>
+                <ellipse cx="40" cy="19" rx="10" ry="6" fill="#FF8C00"/>
+                <!-- Sombrero band & pompoms -->
+                <ellipse cx="40" cy="28" rx="28" ry="4" fill="none" stroke="#FFD700" stroke-width="2" stroke-dasharray="3,3"/>
+                <circle cx="14" cy="28" r="2.5" fill="#FFD700"/>
+                <circle cx="66" cy="28" r="2.5" fill="#FFD700"/>
+                <!-- Head -->
+                <ellipse cx="40" cy="45" rx="13" ry="14" fill="#D4A96A" stroke="#8B6914" stroke-width="1"/>
+                <!-- Drunk eyes (X eyes) -->
+                <line x1="33" y1="41" x2="37" y2="45" stroke="#333" stroke-width="1.5"/>
+                <line x1="37" y1="41" x2="33" y2="45" stroke="#333" stroke-width="1.5"/>
+                <line x1="43" y1="41" x2="47" y2="45" stroke="#333" stroke-width="1.5"/>
+                <line x1="47" y1="41" x2="43" y2="45" stroke="#333" stroke-width="1.5"/>
+                <!-- Rosy drunk cheeks -->
+                <ellipse cx="33" cy="47" rx="4" ry="2.5" fill="rgba(220,60,60,0.35)"/>
+                <ellipse cx="47" cy="47" rx="4" ry="2.5" fill="rgba(220,60,60,0.35)"/>
+                <!-- Silly smile -->
+                <path d="M35 51 Q40 57 45 51" stroke="#8B6914" stroke-width="1.5" fill="rgba(200,100,80,0.3)" stroke-linecap="round"/>
+                <!-- Stars spinning around head (drunk effect) -->
+                <text x="20" y="20" font-size="7" fill="#FFD700" class="flame">★</text>
+                <text x="52" y="18" font-size="6" fill="#FF6600" class="flame" style="animation-delay:0.2s">★</text>
+                <!-- Neck -->
+                <rect x="36" y="58" width="8" height="10" fill="#D4A96A"/>
+                <!-- Body - Mexican shirt (white guayabera) -->
+                <path d="M24 68 Q30 64 40 62 Q50 64 56 68 L58 110 Q52 115 40 116 Q28 115 22 110Z" fill="white" stroke="#ddd" stroke-width="0.8"/>
+                <!-- Shirt stripes -->
+                <line x1="37" y1="62" x2="36" y2="116" stroke="#ddd" stroke-width="0.8" stroke-dasharray="2,2"/>
+                <line x1="43" y1="62" x2="44" y2="116" stroke="#ddd" stroke-width="0.8" stroke-dasharray="2,2"/>
+                <!-- Belt - Mexican flag colors -->
+                <rect x="22" y="108" width="36" height="5" fill="#006847"/>
+                <rect x="22" y="110" width="36" height="1" fill="white"/>
+                <rect x="22" y="111" width="36" height="2" fill="#CC0000"/>
+                <!-- Pants -->
+                <path d="M22 113 L24 150 L33 150 L40 130 L47 150 L56 150 L58 113Z" fill="#2C4A8B"/>
+                <!-- Shoes -->
+                <ellipse cx="27" cy="151" rx="8" ry="4" fill="#1a1a1a"/>
+                <ellipse cx="53" cy="151" rx="8" ry="4" fill="#1a1a1a"/>
+                <!-- Arm left - holding tequila up -->
+                <path d="M24 70 Q10 80 8 65" stroke="#D4A96A" stroke-width="7" stroke-linecap="round" fill="none"/>
+                <!-- Tequila bottle -->
+                <rect x="3" y="50" width="8" height="18" rx="2" fill="#C0E860" stroke="#7A9A10" stroke-width="0.8"/>
+                <rect x="5" y="47" width="4" height="5" rx="1" fill="#A0C840"/>
+                <text x="1" y="71" font-size="5" fill="#3A6000">TEQ</text>
+                <!-- Arm right - wobbly -->
+                <path d="M56 70 Q70 90 65 100" stroke="#D4A96A" stroke-width="7" stroke-linecap="round" fill="none"/>
+              </g>
+
+              <!-- VS text -->
+              <text x="70" y="95" font-family="serif" font-size="10" font-weight="900" fill="#C9A84C" text-anchor="middle" style="text-shadow:0 0 8px gold">VS</text>
+
+              <!-- === RUSSIAN DRUNK (right) === -->
+              <g class="drink-drunk" style="transform-origin:100px 150px;animation-direction:reverse;">
+                <!-- Ushanka (Russian fur hat) -->
+                <ellipse cx="100" cy="27" rx="16" ry="8" fill="#8B6914" stroke="#5C3D08" stroke-width="1"/>
+                <ellipse cx="100" cy="22" rx="12" ry="10" fill="#A0791A" stroke="#5C3D08" stroke-width="1"/>
+                <!-- Ushanka flaps -->
+                <path d="M84 27 Q82 35 84 40" stroke="#8B6914" stroke-width="5" stroke-linecap="round" fill="none"/>
+                <path d="M116 27 Q118 35 116 40" stroke="#8B6914" stroke-width="5" stroke-linecap="round" fill="none"/>
+                <!-- Red star on hat -->
+                <polygon points="100,14 101.5,18.5 106,18.5 102.5,21 104,25.5 100,23 96,25.5 97.5,21 94,18.5 98.5,18.5" fill="#CC0000"/>
+                <!-- Head -->
+                <ellipse cx="100" cy="45" rx="13" ry="13" fill="#E8C99A" stroke="#8B6914" stroke-width="1"/>
+                <!-- Drunk eyes -->
+                <line x1="93" y1="41" x2="97" y2="45" stroke="#333" stroke-width="1.5"/>
+                <line x1="97" y1="41" x2="93" y2="45" stroke="#333" stroke-width="1.5"/>
+                <line x1="103" y1="41" x2="107" y2="45" stroke="#333" stroke-width="1.5"/>
+                <line x1="107" y1="41" x2="103" y2="45" stroke="#333" stroke-width="1.5"/>
+                <!-- Rosy cheeks -->
+                <ellipse cx="93" cy="47" rx="4" ry="2.5" fill="rgba(220,60,60,0.4)"/>
+                <ellipse cx="107" cy="47" rx="4" ry="2.5" fill="rgba(220,60,60,0.4)"/>
+                <!-- Silly smile with tooth -->
+                <path d="M95 51 Q100 57 105 51" stroke="#8B6914" stroke-width="1.5" fill="rgba(200,100,80,0.3)" stroke-linecap="round"/>
+                <!-- Drunk stars -->
+                <text x="82" y="20" font-size="7" fill="#FFD700" class="flame" style="animation-delay:0.1s">★</text>
+                <text x="113" y="22" font-size="6" fill="#CC0000" class="flame" style="animation-delay:0.3s">☆</text>
+                <!-- Neck -->
+                <rect x="96" y="57" width="8" height="10" fill="#E8C99A"/>
+                <!-- Body - Russian style shirt (белая рубашка) -->
+                <path d="M84 67 Q90 63 100 61 Q110 63 116 67 L118 110 Q112 115 100 116 Q88 115 82 110Z" fill="#CC0000" stroke="#990000" stroke-width="0.8"/>
+                <!-- Russian shirt details -->
+                <rect x="96" y="61" width="8" height="20" fill="#990000"/>
+                <path d="M100 61 L100 81" stroke="#FFD700" stroke-width="1" stroke-dasharray="2,2"/>
+                <!-- Belt -->
+                <rect x="82" y="108" width="36" height="5" fill="#4A2C00"/>
+                <rect x="95" y="107" width="10" height="7" fill="#8B6914" rx="1"/>
+                <text x="98" y="113" font-size="5" fill="#FFD700">✦</text>
+                <!-- Pants - dark -->
+                <path d="M82 113 L84 150 L93 150 L100 130 L107 150 L116 150 L118 113Z" fill="#1a1a3a"/>
+                <!-- Boots -->
+                <ellipse cx="87" cy="151" rx="8" ry="4" fill="#1a0a00"/>
+                <ellipse cx="113" cy="151" rx="8" ry="4" fill="#1a0a00"/>
+                <!-- Arm left - wobbly -->
+                <path d="M84 70 Q72 90 78 102" stroke="#E8C99A" stroke-width="7" stroke-linecap="round" fill="none"/>
+                <!-- Arm right - holding vodka -->
+                <path d="M116 70 Q130 75 132 60" stroke="#E8C99A" stroke-width="7" stroke-linecap="round" fill="none"/>
+                <!-- Vodka bottle -->
+                <rect x="127" y="44" width="9" height="19" rx="2" fill="rgba(200,230,255,0.85)" stroke="#90B8CC" stroke-width="0.8"/>
+                <rect x="129" y="41" width="5" height="5" rx="1" fill="rgba(180,210,235,0.9)"/>
+                <text x="126" y="60" font-size="4.5" fill="#006" style="font-family:sans-serif">VOD</text>
+              </g>
+
+              <!-- Explosion / sparkle in center -->
+              <g class="flame">
+                <circle cx="70" cy="105" r="6" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+                <text x="63" y="109" font-size="9">💥</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!-- END DRINKING COMPETITION -->
+
+    </div>
+  </div>
+</div>
+
+
+<!-- DRESS CODE -->
+<div id="dresscode" style="background: #FDFBF7; padding: 5rem 1.5rem 2.5rem; border-top: 1px solid rgba(139,105,20,0.15);">
+  <div class="sec-head fi" style="max-width:900px;margin:0 auto 4rem;">
+    <div class="sec-eye"><span data-lang="en">Attire</span><span data-lang="ru">Дресс-код</span></div>
+    <h2 class="sec-title" style="color:#1a1008;"><span data-lang="en">White by the Sea</span><span data-lang="ru">Белое на берегу моря</span></h2>
+    <div class="sec-div"><div class="dl" style="background:#8B6914;"></div><div class="dm" style="background:#8B6914;"></div><div class="dr" style="background:#8B6914;"></div></div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:#8B6914;font-size:1.15rem;margin-top:1.5rem;line-height:1.7;">
+      <span data-lang="en">We invite our guests to celebrate with us in elegant all-white beach attire.</span>
+      <span data-lang="ru">Мы приглашаем гостей присоединиться к нам в элегантном белом пляжном стиле.</span>
+    </p>
+  </div>
+
+  <div style="max-width:1000px;margin:0 auto;">
+
+    <!-- Illustrations row -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-bottom:4rem;align-items:end;">
+      <!-- Woman 1 - Short dress -->
+      <div style="text-align:center;">
+        <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
+          <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
+  <!-- Hair -->
+  <ellipse cx="80" cy="28" rx="22" ry="26" fill="#f0ede8" stroke="#8B6914" stroke-width="1.2"/>
+  <path d="M58 28 Q52 50 55 70" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+  <path d="M102 28 Q108 50 105 70" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+  <path d="M62 10 Q80 2 98 10 Q105 22 102 32 Q80 26 58 32 Q55 22 62 10Z" fill="#d4c9b0" stroke="#8B6914" stroke-width="1"/>
+  <!-- Face -->
+  <ellipse cx="80" cy="45" rx="16" ry="19" fill="#f5f0e8" stroke="#8B6914" stroke-width="1"/>
+  <!-- Eyes -->
+  <path d="M72 41 Q75 38 78 41" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M82 41 Q85 38 88 41" stroke="#333" stroke-width="1.2" fill="none"/>
+  <!-- Smile -->
+  <path d="M75 50 Q80 54 85 50" stroke="#8B6914" stroke-width="1" fill="none"/>
+  <!-- Neck -->
+  <rect x="75" y="63" width="10" height="12" fill="#f5f0e8" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- Shoulders -->
+  <path d="M55 75 Q65 70 80 68 Q95 70 105 75" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+  <!-- Short white dress - strapless mini -->
+  <path d="M55 75 Q50 95 48 140 L112 140 Q110 95 105 75 Q95 70 80 68 Q65 70 55 75Z" fill="white" stroke="#8B6914" stroke-width="1.5"/>
+  <!-- Dress waist detail -->
+  <path d="M52 105 Q80 110 108 105" stroke="#8B6914" stroke-width="0.8" stroke-dasharray="2,2" fill="none"/>
+  <!-- Dress hem flare -->
+  <path d="M48 140 Q44 148 42 155 L118 155 Q116 148 112 140Z" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <!-- Legs -->
+  <line x1="68" y1="155" x2="62" y2="230" stroke="#f5f0e8" stroke-width="8" stroke-linecap="round"/>
+  <line x1="92" y1="155" x2="98" y2="230" stroke="#f5f0e8" stroke-width="8" stroke-linecap="round"/>
+  <line x1="62" y1="155" x2="56" y2="230" stroke="#e0d8cc" stroke-width="7" stroke-linecap="round"/>
+  <line x1="98" y1="155" x2="104" y2="230" stroke="#e0d8cc" stroke-width="7" stroke-linecap="round"/>
+  <!-- Heels -->
+  <path d="M52 228 Q60 234 68 228" stroke="#8B6914" stroke-width="2" fill="none"/>
+  <path d="M98 228 Q106 234 114 228" stroke="#8B6914" stroke-width="2" fill="none"/>
+  <line x1="54" y1="232" x2="54" y2="242" stroke="#8B6914" stroke-width="1.5"/>
+  <line x1="110" y1="232" x2="110" y2="242" stroke="#8B6914" stroke-width="1.5"/>
+  <!-- Arms -->
+  <path d="M55 75 Q44 100 40 125" stroke="#f5f0e8" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M105 75 Q116 100 120 125" stroke="#f5f0e8" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <!-- Label -->
+  <text x="80" y="265" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#8B6914" font-style="italic">Short Dress</text>
+</svg>
+        </div>
+        <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#8B6914;text-transform:uppercase;">
+          <span data-lang="en">Short Dress</span><span data-lang="ru">Короткое платье</span>
+        </div>
+      </div>
+      <!-- Woman 2 - Midi -->
+      <div style="text-align:center;">
+        <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
+          <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
+  <!-- Hair - loose waves -->
+  <ellipse cx="80" cy="28" rx="22" ry="26" fill="#f0ede8" stroke="#8B6914" stroke-width="1.2"/>
+  <path d="M58 28 Q48 55 52 80" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+  <path d="M102 28 Q112 55 108 80" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+  <path d="M62 10 Q80 2 98 10 Q105 22 102 32 Q80 26 58 32 Q55 22 62 10Z" fill="#d4c9b0" stroke="#8B6914" stroke-width="1"/>
+  <!-- Face -->
+  <ellipse cx="80" cy="45" rx="16" ry="19" fill="#f5f0e8" stroke="#8B6914" stroke-width="1"/>
+  <path d="M72 41 Q75 38 78 41" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M82 41 Q85 38 88 41" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M75 50 Q80 54 85 50" stroke="#8B6914" stroke-width="1" fill="none"/>
+  <!-- Neck -->
+  <rect x="75" y="63" width="10" height="12" fill="#f5f0e8" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- Midi linen dress - flowy with thin straps -->
+  <line x1="74" y1="63" x2="70" y2="75" stroke="#8B6914" stroke-width="1.2"/>
+  <line x1="86" y1="63" x2="90" y2="75" stroke="#8B6914" stroke-width="1.2"/>
+  <path d="M62 80 Q60 120 55 195 L105 195 Q100 120 98 80 Q90 74 80 73 Q70 74 62 80Z" fill="white" stroke="#8B6914" stroke-width="1.5"/>
+  <!-- Linen texture lines -->
+  <path d="M60 100 Q80 103 100 100" stroke="#8B6914" stroke-width="0.5" stroke-dasharray="3,3" fill="none"/>
+  <path d="M58 130 Q80 133 102 130" stroke="#8B6914" stroke-width="0.5" stroke-dasharray="3,3" fill="none"/>
+  <path d="M56 160 Q80 163 104 160" stroke="#8B6914" stroke-width="0.5" stroke-dasharray="3,3" fill="none"/>
+  <!-- Hem detail -->
+  <path d="M55 195 Q50 200 52 205 L108 205 Q110 200 105 195Z" fill="white" stroke="#8B6914" stroke-width="1"/>
+  <!-- Feet/sandals -->
+  <line x1="68" y1="205" x2="64" y2="238" stroke="#e8e0d0" stroke-width="7" stroke-linecap="round"/>
+  <line x1="92" y1="205" x2="96" y2="238" stroke="#e8e0d0" stroke-width="7" stroke-linecap="round"/>
+  <!-- Flat sandal straps -->
+  <path d="M58 236 Q65 232 72 236" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+  <path d="M90 236 Q97 232 104 236" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+  <!-- Arms -->
+  <path d="M62 80 Q50 110 46 140" stroke="#f5f0e8" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M98 80 Q110 110 114 140" stroke="#f5f0e8" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <!-- Label -->
+  <text x="80" y="265" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#8B6914" font-style="italic">Midi Linen</text>
+</svg>
+        </div>
+        <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#8B6914;text-transform:uppercase;">
+          <span data-lang="en">Midi Dress</span><span data-lang="ru">Миди платье</span>
+        </div>
+      </div>
+      <!-- Man 1 - Suit -->
+      <div style="text-align:center;">
+        <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
+          <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
+  <!-- Hair -->
+  <ellipse cx="80" cy="26" rx="20" ry="22" fill="#2a1a0a" stroke="#8B6914" stroke-width="1"/>
+  <path d="M63 14 Q80 8 97 14 Q104 24 100 34 Q80 30 60 34 Q56 24 63 14Z" fill="#1a0f05" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- Face -->
+  <ellipse cx="80" cy="44" rx="15" ry="18" fill="#f5f0e8" stroke="#8B6914" stroke-width="1"/>
+  <path d="M72 40 Q75 37 78 40" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M82 40 Q85 37 88 40" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M75 50 Q80 53 85 50" stroke="#8B6914" stroke-width="1" fill="none"/>
+  <!-- Neck -->
+  <rect x="74" y="61" width="12" height="14" fill="#f5f0e8" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- White linen suit jacket -->
+  <path d="M45 120 L50 75 Q60 68 80 66 Q100 68 110 75 L115 120Z" fill="white" stroke="#8B6914" stroke-width="1.5"/>
+  <!-- Lapels -->
+  <path d="M80 66 L72 90 L60 80" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <path d="M80 66 L88 90 L100 80" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <!-- Shirt underneath -->
+  <path d="M72 90 L80 66 L88 90 L84 105 L76 105Z" fill="#f8f5f0" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- Pocket square -->
+  <path d="M100 82 L107 80 L105 88" fill="#f0e8d0" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- Beige/sand pants -->
+  <path d="M45 120 L42 230 L72 230 L80 170 L88 230 L118 230 L115 120Z" fill="#F5F2EC" stroke="#8B6914" stroke-width="1.5"/>
+  <!-- Pants center crease -->
+  <line x1="80" y1="120" x2="80" y2="170" stroke="#8B6914" stroke-width="0.6" stroke-dasharray="2,2"/>
+  <!-- Shoes -->
+  <path d="M36 228 Q52 222 70 228 L72 238 L38 238Z" fill="#e8e0cc" stroke="#8B6914" stroke-width="1"/>
+  <path d="M90 228 Q108 222 124 228 L122 238 L88 238Z" fill="#d4c9a8" stroke="#8B6914" stroke-width="1"/>
+  <!-- Arms/Sleeves -->
+  <path d="M50 75 L38 140 L48 142 L58 90" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <path d="M110 75 L122 140 L112 142 L102 90" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <!-- Cuffs -->
+  <rect x="34" y="138" width="18" height="8" rx="2" fill="#f8f5f0" stroke="#8B6914" stroke-width="1"/>
+  <rect x="108" y="138" width="18" height="8" rx="2" fill="#f8f5f0" stroke="#8B6914" stroke-width="1"/>
+  <!-- Label -->
+  <text x="80" y="265" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#8B6914" font-style="italic">White Suit</text>
+</svg>
+        </div>
+        <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#8B6914;text-transform:uppercase;">
+          <span data-lang="en">Linen Suit</span><span data-lang="ru">Льняной костюм</span>
+        </div>
+      </div>
+      <!-- Man 2 - Casual -->
+      <div style="text-align:center;">
+        <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
+          <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px">
+  <!-- Hair -->
+  <ellipse cx="80" cy="26" rx="20" ry="22" fill="#2a1a0a" stroke="#8B6914" stroke-width="1"/>
+  <path d="M63 14 Q80 8 97 14 Q104 24 100 34 Q80 30 60 34 Q56 24 63 14Z" fill="#1a0f05" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- Face -->
+  <ellipse cx="80" cy="44" rx="15" ry="18" fill="#f5f0e8" stroke="#8B6914" stroke-width="1"/>
+  <path d="M72 40 Q75 37 78 40" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M82 40 Q85 37 88 40" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M75 50 Q80 53 85 50" stroke="#8B6914" stroke-width="1" fill="none"/>
+  <!-- Neck -->
+  <rect x="74" y="61" width="12" height="14" fill="#f5f0e8" stroke="#8B6914" stroke-width="0.8"/>
+  <!-- White linen shirt - open collar, relaxed -->
+  <path d="M50 155 L55 75 Q65 68 80 66 Q95 68 105 75 L110 155Z" fill="white" stroke="#8B6914" stroke-width="1.5"/>
+  <!-- Open collar -->
+  <path d="M80 66 L74 86 L66 78" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <path d="M80 66 L86 86 L94 78" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <!-- Shirt buttons -->
+  <circle cx="80" cy="100" r="1.5" fill="#8B6914"/>
+  <circle cx="80" cy="115" r="1.5" fill="#8B6914"/>
+  <circle cx="80" cy="130" r="1.5" fill="#8B6914"/>
+  <circle cx="80" cy="145" r="1.5" fill="#8B6914"/>
+  <!-- Shirt hem tucked slightly -->
+  <path d="M50 155 Q52 162 55 165 L105 165 Q108 162 110 155Z" fill="white" stroke="#8B6914" stroke-width="1"/>
+  <!-- Sand/beige chinos -->
+  <path d="M55 165 L50 235 L78 235 L80 185 L82 235 L110 235 L105 165Z" fill="#F8F5EE" stroke="#8B6914" stroke-width="1.5"/>
+  <!-- Belt -->
+  <rect x="50" y="160" width="60" height="6" rx="1" fill="#E8E4DA" stroke="#8B6914" stroke-width="0.8"/>
+  <rect x="77" y="159" width="7" height="8" rx="1" fill="#C9A884" stroke="#8B6914" stroke-width="0.5"/>
+  <!-- Loafers/boat shoes -->
+  <path d="M40 233 Q55 227 72 233 L70 242 L42 242Z" fill="#c8b89a" stroke="#8B6914" stroke-width="1"/>
+  <path d="M88 233 Q105 227 120 233 L118 242 L86 242Z" fill="#c8b89a" stroke="#8B6914" stroke-width="1"/>
+  <!-- Arms/Sleeves - rolled up -->
+  <path d="M55 75 L44 145 L56 147 L64 90" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <path d="M105 75 L116 145 L104 147 L96 90" fill="white" stroke="#8B6914" stroke-width="1.2"/>
+  <!-- Rolled cuff -->
+  <path d="M44 138 L56 140 L56 150 L44 148Z" fill="#f0ece4" stroke="#8B6914" stroke-width="1"/>
+  <path d="M104 138 L116 140 L116 150 L104 148Z" fill="#f0ece4" stroke="#8B6914" stroke-width="1"/>
+  <!-- Label -->
+  <text x="80" y="270" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#8B6914" font-style="italic">White Chinos</text>
+</svg>
+        </div>
+        <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#8B6914;text-transform:uppercase;">
+          <span data-lang="en">Shirt + Chinos</span><span data-lang="ru">Рубашка + брюки</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guidelines grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;">
+
+      <!-- Women card -->
+      <div style="background:white;border:1px solid rgba(139,105,20,0.2);padding:2.5rem;border-top:3px solid #8B6914;">
+        <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.4em;color:#8B6914;text-transform:uppercase;margin-bottom:1.2rem;">
+          <span data-lang="en">For Women</span><span data-lang="ru">Для женщин</span>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#1a1008;line-height:1.9;">
+          <div style="margin-bottom:1.2rem;">
+            <p data-lang="en">✓ &nbsp;White dresses are welcome</p>
+            <p data-lang="en">✓ &nbsp;Short or midi lengths in light fabrics</p>
+            <p data-lang="en">✓ &nbsp;Linen, cotton, chiffon, resort styles</p>
+            <p data-lang="ru">✓ &nbsp;Белые платья приветствуются</p>
+            <p data-lang="ru">✓ &nbsp;Короткие или миди из лёгких тканей</p>
+            <p data-lang="ru">✓ &nbsp;Лён, хлопок, шифон, курортные фасоны</p>
+          </div>
+          <div style="height:1px;background:rgba(139,105,20,0.15);margin:1rem 0;"></div>
+          <div style="opacity:0.65;font-size:0.95rem;">
+            <p style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:#8B6914;text-transform:uppercase;margin-bottom:0.6rem;">
+              <span data-lang="en">Please avoid</span><span data-lang="ru">Пожалуйста, избегайте</span>
+            </p>
+            <p data-lang="en">✗ &nbsp;Long gowns or bridal-style dresses</p>
+            <p data-lang="en">✗ &nbsp;Heavy lace or embellishments</p>
+            <p data-lang="en">✗ &nbsp;Dresses resembling a wedding gown</p>
+            <p data-lang="ru">✗ &nbsp;Длинных вечерних платьев</p>
+            <p data-lang="ru">✗ &nbsp;Кружева или сильных украшений</p>
+            <p data-lang="ru">✗ &nbsp;Платьев в свадебном стиле</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Men card -->
+      <div style="background:white;border:1px solid rgba(139,105,20,0.2);padding:2.5rem;border-top:3px solid #8B6914;">
+        <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.4em;color:#8B6914;text-transform:uppercase;margin-bottom:1.2rem;">
+          <span data-lang="en">For Men</span><span data-lang="ru">Для мужчин</span>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#1a1008;line-height:1.9;">
+          <p data-lang="en">✓ &nbsp;White shirts or linen suits</p>
+          <p data-lang="en">✓ &nbsp;Light beach-formal attire</p>
+          <p data-lang="en">✓ &nbsp;White pants</p>
+          <p data-lang="en">✓ &nbsp;Loafers or dress sandals</p>
+          <p data-lang="ru">✓ &nbsp;Белые рубашки или льняные костюмы</p>
+          <p data-lang="ru">✓ &nbsp;Лёгкий пляжный формальный стиль</p>
+          <p data-lang="ru">✓ &nbsp;Белые брюки</p>
+          <p data-lang="ru">✓ &nbsp;Лоферы или нарядные сандалии</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom tagline -->
+    <div style="text-align:center;margin-top:3rem;">
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.75rem;font-weight:600;color:#5A3E08;letter-spacing:0.03em;">
+        <span data-lang="en">Think effortless, elegant, and beach chic. 🌊</span>
+        <span data-lang="ru">Лёгкость, элегантность и пляжный шик. 🌊</span>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- RSVP -->
+<div id="rsvp" class="section-wrap">
+  <div class="sec-head fi">
+    <div class="sec-eye" style="font-size:0.9rem;font-weight:800;color:#C0392B;letter-spacing:0.3em;"><span data-lang="en">⏰ RSVP by May 31st, 2026</span><span data-lang="ru">⏰ Ответьте до 31 мая 2026</span></div>
+    <h2 class="sec-title">RSVP</h2>
+    <div class="sec-div"><div class="dl"></div><div class="dm"></div><div class="dr"></div></div>
+  </div>
+  <div class="rsvp-box fi">
+    <div id="rsvp-form">
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-lbl"><span data-lang="en">First Name</span><span data-lang="ru">Имя</span></label>
+          <input type="text" class="f-input" id="r-fn">
+        </div>
+        <div class="f-group">
+          <label class="f-lbl"><span data-lang="en">Last Name</span><span data-lang="ru">Фамилия</span></label>
+          <input type="text" class="f-input" id="r-ln">
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-lbl">Email</label>
+        <input type="email" class="f-input" id="r-em">
+      </div>
+      <div class="f-group">
+        <label class="f-lbl"><span data-lang="en">Attending?</span><span data-lang="ru">Вы придёте?</span></label>
+        <div class="radio-g">
+          <label class="radio-o"><input type="radio" name="att" value="yes"><span><span data-lang="en">Joyfully Accept</span><span data-lang="ru">С радостью приду</span></span></label>
+          <label class="radio-o"><input type="radio" name="att" value="no"><span><span data-lang="en">Regretfully Decline</span><span data-lang="ru">К сожалению, не смогу</span></span></label>
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-lbl"><span data-lang="en">Guests</span><span data-lang="ru">Кол-во гостей</span></label>
+        <select class="f-sel"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+      </div>
+      <div class="f-group">
+        <label class="f-lbl"><span data-lang="en">Dietary Requirements</span><span data-lang="ru">Пожелания по меню</span></label>
+        <textarea class="f-ta"></textarea>
+      </div>
+      <div class="f-group">
+        <label class="f-lbl"><span data-lang="en">Message for the Couple</span><span data-lang="ru">Сообщение для пары</span></label>
+        <textarea class="f-ta"></textarea>
+      </div>
+      <div class="f-group">
+        <label class="f-lbl"><span data-lang="en">Need airport shuttle?</span><span data-lang="ru">Нужен трансфер из аэропорта?</span></label>
+        <div class="radio-g">
+          <label class="radio-o"><input type="radio" name="shuttle" value="yes"><span><span data-lang="en">Yes please</span><span data-lang="ru">Да, прошу</span></span></label>
+          <label class="radio-o"><input type="radio" name="shuttle" value="no"><span><span data-lang="en">No thanks</span><span data-lang="ru">Нет, спасибо</span></span></label>
+        </div>
+      </div>
+      <button class="sub-btn" onclick="submitRsvp()">
+        <span data-lang="en">Send My RSVP</span><span data-lang="ru">Отправить Ответ</span>
+      </button>
+    </div>
+    <div class="rsvp-ok" id="rsvp-ok">
+      <div class="ok-icon">💌</div>
+      <p data-lang="en">Thank you! We can't wait to celebrate with you.</p>
+      <p data-lang="ru">Спасибо! Мы с нетерпением ждём встречи с вами.</p>
+    </div>
+  </div>
+</div>
+
+<!-- GIFTS -->
+<div id="gifts" class="white-bg" style="padding: 6rem 2rem;">
+  <div class="section-inner">
+    <div class="sec-head fi">
+      <div class="sec-eye"><span data-lang="en">Gift Registry</span><span data-lang="ru">Список Подарков</span></div>
+      <h2 class="sec-title"><span data-lang="en">Gifts & Wishes</span><span data-lang="ru">Подарки и Пожелания</span></h2>
+      <div class="sec-div"><div class="dl"></div><div class="dm"></div><div class="dr"></div></div>
+      <p class="sec-note"><span data-lang="en">Your presence is the greatest gift. If you wish to give something, here are a few ideas.</span><span data-lang="ru">Ваше присутствие — лучший подарок. Если хотите что-то подарить, вот несколько идей.</span></p>
+    </div>
+    <div class="gifts-g">
+      <div class="gift-c fi"><div class="gift-ico">🏡</div><div class="gift-n"><span data-lang="en">Our New Home</span><span data-lang="ru">Наш Новый Дом</span></div><div class="gift-d"><span data-lang="en">Contribute to our home fund and help us build our first nest together.</span><span data-lang="ru">Помогите нам обустроить наше первое гнёздышко.</span></div></div>
+      <div class="gift-c fi"><div class="gift-ico">✈️</div><div class="gift-n"><span data-lang="en">Honeymoon Fund</span><span data-lang="ru">Медовый Месяц</span></div><div class="gift-d"><span data-lang="en">Help us create unforgettable memories on our honeymoon adventure.</span><span data-lang="ru">Помогите создать незабываемые воспоминания в свадебном путешествии.</span></div></div>
+      <div class="gift-c fi"><div class="gift-ico">🎁</div><div class="gift-n"><span data-lang="en">Wish List</span><span data-lang="ru">Список Желаний</span></div><div class="gift-d"><span data-lang="en">Browse our curated wish list for ideas big and small.</span><span data-lang="ru">Просмотрите наш список желаний — идеи на любой вкус.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOTELS -->
+<div id="hotels" class="section-wrap">
+  <div class="sec-head fi">
+    <div class="sec-eye"><span data-lang="en">Where to Stay</span><span data-lang="ru">Где Остановиться</span></div>
+    <h2 class="sec-title"><span data-lang="en">Recommended Hotels</span><span data-lang="ru">Рекомендуемые Отели</span></h2>
+    <div class="sec-div"><div class="dl"></div><div class="dm"></div><div class="dr"></div></div>
+    <p class="sec-note"><span data-lang="en">Special rates available for our guests. Please mention the wedding when booking.</span><span data-lang="ru">Специальные тарифы для наших гостей. При бронировании укажите свадьбу.</span></p>
+  </div>
+  <div class="hotels-g">
+    <div class="hotel-c fi">
+      <div class="hotel-h"><div class="hotel-stars">★★★★★</div><div class="hotel-n">Gran Hotel México</div></div>
+      <div class="hotel-b">
+        <div class="hotel-d"><span class="hi">📍</span><span><span data-lang="en">5 min from venue · City Center</span><span data-lang="ru">5 мин от места · Центр города</span></span></div>
+        <div class="hotel-d"><span class="hi">💰</span><span><span data-lang="en">From $180 / night</span><span data-lang="ru">От $180 / ночь</span></span></div>
+        <div class="hotel-badge"><span data-lang="en">Wedding Rate</span><span data-lang="ru">Свадебный тариф</span></div>
+      </div>
+    </div>
+    <div class="hotel-c fi">
+      <div class="hotel-h"><div class="hotel-stars">★★★★</div><div class="hotel-n">Hotel Boutique Jardín</div></div>
+      <div class="hotel-b">
+        <div class="hotel-d"><span class="hi">📍</span><span><span data-lang="en">10 min · Historic District</span><span data-lang="ru">10 мин · Исторический центр</span></span></div>
+        <div class="hotel-d"><span class="hi">💰</span><span><span data-lang="en">From $120 / night</span><span data-lang="ru">От $120 / ночь</span></span></div>
+        <div class="hotel-badge"><span data-lang="en">Wedding Rate</span><span data-lang="ru">Свадебный тариф</span></div>
+      </div>
+    </div>
+    <div class="hotel-c fi">
+      <div class="hotel-h"><div class="hotel-stars">★★★</div><div class="hotel-n">Casa Bonita Suites</div></div>
+      <div class="hotel-b">
+        <div class="hotel-d"><span class="hi">📍</span><span><span data-lang="en">15 min · Quiet area</span><span data-lang="ru">15 мин · Тихий район</span></span></div>
+        <div class="hotel-d"><span class="hi">💰</span><span><span data-lang="en">From $75 / night</span><span data-lang="ru">От $75 / ночь</span></span></div>
+        <div class="hotel-badge"><span data-lang="en">Budget Friendly</span><span data-lang="ru">Бюджетный вариант</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAVEL -->
+<div id="travel" style="background:#FEFCF8; padding: 5rem 0 0;">
+
+  <!-- VENUE PHOTOS BANNER -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,200px);overflow:hidden;margin-bottom:0;">
+    <div style="overflow:hidden;position:relative;">
+      <img src="images/venue_01.jpg" alt="Muelle del Mar" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
+        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Muelle del Mar</span>
+      </div>
+    </div>
+    <div style="overflow:hidden;position:relative;">
+      <img src="images/venue_hero.jpg" alt="Playa Paraíso" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
+        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Playa Paraíso</span>
+      </div>
+    </div>
+    <div style="overflow:hidden;position:relative;">
+      <img src="images/venue_03.jpg" alt="Mar Turquesa" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
+        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Mar Turquesa</span>
+      </div>
+    </div>
+    <div style="overflow:hidden;position:relative;">
+      <img src="images/venue_02.jpg" alt="Atardecer" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
+        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Atardecer</span>
+      </div>
+    </div>
+    <div style="overflow:hidden;position:relative;">
+      <img src="images/venue_04.jpg" alt="Palmera" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
+        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Palmera</span>
+      </div>
+    </div>
+    <div style="overflow:hidden;position:relative;">
+      <img src="images/venue_05.webp" alt="Blu Venado" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
+        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">Blu Venado</span>
+      </div>
+    </div>
+    <div style="overflow:hidden;position:relative;">
+      <img src="images/venue_06.jpg" alt="La Fiesta" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.4));display:flex;align-items:flex-end;padding:1rem;">
+        <span style="color:white;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;">La Fiesta</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENUE DESCRIPTION STRIP -->
+  <div style="background:linear-gradient(135deg,#2C1E0A,#1a1205);padding:2.5rem 2rem;text-align:center;">
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:rgba(255,245,220,0.9);max-width:700px;margin:0 auto;line-height:1.7;">
+      <span data-lang="en">Nestled in the pristine Punta Venado Eco Park · Private white-sand beach · Crystal Caribbean waters · Tropical palapa · 8km south of Playa del Carmen</span>
+      <span data-lang="ru">В экопарке Пунта-Венадо · Приватный пляж с белым песком · Кристальные воды Карибского моря · Тропическая палапа · 8 км к югу от Плайя-дель-Кармен</span>
+    </p>
+  </div>
+
+  <div class="section-inner" style="padding:4rem 2rem;">
+    <div class="sec-head fi">
+      <div class="sec-eye"><span data-lang="en">Getting Here</span><span data-lang="ru">Как Добраться</span></div>
+      <h2 class="sec-title"><span data-lang="en">Travel Information</span><span data-lang="ru">Информация о Перелёте</span></h2>
+      <div class="sec-div"><div class="dl"></div><div class="dm"></div><div class="dr"></div></div>
+    </div>
+    <div class="apt-g">
+      <div class="apt-c fi">
+        <div class="apt-code">CUN</div>
+        <div class="apt-name"><span data-lang="en">Cancún International Airport</span><span data-lang="ru">Аэропорт Канкун</span></div>
+        <div class="apt-d"><strong><span data-lang="en">Distance to venue</span><span data-lang="ru">До места</span>: </strong><span data-lang="en">~1h 15min south (Blue Venado, Paa Mul)</span><span data-lang="ru">~1 ч 15 мин на юг (Blue Venado, Paa Mul)</span></div>
+        <div class="apt-d"><strong><span data-lang="en">Transport</span><span data-lang="ru">Транспорт</span>: </strong><span data-lang="en">Taxi, Uber, ADO bus to Playa del Carmen + taxi</span><span data-lang="ru">Такси, Uber, автобус ADO до Плайя + такси</span></div>
+        <div class="apt-d"><strong><span data-lang="en">From Russia</span><span data-lang="ru">Из России</span>: </strong><span data-lang="en">Via Madrid, Istanbul or NYC (~13–18h total)</span><span data-lang="ru">Через Мадрид, Стамбул или Нью-Йорк (~13–18 ч)</span></div>
+      </div>
+      <div class="apt-c fi">
+        <div class="apt-code" style="font-size:1.3rem">📍</div>
+        <div class="apt-name">Blue Venado Beach Club</div>
+        <div class="apt-d"><strong><span data-lang="en">Address</span><span data-lang="ru">Адрес</span>: </strong><span>Carretera federal KM 269, Paa Mul, Riviera Maya, Q.R.</span></div>
+        <div class="apt-d"><strong><span data-lang="en">From Playa del Carmen</span><span data-lang="ru">От Плайя-дель-Кармен</span>: </strong><span data-lang="en">~25 min south on Federal Highway</span><span data-lang="ru">~25 мин на юг по федеральной трассе</span></div>
+        <div class="apt-d"><strong><span data-lang="en">Parking</span><span data-lang="ru">Парковка</span>: </strong><span data-lang="en">Available on site · Private entrance</span><span data-lang="ru">Есть на месте · Частный въезд</span></div>
+      </div>
+    </div>
+    <div class="shuttle-box fi">
+      <div class="shuttle-title">🚗 <span data-lang="en">Complimentary Shuttle Service</span><span data-lang="ru">Бесплатный Трансфер</span></div>
+      <div class="shuttle-body"><span data-lang="en">We are arranging a complimentary shuttle from Cancún airport (CUN) on the day of the wedding to Blue Venado. Details will be sent closer to the date. Please indicate in your RSVP if you need it.</span><span data-lang="ru">Мы организуем бесплатный трансфер из аэропорта Канкун (CUN) в день свадьбы до Blue Venado. Подробности будут отправлены ближе к дате. Укажите в RSVP, если вам нужен трансфер.</span></div>
+    </div>
+
+    <!-- MAP -->
+    <div class="fi" style="margin-top:3rem;">
+      <div style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.35em;color:#5A3E08;text-transform:uppercase;font-weight:700;margin-bottom:1rem;text-align:center;">
+        <span data-lang="en">📍 Find Us</span><span data-lang="ru">📍 Как нас найти</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
+        <div style="border-radius:4px;overflow:hidden;border:2px solid rgba(139,105,20,0.25);box-shadow:0 4px 20px rgba(139,105,20,0.1);">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.0741!2d-87.17530179999999!3d20.4788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4e43042b2f4bbd%3A0x6bc6e7d7d7a19eab!2sBlue%20Venado%20Beach%20Club!5e0!3m2!1sen!2smx!4v1710000000001!5m2!1sen!2smx"
+            width="100%" height="350" style="border:0;display:block;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;min-width:200px;">
+          <a href="https://maps.google.com/?q=Blue+Venado+Beach+Club+Riviera+Maya" target="_blank"
+             style="display:block;background:#8B6914;color:#FEFCF8;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:700;padding:0.9rem 1.2rem;text-decoration:none;text-align:center;border-radius:2px;transition:background 0.2s;"
+             onmouseover="this.style.background='#5A3E08'" onmouseout="this.style.background='#8B6914'">
+            <span data-lang="en">Open in Google Maps</span><span data-lang="ru">Открыть в Google Maps</span>
+          </a>
+          <a href="https://waze.com/ul?q=Blue+Venado+Beach+Club" target="_blank"
+             style="display:block;background:white;color:#5A3E08;border:2px solid rgba(139,105,20,0.4);font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:700;padding:0.9rem 1.2rem;text-decoration:none;text-align:center;border-radius:2px;transition:all 0.2s;"
+             onmouseover="this.style.background='#F8F4EE'" onmouseout="this.style.background='white'">
+            Open in Waze
+          </a>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:#3D3020;line-height:1.6;margin-top:0.4rem;padding:0.8rem;background:#F8F4EE;border-left:3px solid #8B6914;">
+            Carretera Federal KM 269<br>Paa Mul, Riviera Maya<br>Quintana Roo, México
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-names">Miguel <span style="color:var(--gold);font-style:normal">&</span> Ekaterina</div>
+
+  <div class="ft-line"></div>
+  <div class="ft-date">Blue Venado Beach Club · Riviera Maya · November 10, 2026</div>
+  <div class="ft-love"><span data-lang="en">Made with love for the ones we love most</span><span data-lang="ru">Сделано с любовью для самых любимых</span></div>
+</footer>
+
+<script>
+
+// Language picker on password screen
+function setPwLang(lang) {
+  document.querySelectorAll('.pw-lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pw-lang-' + lang).classList.add('active');
+  setLang(lang);
+}
+
+// End intro and scroll to top
+function endIntroAndScroll() {
+  endIntro();
+  setTimeout(() => { window.scrollTo({top: 0, behavior: 'smooth'}); }, 200);
+}
+
+// PASSWORD
+const PW = "berryme2026";
+function checkPw() {
+  const v = document.getElementById('pw-input').value.trim().toLowerCase();
+  if (v === PW) {
+    const s = document.getElementById('password-screen');
+    s.classList.add('hidden');
+    setTimeout(() => {
+      s.style.display = 'none';
+      const intro = document.getElementById('cinematic-intro');
+      intro.style.display = 'block';
+      if (window.startCinematicIntro) window.startCinematicIntro();
+    }, 700);
+  } else {
+    const e = document.getElementById('pw-error');
+    e.classList.add('show');
+    setTimeout(() => e.classList.remove('show'), 2500);
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+
+// LANGUAGE
+function setLang(l) {
+  document.body.className = l === 'ru' ? 'lang-ru' : '';
+  document.querySelectorAll('.lang-btn').forEach((b,i) => b.classList.toggle('active', (l==='en'&&i===0)||(l==='ru'&&i===1)));
+}
+
+// COUNTDOWN — change date here
+const wDate = new Date('2026-11-10T16:00:00');
+document.getElementById('hero-date-txt').textContent =
+  wDate.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) + ' · Mexico';
+
+function tick() {
+  const diff = wDate - new Date();
+  if (diff <= 0) return;
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('cd-d').textContent = String(d).padStart(3,'0');
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+// SCROLL ANIMATIONS
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+// RSVP
+function submitRsvp() {
+  const fn = document.getElementById('r-fn').value.trim();
+  const em = document.getElementById('r-em').value.trim();
+  if (!fn || !em) {
+    alert(document.body.classList.contains('lang-ru')
+      ? 'Пожалуйста, заполните имя и email.'
+      : 'Please fill in your name and email.');
+    return;
+  }
+  document.getElementById('rsvp-form').style.display = 'none';
+  document.getElementById('rsvp-ok').style.display = 'block';
+}
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+
+</body>
+</html>
