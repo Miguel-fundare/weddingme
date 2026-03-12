@@ -1879,7 +1879,7 @@ window.endIntro=function(){
       <div class="map-grid" style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
         <div style="border-radius:4px;overflow:hidden;border:2px solid rgba(139,105,20,0.25);box-shadow:0 4px 20px rgba(139,105,20,0.1);">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.0741!2d-87.17530179999999!3d20.4788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4e43042b2f4bbd%3A0x6bc6e7d7d7a19eab!2sBlue%20Venado%20Beach%20Club!5e0!3m2!1sen!2smx!4v1710000000001!5m2!1sen!2smx"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3741.8234!2d-87.1953!3d20.5123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4e5c3b9d3b4a5d%3A0xa1b2c3d4e5f60001!2sBlue%20Venado%20Beach%20Club!5e0!3m2!1sen!2smx!4v1710000000002!5m2!1sen!2smx"
             width="100%" height="350" style="border:0;display:block;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
@@ -1960,9 +1960,14 @@ function checkPw() {
     s.classList.add('hidden');
     setTimeout(() => {
       s.style.display = 'none';
-      const intro = document.getElementById('cinematic-intro');
-      intro.style.display = 'block';
-      if (window.startCinematicIntro) window.startCinematicIntro();
+      // Skip cinematic intro on mobile
+      if (window.innerWidth <= 768) {
+        // mobile: skip straight to page
+      } else {
+        const intro = document.getElementById('cinematic-intro');
+        intro.style.display = 'block';
+        if (window.startCinematicIntro) window.startCinematicIntro();
+      }
     }, 700);
   } else {
     const e = document.getElementById('pw-error');
@@ -2026,5 +2031,127 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 </script>
 
+
+<style id="mobile-fixes">
+@media (max-width: 768px) {
+
+  /* ── 1. GLOBAL: prevent horizontal overflow ───────── */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  * { box-sizing: border-box; }
+  section, div, nav, footer {
+    max-width: 100vw;
+  }
+
+  /* ── 2. LANG TOGGLE: hide on mobile (inside nav area) */
+  #lang-toggle {
+    position: static !important;
+    /* keep visible but move into page flow — handled below */
+  }
+
+  /* ── 3. ITINERARY CARDS: constrain to viewport ──────── */
+  #itinerary { padding: 4rem 1rem !important; }
+  .it-cards { width: 100% !important; }
+  .it-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    padding: 1.2rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .it-card .it-time {
+    margin-bottom: 0.3rem !important;
+  }
+
+  /* ── 4. PHOTO GALLERY: taller rows + tap to expand ─── */
+  .sp-grid {
+    grid-template-columns: repeat(2,1fr) !important;
+    grid-auto-rows: 200px !important;
+    gap: 3px !important;
+  }
+  .sp-card {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+  .sp-card:first-child {
+    grid-column: span 2 !important;
+    grid-row: span 2 !important;
+  }
+  /* Show overlay always on mobile (no hover) */
+  .sp-cap {
+    max-height: 3rem !important;
+    opacity: 1 !important;
+  }
+
+  /* ── 5. DRESS CODE: vertical stack ──────────────────── */
+  .dc-illu-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .dc-guide-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* ── 6. GOOGLE MAPS: vertical stack ─────────────────── */
+  .map-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .map-grid iframe {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 250px !important;
+  }
+  .map-grid > div:last-child {
+    min-width: unset !important;
+    width: 100% !important;
+  }
+
+  /* ── 7. LANG BUTTON: embed in top-right, not floating  */
+  #lang-toggle {
+    position: fixed !important;
+    top: 0.6rem !important;
+    right: 0.6rem !important;
+    z-index: 300 !important;
+  }
+
+  /* ── Fix venue description strip overflow ─────────── */
+  #travel { overflow-x: hidden !important; }
+  .section-inner { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+  /* ── Fix photo banners on mobile ─────────────────── */
+  .photo-banner { height: 160px !important; }
+
+  /* ── Fix drinking competition card overflow ───────── */
+  #itinerary .section-inner { overflow: hidden !important; }
+}
+</style>
+
+<div id="mob-lightbox" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.95);align-items:center;justify-content:center;" onclick="this.style.display='none'">
+  <img id="mob-lb-img" src="" style="max-width:95vw;max-height:90vh;object-fit:contain;">
+</div>
+<script>
+(function(){
+  function initLightbox(){
+    if(window.innerWidth > 768) return;
+    document.querySelectorAll('.sp-card').forEach(card => {
+      card.addEventListener('click', function(){
+        const src = this.querySelector('img')?.src;
+        if(!src) return;
+        const lb = document.getElementById('mob-lightbox');
+        document.getElementById('mob-lb-img').src = src;
+        lb.style.display = 'flex';
+      });
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', initLightbox);
+  else initLightbox();
+})();
+</script>
 </body>
 </html>
