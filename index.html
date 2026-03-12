@@ -18,7 +18,7 @@
     --border: rgba(139,105,20,0.2);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'EB Garamond', serif; background: #FEFCF8; color: #2C2415; overflow-x: hidden; }
+  body { font-family: 'EB Garamond', serif; background: #FEFCF8; color: #2C2415; overflow-x: hidden; max-width: 100vw; }
 
   /* PASSWORD */
   #password-screen {
@@ -48,7 +48,7 @@
   .lang-btn.active { background: var(--gold); color: var(--dark); }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: center; padding: 1.1rem 2rem; background: rgba(254,252,248,0.97); box-shadow: 0 1px 20px rgba(139,105,20,0.08); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(139,105,20,0.15); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding: 1.1rem 2rem; background: rgba(254,252,248,0.97); box-shadow: 0 1px 20px rgba(139,105,20,0.08); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(139,105,20,0.15); }
   .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; justify-content: center; }
   .nav-links a { font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.2em; text-transform: uppercase; color: #1a1008; text-decoration: none; transition: color 0.3s; }
   .nav-links a:hover { color: var(--gold-dark); }
@@ -239,6 +239,8 @@
   position: fixed; inset: 0; z-index: 99999;
   background: #000; display: none;
   transition: opacity 2.5s ease;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
 }
 #cinematic-intro.fade-out { opacity: 0; pointer-events: none; }
 #ci-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -1461,7 +1463,7 @@ window.endIntro=function(){
   <div style="max-width:1000px;margin:0 auto;">
 
     <!-- Illustrations row -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-bottom:4rem;align-items:end;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-bottom:4rem;align-items:end;" class="dc-illu-grid">
       <!-- Woman 1 - Short dress -->
       <div style="text-align:center;">
         <div style="background:linear-gradient(to bottom,#FDFBF7,#f0ede6);border:1px solid rgba(139,105,20,0.2);border-radius:4px;padding:1.5rem 1rem 0.5rem;margin-bottom:0.8rem;">
@@ -1647,7 +1649,7 @@ window.endIntro=function(){
     </div>
 
     <!-- Guidelines grid -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;" class="dc-guide-grid">
 
       <!-- Women card -->
       <div style="background:white;border:1px solid rgba(139,105,20,0.2);padding:2.5rem;border-top:3px solid #8B6914;">
@@ -1911,7 +1913,7 @@ window.endIntro=function(){
       <div style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.35em;color:#5A3E08;text-transform:uppercase;font-weight:700;margin-bottom:1rem;text-align:center;">
         <span data-lang="en">📍 Find Us</span><span data-lang="ru">📍 Как нас найти</span>
       </div>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
+      <div class="map-grid" style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
         <div style="border-radius:4px;overflow:hidden;border:2px solid rgba(139,105,20,0.25);box-shadow:0 4px 20px rgba(139,105,20,0.1);">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.0741!2d-87.17530179999999!3d20.4788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4e43042b2f4bbd%3A0x6bc6e7d7d7a19eab!2sBlue%20Venado%20Beach%20Club!5e0!3m2!1sen!2smx!4v1710000000001!5m2!1sen!2smx"
@@ -2062,4 +2064,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 
 </body>
-</html>
+</html    <div class="sp-card" style="grid-column:span 3; grid-row:span 2;">
+      <img src="images/photo_21b.jpg" alt="" loading="lazy">
+      <div class="sp-overlay">
+        <div class="sp-loc"><span data-lang="en">Thirty Seconds to Mars, MTY</span><span data-lang="ru">Thirty Seconds to Mars, MTY</span></div>
+        <div class="sp-cap"><span data-lang="en">Best night ever 🎸</span><span data-lang="ru">Лучшая ночь в жизни 🎸</span></div>
+      </div>
+    </div>
+>
