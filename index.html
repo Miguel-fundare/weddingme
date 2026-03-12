@@ -2267,7 +2267,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 
 
-<style id="mobile-fixes">
+
+/* Desktop: hide mobile-only attire section */
+.dc-mobile-section { display: none; }
+
 @media (max-width: 768px) {
 
   /* ── 1. GLOBAL: prevent horizontal overflow ───────── */
@@ -2375,6 +2378,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   /* ── Attire desktop grids hidden on mobile, mobile version shown ── */
   .dc-illu-grid, .dc-guide-grid { display: none !important; }
   .dc-mobile-section { display: block !important; }
+  .dc-illu-grid, .dc-guide-grid { display: none !important; }
   .dc-mob-illu-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
