@@ -68,24 +68,24 @@
   .hero-corner.tl { top: 5rem; left: 2rem; }
   .hero-corner.tr { top: 5rem; right: 2rem; transform: scaleX(-1); }
   .hero-content { position: relative; z-index: 1; }
-  .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; animation: fadeUp 1s ease 0.2s both; }
-  .hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9rem); font-weight: 300; color: var(--dark); line-height: 1; animation: fadeUp 1s ease 0.4s both; }
-  .hero-names .amp { font-style: italic; color: var(--gold); }
-  .hero-names .surname { display: block; font-size: 0.33em; letter-spacing: 0.45em; font-style: normal; color: var(--gray); margin-top: 0.6rem; font-family: 'Cinzel', serif; font-weight: 400; }
+  .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.4em; color: #F5DFA0; text-transform: uppercase; margin-bottom: 1.5rem; animation: fadeUp 1s ease 0.2s both; text-shadow: 0 1px 8px rgba(0,0,0,0.6); }
+  .hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9rem); font-weight: 300; color: #fff; line-height: 1; animation: fadeUp 1s ease 0.4s both; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+  .hero-names .amp { font-style: italic; color: #F5DFA0; }
+  .hero-names .surname { display: block; font-size: 0.33em; letter-spacing: 0.45em; font-style: normal; color: rgba(255,245,220,0.8); margin-top: 0.6rem; font-family: 'Cinzel', serif; font-weight: 400; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
   .hero-date-row { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin: 2rem auto; max-width: 700px; animation: fadeUp 1s ease 0.6s both; }
-  .hero-date-row .hline { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); max-width: 100px; }
-  .hero-date { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.35em; color: #5C3D08; text-transform: uppercase; font-weight: 700; }
-  .hero-loc { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; color: var(--gray); margin-bottom: 3rem; animation: fadeUp 1s ease 0.8s both; text-align: center; width: 100%; }
+  .hero-date-row .hline { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(245,223,160,0.8), transparent); max-width: 100px; }
+  .hero-date { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.35em; color: #F5DFA0; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 8px rgba(0,0,0,0.6); }
+  .hero-loc { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; color: rgba(255,245,220,0.92); margin-bottom: 3rem; animation: fadeUp 1s ease 0.8s both; text-align: center; width: 100%; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
 
   /* COUNTDOWN */
   .countdown { display: flex; gap: clamp(1.5rem,4vw,4rem); justify-content: center; align-items: center; animation: fadeUp 1s ease 1s both; margin: 2rem 0 3.5rem; }
   .cd-item { text-align: center; min-width: clamp(70px,10vw,110px); }
-  .cd-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem,8vw,6rem); font-weight: 300; color: var(--dark); line-height: 1; }
-  .cd-lbl { font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.3em; color: #7A5C10; text-transform: uppercase; margin-top: 0.5rem; font-weight: 600; }
+  .cd-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem,8vw,6rem); font-weight: 300; color: #fff; line-height: 1; text-shadow: 0 2px 15px rgba(0,0,0,0.6); }
+  .cd-lbl { font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.3em; color: #F5DFA0; text-transform: uppercase; margin-top: 0.5rem; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,0.6); }
   .cd-sep { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); align-self: flex-start; padding-top: 0.4rem; font-style: italic; }
-  .scroll-hint { animation: fadeUp 1s ease 1.2s both; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: #7A5C10; opacity: 0.7; }
+  .scroll-hint { animation: fadeUp 1s ease 1.2s both; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: rgba(255,245,220,0.8); opacity: 0.85; }
   .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); animation: pulse 2s ease-in-out infinite; }
-  .scroll-lbl { font-family: 'Cinzel', serif; font-size: 0.48rem; letter-spacing: 0.4em; text-transform: uppercase; }
+  .scroll-lbl { font-family: 'Cinzel', serif; font-size: 0.48rem; letter-spacing: 0.4em; text-transform: uppercase; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
 
   /* SECTIONS */
   .section-wrap { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
@@ -210,6 +210,25 @@
     .countdown { gap: 1rem; }
     .cd-num { font-size: 2rem; }
     .rsvp-box { padding: 2rem 1.2rem; }
+  }
+
+  /* Photo scroll banners */
+  .photo-banner { overflow: hidden; width: 100%; height: 260px; position: relative; }
+  .photo-banner-track {
+    display: flex; height: 100%;
+    animation: bannerScroll 35s linear infinite;
+    width: max-content;
+  }
+  .photo-banner-track:hover { animation-play-state: paused; }
+  .photo-banner-track img {
+    height: 100%; width: auto; object-fit: cover;
+    flex-shrink: 0; margin-right: 6px;
+    transition: transform 0.4s; cursor: pointer;
+  }
+  .photo-banner-track img:hover { transform: scale(1.04); }
+  @keyframes bannerScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 </style>
 
@@ -737,7 +756,7 @@ window.endIntro=function(){
              will-change:transform;"
       alt="venue">
   </div>
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(254,252,248,0.10) 0%,rgba(254,252,248,0.45) 60%,rgba(254,252,248,0.90) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.45) 100%);pointer-events:none;"></div>
 <style>
 @keyframes kenBurns {
   0%   { transform: scale(1.0) translate(0%, 0%); }
@@ -1190,6 +1209,32 @@ window.endIntro=function(){
   };
 })();
 </script>
+
+<!-- PHOTO BANNER 1 -->
+<div class="photo-banner" style="background:#F8F4EE;padding:2px 0;">
+  <div class="photo-banner-track">
+    <img src="images/photo_01.jpg" alt="" loading="lazy">
+    <img src="images/photo_02.jpg" alt="" loading="lazy">
+    <img src="images/photo_03.jpg" alt="" loading="lazy">
+    <img src="images/photo_04.jpg" alt="" loading="lazy">
+    <img src="images/photo_05.jpg" alt="" loading="lazy">
+    <img src="images/photo_06.jpg" alt="" loading="lazy">
+    <img src="images/photo_07.jpg" alt="" loading="lazy">
+    <img src="images/photo_08.jpg" alt="" loading="lazy">
+    <img src="images/photo_09.jpg" alt="" loading="lazy">
+    <img src="images/photo_10.jpg" alt="" loading="lazy">
+    <img src="images/photo_01.jpg" alt="" loading="lazy">
+    <img src="images/photo_02.jpg" alt="" loading="lazy">
+    <img src="images/photo_03.jpg" alt="" loading="lazy">
+    <img src="images/photo_04.jpg" alt="" loading="lazy">
+    <img src="images/photo_05.jpg" alt="" loading="lazy">
+    <img src="images/photo_06.jpg" alt="" loading="lazy">
+    <img src="images/photo_07.jpg" alt="" loading="lazy">
+    <img src="images/photo_08.jpg" alt="" loading="lazy">
+    <img src="images/photo_09.jpg" alt="" loading="lazy">
+    <img src="images/photo_10.jpg" alt="" loading="lazy">
+  </div>
+</div>
 
 <!-- ITINERARY -->
 <div id="itinerary" class="white-bg" style="padding: 6rem 2rem;">
@@ -1897,6 +1942,46 @@ window.endIntro=function(){
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- PHOTO BANNER 2 -->
+<div class="photo-banner" style="background:#1A1205;padding:2px 0;">
+  <div class="photo-banner-track" style="animation-direction:reverse;">
+    <img src="images/photo_11.jpg" alt="" loading="lazy">
+    <img src="images/photo_12.jpg" alt="" loading="lazy">
+    <img src="images/photo_13.jpg" alt="" loading="lazy">
+    <img src="images/photo_14.jpg" alt="" loading="lazy">
+    <img src="images/photo_15.jpg" alt="" loading="lazy">
+    <img src="images/photo_16.jpg" alt="" loading="lazy">
+    <img src="images/photo_17.jpg" alt="" loading="lazy">
+    <img src="images/photo_18.jpg" alt="" loading="lazy">
+    <img src="images/photo_19.jpg" alt="" loading="lazy">
+    <img src="images/photo_20.jpg" alt="" loading="lazy">
+    <img src="images/venue_sunset.jpg" alt="" loading="lazy">
+    <img src="images/venue_01.jpg" alt="" loading="lazy">
+    <img src="images/venue_02.jpg" alt="" loading="lazy">
+    <img src="images/venue_03.jpg" alt="" loading="lazy">
+    <img src="images/venue_04.jpg" alt="" loading="lazy">
+    <img src="images/venue_05.webp" alt="" loading="lazy">
+    <img src="images/venue_06.jpg" alt="" loading="lazy">
+    <img src="images/photo_11.jpg" alt="" loading="lazy">
+    <img src="images/photo_12.jpg" alt="" loading="lazy">
+    <img src="images/photo_13.jpg" alt="" loading="lazy">
+    <img src="images/photo_14.jpg" alt="" loading="lazy">
+    <img src="images/photo_15.jpg" alt="" loading="lazy">
+    <img src="images/photo_16.jpg" alt="" loading="lazy">
+    <img src="images/photo_17.jpg" alt="" loading="lazy">
+    <img src="images/photo_18.jpg" alt="" loading="lazy">
+    <img src="images/photo_19.jpg" alt="" loading="lazy">
+    <img src="images/photo_20.jpg" alt="" loading="lazy">
+    <img src="images/venue_sunset.jpg" alt="" loading="lazy">
+    <img src="images/venue_01.jpg" alt="" loading="lazy">
+    <img src="images/venue_02.jpg" alt="" loading="lazy">
+    <img src="images/venue_03.jpg" alt="" loading="lazy">
+    <img src="images/venue_04.jpg" alt="" loading="lazy">
+    <img src="images/venue_05.webp" alt="" loading="lazy">
+    <img src="images/venue_06.jpg" alt="" loading="lazy">
   </div>
 </div>
 
