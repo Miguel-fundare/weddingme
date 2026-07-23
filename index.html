@@ -223,7 +223,7 @@
   /* ANIMATIONS */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 0.2; } }
-  .fi { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fi { opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
   .fi.vis { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 640px) {
@@ -2250,17 +2250,7 @@ function checkPw() {
   if (v === PW) {
     const s = document.getElementById('password-screen');
     s.classList.add('hidden');
-    setTimeout(() => {
-      s.style.display = 'none';
-      // Skip cinematic intro on mobile
-      if (window.innerWidth <= 768) {
-        // mobile: skip straight to page
-      } else {
-        const intro = document.getElementById('cinematic-intro');
-        intro.style.display = 'block';
-        if (window.startCinematicIntro) window.startCinematicIntro();
-      }
-    }, 700);
+    setTimeout(() => { s.style.display = 'none'; }, 400);
   } else {
     const e = document.getElementById('pw-error');
     e.classList.add('show');
@@ -2367,8 +2357,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 </script>
 
-
-
+<style>
 /* Desktop: hide mobile-only attire section */
 .dc-mobile-section { display: none; }
 
