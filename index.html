@@ -188,6 +188,18 @@
   .rs-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-dark); text-align: center; margin-bottom: 0.9rem; }
   .rs-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 0.6rem; }
   .rs-i { font-size: 0.78rem; color: var(--gray); border: 1px solid var(--border); padding: 0.35rem 0.75rem; border-radius: 999px; background: rgba(201,168,76,0.04); white-space: nowrap; }
+  .bank-box { max-width: 480px; margin: 2.2rem auto 0; border: 1px solid var(--border); background: var(--white); padding: 1.6rem 1.5rem; position: relative; }
+  .bank-box::before { content: ''; position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .bank-box::after { content: ''; position: absolute; bottom: 8px; right: 8px; width: 22px; height: 22px; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+  .bank-t { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-dark); text-align: center; margin-bottom: 1.1rem; }
+  .bank-row { display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; padding: 0.55rem 0; border-bottom: 1px dashed rgba(139,105,20,0.15); }
+  .bank-row:last-child { border-bottom: none; }
+  .bank-lbl { font-size: 0.72rem; color: var(--gray); letter-spacing: 0.08em; text-transform: uppercase; flex-shrink: 0; }
+  .bank-val { font-size: 0.88rem; color: var(--dark); font-weight: 600; text-align: right; word-break: break-all; }
+  .copy-b { flex-shrink: 0; background: none; border: 1px solid var(--border); color: var(--gold-dark); font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.18em; padding: 0.35rem 0.7rem; cursor: pointer; text-transform: uppercase; transition: all 0.25s; }
+  .copy-b:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+  .gift-or { display: flex; align-items: center; gap: 1rem; max-width: 480px; margin: 2rem auto 0; color: var(--gray); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
+  .gift-or::before, .gift-or::after { content: ''; flex: 1; height: 1px; background: var(--border); }
   @media (max-width: 620px) { .hotel-facts { grid-template-columns: 1fr; } .hotel-main-b { padding: 1.6rem 1.2rem; } }
 
   /* AIRPORTS */
@@ -259,38 +271,7 @@
   }
 </style>
 
-<style>
 
-/* ── Cinematic Intro ── */
-#cinematic-intro {
-  position: fixed; inset: 0; z-index: 99999;
-  background: #000; display: none;
-  transition: opacity 2.5s ease;
-  width: 100vw; height: 100vh;
-  overflow: hidden;
-}
-#cinematic-intro.fade-out { opacity: 0; pointer-events: none; }
-#ci-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-#ci-texts { position: absolute; inset: 0; pointer-events: none; }
-.ci-t { position: absolute; opacity: 0; transition: opacity 1.4s ease; pointer-events: none; text-align: center; transform: translateX(-50%); }
-.ci-t.on { opacity: 1; }
-.ci-year { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 3.5vw, 2.5rem); letter-spacing: 0.5em; color: #fff; text-shadow: 0 0 24px rgba(201,168,76,1), 0 0 50px rgba(201,168,76,0.5), 0 2px 10px #000; }
-.ci-city { font-family: 'Cinzel', serif; font-size: clamp(0.85rem, 2vw, 1.3rem); letter-spacing: 0.3em; color: #F5DFA0; text-shadow: 0 0 16px rgba(201,168,76,0.8), 0 2px 8px #000; background: rgba(0,0,0,0.55); padding: 0.2rem 0.7rem; transition: opacity 0.7s ease; }
-#ci-austin-txt { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 3vw, 2.2rem); letter-spacing: 0.4em; color: #fff; text-align:center; white-space: nowrap; text-shadow: 0 0 35px rgba(201,168,76,1), 0 0 70px rgba(201,168,76,0.6), 0 2px 12px #000; }
-#ci-seren { left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(92vw, 640px); text-align: center; background: radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, transparent 85%); padding: 2.5rem 2rem; }
-#ci-seren .cs-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 9vw, 6rem); font-weight: 300; font-style: italic; color: #fff; letter-spacing: 0.06em; line-height: 1; margin-bottom: 1rem; text-shadow: 0 0 50px rgba(201,168,76,0.9), 0 0 100px rgba(201,168,76,0.4); }
-#ci-seren .cs-div { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #C9A84C, transparent); margin: 0 auto 1.2rem; }
-#ci-seren .cs-body { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 3vw, 1.55rem); color: rgba(255,240,200,0.95); font-style: italic; line-height: 1.75; text-shadow: 0 1px 10px #000; }
-#ci-seren .cs-prob { font-family: 'Cinzel', serif; font-size: clamp(0.6rem, 1.3vw, 0.78rem); letter-spacing: 0.35em; color: #F5DFA0; margin-top: 2rem; line-height: 2.1; text-shadow: 0 1px 8px #000; }
-#ci-finale { left: 50%; bottom: 22%; width: min(92vw, 700px); text-align: center; }
-#ci-finale .cf-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 8vw, 6rem); font-weight: 300; font-style: italic; color: #fff; line-height: 1; text-shadow: 0 0 60px rgba(201,168,76,0.8), 0 0 120px rgba(201,168,76,0.3); }
-#ci-finale .cf-amp { color: #C9A84C; font-style: normal; }
-#ci-finale .cf-date { font-family: 'Cinzel', serif; font-size: clamp(0.6rem, 1.5vw, 0.85rem); letter-spacing: 0.55em; color: rgba(232,213,163,0.9); margin-top: 0.8rem; text-transform: uppercase; text-shadow: 0 1px 8px #000; }
-#ci-finale .cf-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, #C9A84C, transparent); margin: 0.9rem auto; }
-#ci-skip { position: absolute; bottom: 1.8rem; right: 2rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(201,168,76,0.6); color: rgba(232,213,163,0.9); font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.3em; padding: 0.55rem 1.4rem; cursor: pointer; text-transform: uppercase; transition: all 0.3s; }
-#ci-skip:hover { background: rgba(201,168,76,0.25); border-color: #C9A84C; color: #fff; }
-
-</style>
 </head>
 <body>
 
@@ -326,434 +307,210 @@
   </button>
 </div>
 
-<div id="cinematic-intro" style="display:none">
-  <canvas id="ci-canvas"></canvas>
-  <div id="ci-texts">
-    <div class="ci-t ci-year" id="ci-y1979">1979</div>
-    <div class="ci-t ci-year" id="ci-y1990">1990</div>
-    <div class="ci-t ci-city" id="ci-city-lbl"></div>
-    <div class="ci-t" id="ci-austin-txt"><div>Austin</div><div style="font-size:0.7em;margin-top:0.3em;letter-spacing:0.35em;">July 2024</div></div>
-    <div class="ci-t" id="ci-seren">
-      <div class="cs-title">Serendipity</div>
-      <div class="cs-div"></div>
-      <div class="cs-body">Some people win the lottery.<br>Something even more unlikely happened.</div>
-      <div class="cs-prob">Probability of this meeting<br><span style="font-size:1.65em;letter-spacing:0.1em;color:#fff;">1 in 50,000,000</span></div>
-    </div>
-    <div class="ci-t" id="ci-finale">
-      <div class="cf-names">Miguel <span class="cf-amp">&amp;</span> Ekaterina</div>
-      <div class="cf-line"></div>
-      <div class="cf-date">Blue Venado · Riviera Maya · November 10, 2026</div>
-    </div>
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── Almas Intro — two souls meet in Austin ── */
+#almas-intro { position:fixed; inset:0; z-index:400; background:#0d0906; display:none; opacity:1; transition:opacity 1.1s ease; }
+#almas-intro.fade-out { opacity:0; pointer-events:none; }
+#almas-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+#almas-text { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; pointer-events:none; padding:0 1.5rem; }
+.al-names { font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,8vw,5.5rem); font-weight:300; color:#F5E6C8; opacity:0; letter-spacing:0.04em; text-shadow:0 0 44px rgba(201,168,76,0.6), 0 2px 18px rgba(0,0,0,0.6); transform:scale(0.96); transition:opacity 1.5s ease, transform 1.5s ease; }
+.al-sub { font-family:'Cinzel',serif; font-size:clamp(0.6rem,2vw,0.82rem); letter-spacing:0.45em; color:#C9A884; opacity:0; margin-top:1.2rem; text-transform:uppercase; transition:opacity 1.5s ease 0.4s; text-shadow:0 2px 10px #000; }
+#almas-intro.show-text .al-names { opacity:1; transform:scale(1); }
+#almas-intro.show-text .al-sub { opacity:1; }
+.al-lbl { position:absolute; font-family:'Cinzel',serif; font-size:clamp(0.55rem,1.6vw,0.78rem); letter-spacing:0.35em; color:rgba(201,168,132,0.9); opacity:0; transition:opacity 1.2s ease; text-transform:uppercase; text-shadow:0 2px 10px #000; pointer-events:none; }
+#almas-intro.show-lbls .al-lbl { opacity:1; }
+#al-lbl-atx { transition:opacity 0.9s ease; }
+#almas-skip { position:absolute; bottom:1.6rem; right:1.7rem; background:rgba(13,9,6,0.5); border:1px solid rgba(201,168,132,0.4); color:#C9A884; font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.3em; padding:0.6rem 1.2rem; cursor:pointer; text-transform:uppercase; transition:all .3s; }
+#almas-skip:hover { border-color:#C9A884; color:#F5E6C8; }
+</style>
+
+<div id="almas-intro">
+  <canvas id="almas-canvas"></canvas>
+  <div class="al-lbl" id="al-lbl-mx">México</div>
+  <div class="al-lbl" id="al-lbl-ru"><span data-lang="en">Russia</span><span data-lang="ru">Россия</span></div>
+  <div class="al-lbl" id="al-lbl-atx" style="opacity:0;">Austin</div>
+  <div id="almas-text">
+    <div class="al-names">Miguel &amp; Ekaterina</div>
+    <div class="al-sub"><span data-lang="en">Two souls · One light · 10.11.2026</span><span data-lang="ru">Две души · Один свет · 10.11.2026</span></div>
   </div>
-  <button id="ci-skip" onclick="endIntroAndScroll()"><span data-lang="en">Next ›</span><span data-lang="ru">Далее ›</span></button>
+  <button id="almas-skip" onclick="endAlmas()"><span data-lang="en">Skip ››</span><span data-lang="ru">Пропустить ››</span></button>
 </div>
 
 <script>
-(function() {
+(function(){
+var cv, ctx, W, H, DPR, raf, t0, ended = false, burstT = null;
+var stars = [], trailA = [], trailB = [], sparks = [];
 
-/* ── LAND DOTS ─────────────────────────────────────────── */
-const LAND = [
-  [71,-140],[70,-132],[68,-122],[65,-118],[62,-140],[60,-135],[58,-135],[55,-128],[50,-122],[48,-120],[45,-120],[42,-120],[38,-120],[34,-118],[32,-116],
-  [70,-100],[65,-95],[60,-90],[55,-85],[50,-85],[48,-88],[45,-93],[42,-87],[40,-80],[38,-78],[35,-80],[33,-80],[30,-84],[28,-82],
-  [70,-80],[65,-65],[60,-65],[55,-60],[52,-57],[48,-70],[45,-63],[45,-75],[43,-74],[40,-74],[37,-76],[35,-78],
-  [50,-95],[50,-100],[50,-105],[50,-110],[50,-115],[60,-110],[60,-100],[60,-95],[60,-80],[60,-75],
-  [25,-100],[22,-100],[20,-99],[18,-94],[16,-92],[15,-90],[12,-87],[10,-85],[9,-83],[8,-77],
-  [22,-80],[25,-77],[28,-82],[30,-81],[33,-79],[35,-78],[37,-76],[18,-67],[20,-72],[22,-78],[25,-80],
-  [10,-75],[8,-74],[5,-75],[2,-78],[0,-78],[-3,-80],[-5,-80],[10,-65],[8,-64],[5,-60],[2,-60],[0,-60],
-  [-5,-55],[-5,-35],[0,-50],[-2,-45],[-5,-45],[-10,-40],[-12,-38],[-5,-78],[-10,-75],[0,-75],
-  [-15,-70],[-15,-50],[-20,-40],[-20,-45],[-20,-65],[-22,-43],[-25,-65],[-25,-50],
-  [-30,-65],[-30,-52],[-32,-56],[-33,-53],[-35,-65],[-35,-55],[-38,-70],[-40,-65],[-42,-65],[-45,-68],[-50,-68],[-52,-68],[-55,-68],
-  [71,28],[70,25],[68,22],[67,16],[65,14],[63,10],[60,8],[58,8],[56,8],[54,9],[52,8],[50,8],[48,8],[47,8],
-  [60,10],[58,10],[56,12],[54,12],[56,15],[58,15],[52,12],[50,12],[48,14],[46,14],[44,12],[42,12],[40,14],[38,14],[37,14],
-  [50,20],[52,20],[54,20],[56,22],[58,25],[60,25],[62,26],[64,26],[48,18],[46,18],[44,16],[42,18],[42,22],[40,22],[38,22],[38,26],
-  [41,28],[42,28],[44,28],[46,24],[48,22],[55,10],[55,14],[55,22],[55,25],
-  [52,6],[50,4],[48,2],[46,4],[44,4],[42,2],[40,-2],[38,-6],[36,-6],[36,-2],[37,0],[37,4],[38,0],
-  [51,0],[52,1],[53,-1],[55,-3],[57,-3],[56,-4],[64,26],[66,28],[68,28],[70,28],[65,18],[67,18],[65,22],[63,22],
-  [37,10],[35,12],[32,14],[28,18],[22,18],[15,18],[10,18],[5,5],[5,0],[5,-5],[2,-10],
-  [10,2],[0,10],[0,15],[0,20],[0,25],[0,30],[0,35],[0,38],[-2,33],
-  [-5,12],[-5,15],[-10,14],[-10,20],[-10,25],[-10,30],[-10,35],[-15,12],[-15,20],[-15,30],[-15,35],[-15,38],
-  [-20,14],[-20,20],[-20,28],[-22,18],[-22,30],[-25,28],[-25,32],[-28,26],[-28,30],[-28,18],
-  [-30,20],[-30,28],[-32,26],[-34,18],[-34,22],[-34,26],
-  [15,30],[18,35],[20,38],[22,38],[25,38],[28,35],[30,32],[32,35],[35,35],[37,37],
-  [5,38],[8,38],[10,40],[12,42],[15,42],[10,44],[5,40],[2,40],
-  [38,30],[40,35],[37,35],[35,36],[33,36],[32,35],[30,32],[28,32],[22,40],[18,42],[15,44],[12,44],
-  [25,50],[28,50],[30,48],[32,48],[35,48],[38,48],[40,48],[42,48],[45,42],[48,40],[50,42],[52,44],
-  [22,60],[25,60],[28,58],[30,58],[32,52],[28,55],
-  [37,58],[40,60],[42,62],[45,60],[48,58],[50,55],[52,55],[55,55],[55,60],[58,58],[60,55],
-  [40,65],[42,68],[45,68],[48,68],[50,68],[52,68],[55,68],
-  [38,68],[40,72],[42,75],[45,75],[48,75],[50,75],[52,75],[55,75],[58,72],
-  [55,80],[58,80],[60,80],[62,78],[65,80],[68,80],[70,80],[55,90],[58,90],[60,90],[65,90],[68,88],
-  [55,100],[58,100],[60,100],[65,100],[68,100],[70,100],[55,110],[58,110],[60,110],[65,110],[70,108],
-  [55,120],[58,120],[60,122],[65,120],[68,118],[70,118],[55,128],[58,130],[60,128],[62,125],[65,130],[68,130],[70,128],
-  [48,132],[50,130],[50,135],[52,140],[55,132],[55,140],[57,142],[50,142],
-  [35,70],[32,72],[30,72],[28,78],[25,80],[22,80],[20,83],[18,84],[15,80],[12,78],[10,79],[8,77],
-  [25,85],[28,84],[30,82],[30,90],[28,92],[25,92],[22,88],[20,88],[22,92],[25,90],
-  [28,95],[30,96],[28,100],[25,102],[20,96],[18,96],[15,102],[12,103],[10,99],[8,98],
-  [25,110],[22,108],[20,106],[18,106],[15,108],[12,109],[10,107],[8,104],[5,103],[2,102],[0,104],[0,108],
-  [-14,130],[-16,130],[-18,130],[-20,130],[-25,130],[-28,130],[-30,130],[-32,128],
-  [-34,116],[-32,116],[-28,114],[-24,114],[-20,116],[-18,122],[-15,128],[-12,132],
-  [-12,136],[-14,140],[-16,145],[-18,146],[-20,148],[-22,150],[-25,150],[-28,152],
-  [-30,153],[-32,152],[-35,150],[-37,148],[-38,146],[-38,144],[-36,140],[-35,138],
-  [72,-25],[72,-40],[75,-42],[77,-55],[75,-60],[73,-55],[70,-55],[70,-25],[68,-28],[72,-28],
-];
+// geometry (fractions of viewport)
+var P_MX = [0.15, 0.74], P_RU = [0.86, 0.22], P_AX = [0.50, 0.42];
+var C_MX = [0.20, 0.34], C_RU = [0.68, 0.06]; // bezier control points
 
-/* ── MEXICO OUTLINE ──────────────────────────────────────
-   Clockwise from NW corner                               */
-const MEXICO = [
-  // US border west→east
-  [32.7,-117.1],[32.5,-114.8],[31.9,-111.0],[31.3,-108.2],[31.7,-106.4],
-  // Big Bend south
-  [30.3,-105.0],[29.7,-104.5],[29.3,-100.9],[28.7,-100.3],[27.5,-99.5],
-  [26.4,-99.1],[26.1,-97.9],[25.9,-97.5],
-  // Gulf coast south
-  [24.5,-97.6],[23.0,-97.8],[22.2,-97.9],[21.2,-97.3],[20.3,-96.7],
-  [19.5,-96.0],[19.2,-95.8],[18.8,-96.5],[18.6,-95.2],[18.5,-93.2],
-  [18.4,-91.3],[18.4,-88.3],
-  // Yucatan peninsula
-  [18.5,-87.7],[19.5,-87.5],[20.5,-87.3],[21.3,-87.2],[21.5,-86.9],
-  [21.3,-89.5],[21.0,-90.3],[20.0,-90.5],[19.8,-90.8],[18.9,-91.0],
-  [18.0,-91.2],[17.3,-91.6],
-  // Guatemala border
-  [16.1,-89.2],[15.9,-89.2],[15.9,-92.2],
-  // Pacific coast north
-  [15.2,-92.5],[14.7,-92.6],[15.7,-96.5],[16.2,-98.5],[17.0,-100.5],
-  [18.0,-102.7],[18.7,-103.9],[19.3,-104.7],[20.0,-105.2],[20.8,-105.7],
-  [21.5,-105.7],[22.5,-105.8],[23.2,-106.5],[24.0,-107.3],[24.8,-108.0],
-  // Sonora coast + jump Baja tip area
-  [27.0,-110.0],[28.0,-110.5],[29.5,-112.0],[30.5,-112.8],[30.9,-113.6],
-  [31.7,-116.1],[32.7,-117.1]
-];
-const BAJA = [
-  [32.6,-117.1],[32.4,-117.0],[31.9,-116.5],[30.8,-115.8],[29.5,-114.8],
-  [28.0,-114.3],[27.0,-113.5],[26.2,-112.9],[25.2,-112.0],[24.2,-110.8],
-  [23.1,-110.0],[22.9,-109.9],[23.5,-109.5],[24.0,-110.0],[25.0,-111.0],
-  [26.0,-111.3],[27.0,-110.7],[28.0,-110.2],[29.0,-113.5],[30.5,-113.8],
-  [31.5,-116.5],[32.6,-117.1]
-];
+var TRAVEL_START = 700, TRAVEL_END = 3300, TEXT_AT = 3700, AUTO_END = 6200;
 
-/* ── RUSSIA OUTLINE (simplified) ────────────────────────
-   Roughly W→N→E→S                                       */
-const RUSSIA = [
-  // Kola Peninsula / Murmansk coast
-  [68.9,32.5],[70.0,36.0],[70.5,42.0],[71.5,50.0],[72.0,55.0],
-  [72.5,60.0],[72.5,68.0],[72.0,73.0],[72.0,79.0],
-  // Arctic to Ural clip edge (eastern boundary at 90E)
-  [73.0,95.0],[70.5,95.0],
-  // Southern border at 90E down through Kazakhstan
-  [55.5,95.0],[52.0,88.0],[50.5,82.0],[49.5,82.5],
-  [51.0,72.0],[51.5,61.0],[51.5,55.0],[54.0,51.0],
-  [53.5,48.0],[55.0,44.5],[54.5,41.5],
-  // Western border & Black Sea
-  [55.0,37.5],[57.0,34.5],[60.0,30.5],
-  [62.0,29.5],[65.0,30.0],[68.0,32.0],[68.9,32.5]
-];
+function px(p){ return [p[0]*W, p[1]*H]; }
+function qbez(p0,c,p1,t){
+  var u=1-t;
+  return [u*u*p0[0]+2*u*t*c[0]+t*t*p1[0], u*u*p0[1]+2*u*t*c[1]+t*t*p1[1]];
+}
+function ease(t){ return t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
 
-/* ── WAYPOINTS ───────────────────────────────────────── */
-const L1 = [
-  [25.67,-100.32,  1.0,'Monterrey'],
-  [45.0,  -50.0,   2.5,''],
-  [51.75,  -1.26,  3.8,'Oxford'],
-  [51.90,   0.89,  4.8,'Colchester'],
-  [40.42,  -3.70,  5.8,'Madrid'],
-  [25.0,   60.0,   7.2,''],
-  [13.76, 100.50,  8.2,'Bangkok'],
-  [25.0,  -60.0,   9.8,''],
-  [19.43, -99.13, 10.8,'Mexico City'],
-  [35.0,  -50.0,  12.0,''],
-  [48.86,   2.35, 13.0,'Paris'],
-  [30.27, -97.74, 14.5,'Austin'],
-];
-const L2 = [
-  [56.41,  61.92,  5.5,'Kamensk-Uralsky'],
-  [55.75,  37.62,  7.8,'Moscow'],
-  [48.86,   2.35, 10.2,'Paris'],
-  [40.71, -74.01, 12.2,'New York'],
-  [30.27, -97.74, 14.5,'Austin'],
-];
-
-/* ── SETUP ───────────────────────────────────────────── */
-const cvs = document.getElementById('ci-canvas');
-const ctx = cvs.getContext('2d');
-let W, H;
 function resize(){
-  const rect = cvs.getBoundingClientRect();
-  W = cvs.width  = rect.width  || window.innerWidth  || document.documentElement.clientWidth  || 800;
-  H = cvs.height = rect.height || window.innerHeight || document.documentElement.clientHeight || 600;
-}
-window.addEventListener('resize', resize); resize();
-
-// Zoomed projection — focuses on Mexico→Europe→Russia corridor
-const PROJ_LON_MIN=-120, PROJ_LON_MAX=110, PROJ_LAT_MIN=8, PROJ_LAT_MAX=76;
-function proj(lat,lon){
-  const x=(lon-PROJ_LON_MIN)/(PROJ_LON_MAX-PROJ_LON_MIN)*W;
-  const y=(1-(lat-PROJ_LAT_MIN)/(PROJ_LAT_MAX-PROJ_LAT_MIN))*H;
-  return [x,y];
-}
-
-/* ── EASING ─────────────────────────────────────────── */
-function eio(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
-function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
-
-/* ── PATH INTERPOLATION ─────────────────────────────── */
-function getPosOnPath(path, t){
-  const start=path[0][2], end=path[path.length-1][2];
-  if(t<=start) return {lat:path[0][0],lon:path[0][1],segIdx:0};
-  if(t>=end)   return {lat:path[path.length-1][0],lon:path[path.length-1][1],segIdx:path.length-1};
-  for(let i=0;i<path.length-1;i++){
-    const ta=path[i][2],tb=path[i+1][2];
-    if(t>=ta&&t<=tb){
-      const f=eio(clamp((t-ta)/(tb-ta),0,1));
-      let dlon=path[i+1][1]-path[i][1];
-      if(dlon>180) dlon-=360; if(dlon<-180) dlon+=360;
-      return {lat:path[i][0]+(path[i+1][0]-path[i][0])*f, lon:path[i][1]+dlon*f,
-              segIdx:i, label:i<path.length-2?path[i+1][3]:null, progress:f};
-    }
-  }
-  return {lat:path[path.length-1][0],lon:path[path.length-1][1]};
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  cv.width = W*DPR; cv.height = H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  // position labels near their points
+  var m = px(P_MX), r = px(P_RU), a = px(P_AX);
+  var lm = document.getElementById('al-lbl-mx');
+  var lr = document.getElementById('al-lbl-ru');
+  var la = document.getElementById('al-lbl-atx');
+  lm.style.left = (m[0]-20)+'px'; lm.style.top = (m[1]+16)+'px';
+  lr.style.left = (r[0]-40)+'px'; lr.style.top = (r[1]-34)+'px';
+  la.style.left = (a[0]-26)+'px'; la.style.top = (a[1]-46)+'px';
 }
 
-/* ── DRAW COUNTRY ────────────────────────────────────── */
-function drawCountry(pts, col, alpha, glowColor){
-  if(alpha<=0) return;
-  const coords = pts.map(([lat,lon])=>proj(lat,lon));
-
-  // glow shadow
-  ctx.save();
-  ctx.shadowColor = glowColor;
-  ctx.shadowBlur = 18;
-  ctx.beginPath();
-  coords.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
-  ctx.closePath();
-  ctx.strokeStyle = `rgba(${col},${alpha})`;
-  ctx.lineWidth = 3.0;
-  ctx.stroke();
-
-  // fill with very subtle tint
-  ctx.beginPath();
-  coords.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
-  ctx.closePath();
-  ctx.fillStyle = `rgba(${col},${alpha*0.07})`;
-  ctx.fill();
-  ctx.restore();
+function makeStars(){
+  stars = [];
+  var n = Math.floor(W*H/16000);
+  for(var i=0;i<n;i++) stars.push({x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.1+0.3, ph:Math.random()*6.28, sp:0.0006+Math.random()*0.001});
 }
 
-/* ── GLOW ────────────────────────────────────────────── */
-function drawGlow(x,y,r,col,alpha){
-  const g=ctx.createRadialGradient(x,y,0,x,y,r);
-  g.addColorStop(0,`rgba(${col},${alpha})`);
-  g.addColorStop(0.3,`rgba(${col},${alpha*0.55})`);
-  g.addColorStop(1,`rgba(${col},0)`);
-  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
-  ctx.fillStyle=g; ctx.fill();
+function orb(x,y,r,col){
+  var g = ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,'rgba(255,250,235,0.95)');
+  g.addColorStop(0.35,col);
+  g.addColorStop(1,'rgba(201,168,76,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(x,y,r,0,6.29); ctx.fill();
 }
 
-/* ── AMBIENT PARTICLES ───────────────────────────────── */
-const PARTS=Array.from({length:90},()=>({
-  x:Math.random(),y:Math.random(),s:0.3+Math.random()*0.9,
-  a:Math.random(),va:(Math.random()-0.5)*0.003,
-  vx:(Math.random()-0.5)*0.0002,vy:(Math.random()-0.5)*0.0001,
-}));
-
-const TRAIL_LEN=100;
-let trail1=[],trail2=[];
-let merged=false, mergeT=0;
-let startTime=null, introEnded=false, mapAlpha=0;
-let showed1979=false,showed1990=false,showedAustin=false,showedSeren=false,showedFinale=false;
-let cityLblTimer=0, lastCity='';
-let mexicoAlpha=0, russiaAlpha=0;
-
-/* ── TEXT HELPERS ─────────────────────────────────────── */
-function showEl(id){ const e=document.getElementById(id); if(e) e.classList.add('on'); }
-function hideEl(id){ const e=document.getElementById(id); if(e) e.classList.remove('on'); }
-
-/* ── MAIN LOOP ───────────────────────────────────────── */
-function animate(ts){
-  if(introEnded) return;
-  if(!startTime) startTime=ts;
-  const t=(ts-startTime)/1000;
-
+function frame(now){
+  if(ended) return;
+  if(!t0) t0 = now;
+  var t = now - t0;
   ctx.clearRect(0,0,W,H);
 
-  // Background
-  const bg=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.85);
-  bg.addColorStop(0,'#06101f'); bg.addColorStop(1,'#000408');
-  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+  // background vignette
+  var bg = ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.75);
+  bg.addColorStop(0,'#171008'); bg.addColorStop(1,'#0a0703');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
 
-  mapAlpha=clamp(t/2.2,0,0.9);
-
-  // Ambient particles
-  PARTS.forEach(p=>{
-    p.x+=p.vx; p.y+=p.vy; p.a+=p.va;
-    if(p.x<0)p.x=1; if(p.x>1)p.x=0;
-    if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-    if(p.a<0||p.a>1){p.va*=-1;} p.a=clamp(p.a,0,1);
-    ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.s,0,Math.PI*2);
-    ctx.fillStyle=`rgba(201,168,76,${p.a*0.1*mapAlpha})`; ctx.fill();
-  });
-
-  // Land dots
-  LAND.forEach(([lat,lon])=>{
-    const [x,y]=proj(lat,lon);
-    ctx.beginPath(); ctx.arc(x,y,2.0,0,Math.PI*2);
-    ctx.fillStyle=`rgba(80,130,200,${0.32*mapAlpha})`; ctx.fill();
-  });
-
-  // Grid
-  ctx.strokeStyle=`rgba(40,70,120,${0.12*mapAlpha})`; ctx.lineWidth=0.5;
-  for(let lon=-120;lon<=110;lon+=30){
-    const gx=(lon-PROJ_LON_MIN)/(PROJ_LON_MAX-PROJ_LON_MIN)*W;
-    ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke();
+  // twinkling stars
+  var fade = Math.min(1, t/900);
+  for(var i=0;i<stars.length;i++){
+    var s = stars[i];
+    ctx.globalAlpha = fade*(0.28+0.35*Math.abs(Math.sin(now*s.sp+s.ph)));
+    ctx.fillStyle = '#E8DCC0';
+    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.29); ctx.fill();
   }
-  for(let lat=10;lat<=75;lat+=15){
-    const gy=(1-(lat-PROJ_LAT_MIN)/(PROJ_LAT_MAX-PROJ_LAT_MIN))*H;
-    ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
-  }
+  ctx.globalAlpha = 1;
 
-  // ── Country outlines ──
-  mexicoAlpha = t>=0.8 ? clamp((t-0.8)/1.5,0, t<8?0.7:Math.max(0,0.7-(t-8)*0.15)) : 0;
-  russiaAlpha = t>=5.0 ? clamp((t-5.0)/1.5,0, t<12?0.65:Math.max(0,0.65-(t-12)*0.12)) : 0;
+  // origin markers
+  var m = px(P_MX), r = px(P_RU);
+  orb(m[0],m[1],7,'rgba(217,178,106,0.8)');
+  orb(r[0],r[1],7,'rgba(240,230,210,0.8)');
 
-  drawCountry(MEXICO,'180,220,255', mexicoAlpha*mapAlpha, 'rgba(100,180,255,0.6)');
-  drawCountry(BAJA,'180,220,255', mexicoAlpha*mapAlpha*0.8, 'rgba(100,180,255,0.4)');
-  drawCountry(RUSSIA,'255,200,120', russiaAlpha*mapAlpha, 'rgba(255,180,80,0.6)');
-
-  // ── Light 1 (Miguel) ──
-  const p1on=t>=L1[0][2];
-  let pos1=null;
-  if(p1on){
-    pos1=getPosOnPath(L1,t);
-    const [x1,y1]=proj(pos1.lat,pos1.lon);
-    const a1=merged?Math.max(0,1-(mergeT-0.5)*2.5):clamp((t-L1[0][2])/0.8,0,1);
-    trail1.push([x1,y1]);
-    if(trail1.length>TRAIL_LEN) trail1.shift();
-    trail1.forEach((pt,i)=>{
-      const tf=i/trail1.length;
-      ctx.beginPath(); ctx.arc(pt[0],pt[1],1.8*tf,0,Math.PI*2);
-      ctx.fillStyle=`rgba(150,210,255,${tf*0.45*a1})`; ctx.fill();
+  // traveling souls
+  var tt = Math.min(1, Math.max(0,(t-TRAVEL_START)/(TRAVEL_END-TRAVEL_START)));
+  var e = ease(tt);
+  if(t >= TRAVEL_START){
+    var pa = qbez(px(P_MX), px(C_MX), px(P_AX), e);
+    var pb = qbez(px(P_RU), px(C_RU), px(P_AX), e);
+    if(tt < 1){
+      trailA.push({x:pa[0], y:pa[1], life:1, c:'217,178,106'});
+      trailB.push({x:pb[0], y:pb[1], life:1, c:'240,230,210'});
+    }
+    // trails
+    [trailA, trailB].forEach(function(tr){
+      for(var j=tr.length-1;j>=0;j--){
+        var p = tr[j]; p.life -= 0.016;
+        if(p.life<=0){ tr.splice(j,1); continue; }
+        ctx.globalAlpha = p.life*0.55;
+        ctx.fillStyle = 'rgba('+p.c+',1)';
+        ctx.beginPath(); ctx.arc(p.x,p.y,2.4*p.life+0.4,0,6.29); ctx.fill();
+      }
     });
-    if(!merged){
-      drawGlow(x1,y1,110,'180,220,255',0.18*a1);
-      drawGlow(x1,y1,38,'200,230,255',0.5*a1);
-      drawGlow(x1,y1,10,'255,255,255',0.95*a1);
-      ctx.beginPath(); ctx.arc(x1,y1,4.5,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,255,255,${a1})`; ctx.fill();
-    }
-    // city label
-    if(pos1.label&&pos1.label!==lastCity&&(pos1.progress||0)>0.82){
-      lastCity=pos1.label; cityLblTimer=t+1.8;
-      const lbl=document.getElementById('ci-city-lbl');
-      if(lbl) lbl.textContent=pos1.label;
+    ctx.globalAlpha = 1;
+    if(tt < 1){
+      orb(pa[0],pa[1],13,'rgba(217,178,106,0.9)');
+      orb(pb[0],pb[1],13,'rgba(240,230,210,0.9)');
     }
   }
 
-  // ── Light 2 (Ekaterina) ──
-  const p2on=t>=L2[0][2];
-  let pos2=null;
-  if(p2on){
-    pos2=getPosOnPath(L2,t);
-    const [x2,y2]=proj(pos2.lat,pos2.lon);
-    const a2=merged?Math.max(0,1-(mergeT-0.5)*2.5):clamp((t-L2[0][2])/0.8,0,1);
-    trail2.push([x2,y2]);
-    if(trail2.length>TRAIL_LEN) trail2.shift();
-    trail2.forEach((pt,i)=>{
-      const tf=i/trail2.length;
-      ctx.beginPath(); ctx.arc(pt[0],pt[1],1.8*tf,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,200,100,${tf*0.45*a2})`; ctx.fill();
+  // burst at meeting
+  if(tt >= 1 && burstT === null){
+    burstT = t;
+    var ax = px(P_AX);
+    for(var k=0;k<80;k++){
+      var ang = Math.random()*6.29, v = 0.6+Math.random()*2.6;
+      sparks.push({x:ax[0], y:ax[1], vx:Math.cos(ang)*v, vy:Math.sin(ang)*v, life:1, c: k%2? '217,178,106':'240,230,210'});
+    }
+    document.getElementById('al-lbl-atx').style.opacity = '1';
+    setTimeout(function(){ var el=document.getElementById('al-lbl-atx'); if(el) el.style.opacity='0'; }, 1700);
+  }
+  if(burstT !== null){
+    var bt = t - burstT, ax2 = px(P_AX);
+    // expanding rings
+    [0, 220].forEach(function(d,ri){
+      var rt = bt - d; if(rt<0) return;
+      var rad = rt*0.42, al = Math.max(0, 0.55 - rt/1600);
+      if(al>0){
+        ctx.globalAlpha = al;
+        ctx.strokeStyle = ri? 'rgba(240,230,210,1)':'rgba(217,178,106,1)';
+        ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.arc(ax2[0],ax2[1],rad,0,6.29); ctx.stroke();
+      }
     });
-    if(!merged){
-      drawGlow(x2,y2,110,'255,210,100',0.18*a2);
-      drawGlow(x2,y2,38,'255,220,130',0.5*a2);
-      drawGlow(x2,y2,10,'255,240,200',0.95*a2);
-      ctx.beginPath(); ctx.arc(x2,y2,4.5,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,235,160,${a2})`; ctx.fill();
+    // sparks
+    for(var q=sparks.length-1;q>=0;q--){
+      var sp = sparks[q];
+      sp.x += sp.vx; sp.y += sp.vy; sp.vx*=0.985; sp.vy*=0.985; sp.life -= 0.011;
+      if(sp.life<=0){ sparks.splice(q,1); continue; }
+      ctx.globalAlpha = sp.life*0.85;
+      ctx.fillStyle = 'rgba('+sp.c+',1)';
+      ctx.beginPath(); ctx.arc(sp.x,sp.y,1.6,0,6.29); ctx.fill();
     }
+    ctx.globalAlpha = 1;
+    // soft central light that stays behind the names
+    var glowR = Math.min(Math.max(W,H)*0.55, 90 + bt*0.35);
+    var ga = bt<500 ? 0.5*(bt/500) : Math.max(0.22, 0.5 - (bt-500)/6000);
+    var gl = ctx.createRadialGradient(ax2[0],ax2[1],0,ax2[0],ax2[1],glowR);
+    gl.addColorStop(0,'rgba(245,225,180,'+ga+')');
+    gl.addColorStop(1,'rgba(245,225,180,0)');
+    ctx.fillStyle = gl;
+    ctx.beginPath(); ctx.arc(ax2[0],ax2[1],glowR,0,6.29); ctx.fill();
   }
 
-  // ── MERGE ──
-  if(t>=14.5&&!merged){ merged=true; mergeT=0; }
-  if(merged){
-    mergeT=Math.min(mergeT+0.016,6);
-    const [ax,ay]=proj(30.27,-97.74);
-    const burstR=eio(clamp(mergeT/0.7,0,1))*Math.min(W,H)*0.4;
-    const burstA=Math.max(0,1-mergeT/1.6)*0.4;
-    drawGlow(ax,ay,burstR,'201,168,76',burstA);
-    const orbA=clamp((mergeT-0.3)/0.5,0,1);
-    drawGlow(ax,ay,100,'201,168,76',0.2*orbA);
-    drawGlow(ax,ay,38,'232,213,163',0.5*orbA);
-    drawGlow(ax,ay,12,'255,255,220',0.9*orbA);
-    ctx.beginPath(); ctx.arc(ax,ay,4.5,0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,248,210,${orbA})`; ctx.fill();
-  }
-
-  // ── City label ──
-  const lbl=document.getElementById('ci-city-lbl');
-  if(lbl&&pos1){
-    if(t<cityLblTimer&&lbl.textContent){
-      const [lx,ly]=proj(pos1.lat,pos1.lon);
-      lbl.style.left=(lx/W*100)+'%'; lbl.style.top=((ly-26)/H*100)+'%';
-      lbl.classList.add('on');
-    } else { lbl.classList.remove('on'); }
-  }
-
-  // ── TEXT EVENTS ──
-  if(!showed1979&&t>=1.2){
-    showed1979=true;
-    const [mx,my]=proj(25.67,-100.32);
-    const e=document.getElementById('ci-y1979');
-    if(e){e.style.left='14%'; e.style.top='62%';}
-    showEl('ci-y1979'); setTimeout(()=>hideEl('ci-y1979'),3800);
-  }
-  if(!showed1990&&t>=5.7){
-    showed1990=true;
-    const [rx,ry]=proj(56.41,61.92);
-    const e=document.getElementById('ci-y1990');
-    if(e){e.style.left=((rx-30)/W*100)+'%'; e.style.top=((ry-55)/H*100)+'%';}
-    showEl('ci-y1990'); setTimeout(()=>hideEl('ci-y1990'),3800);
-  }
-  if(!showedAustin&&t>=14.8&&merged){
-    showedAustin=true;
-    const [ax,ay]=proj(30.27,-97.74);
-    const e=document.getElementById('ci-austin-txt');
-    if(e){e.style.left='15%'; e.style.top='60%'; e.style.transform='translateX(-50%)';}
-    showEl('ci-austin-txt');
-  }
-  if(!showedSeren&&t>=16.5){
-    showedSeren=true; showEl('ci-seren');
-  }
-  if(!showedFinale&&t>=21.5){
-    showedFinale=true;
-    hideEl('ci-seren'); hideEl('ci-austin-txt');
-    showEl('ci-finale');
-  }
-  if(t>=25) endIntro();
-  else requestAnimationFrame(animate);
+  if(t >= TEXT_AT) document.getElementById('almas-intro').classList.add('show-text');
+  if(t >= AUTO_END){ endAlmas(); return; }
+  raf = requestAnimationFrame(frame);
 }
 
-window.startCinematicIntro=function(){
-  // Use setTimeout to ensure the intro div is fully visible and laid out
-  setTimeout(function(){
-    W = cvs.width  = window.innerWidth  || document.documentElement.clientWidth  || 1280;
-    H = cvs.height = window.innerHeight || document.documentElement.clientHeight || 720;
-    startTime = null;
-    introEnded = false;
-    showed1979=false; showed1990=false; showedAustin=false;
-    showedSeren=false; showedFinale=false;
-    trail1=[]; trail2=[];
-    merged=false; mergeT=0;
-    mexicoAlpha=0; russiaAlpha=0;
-    lastCity=''; cityLblTimer=0;
-    requestAnimationFrame(animate);
-  }, 100);
-};
-window.endIntro=function(){
-  if(introEnded) return; introEnded=true;
-  const w=document.getElementById('cinematic-intro');
-  if(w){ w.classList.add('fade-out'); setTimeout(()=>{ w.style.display='none'; },2600); }
+window.startAlmas = function(){
+  cv = document.getElementById('almas-canvas');
+  ctx = cv.getContext('2d');
+  resize(); makeStars();
+  window.addEventListener('resize', resize);
+  setTimeout(function(){ document.getElementById('almas-intro').classList.add('show-lbls'); }, 350);
+  document.getElementById('almas-intro').addEventListener('click', function(ev){
+    if(ev.target.id !== 'almas-skip') endAlmas();
+  });
+  t0 = null; ended = false; burstT = null;
+  raf = requestAnimationFrame(frame);
 };
 
+window.endAlmas = function(){
+  if(ended) return; ended = true;
+  cancelAnimationFrame(raf);
+  window.removeEventListener('resize', resize);
+  var w = document.getElementById('almas-intro');
+  if(w){ w.classList.add('fade-out'); setTimeout(function(){ w.style.display='none'; }, 1100); }
+  window.scrollTo({top:0});
+};
 })();
 </script>
-<!-- ══════════════════════════════════════════════════════════ -->
 
 <!-- LANGUAGE TOGGLE -->
 <div id="lang-toggle">
@@ -1732,6 +1489,8 @@ window.endIntro=function(){
         </div>
       </div>
 
+    </div><!-- /dc-guide-grid -->
+
     <!-- MOBILE-ONLY ATTIRE LAYOUT -->
     <div class="dc-mobile-section">
 
@@ -1977,7 +1736,6 @@ window.endIntro=function(){
       </p>
     </div>
 
-  </div>
 </div>
 
 <!-- RSVP -->
@@ -2051,9 +1809,24 @@ window.endIntro=function(){
       <p class="sec-note"><span data-lang="en">Your presence is the greatest gift. If you wish to give something, here are a few ideas.</span><span data-lang="ru">Ваше присутствие — лучший подарок. Если хотите что-то подарить, вот несколько идей.</span></p>
     </div>
     <div class="gifts-g">
-      <div class="gift-c fi"><div class="gift-ico">🏡</div><div class="gift-n"><span data-lang="en">Our New Home</span><span data-lang="ru">Наш Новый Дом</span></div><div class="gift-d"><span data-lang="en">Contribute to our home fund and help us build our first nest together.</span><span data-lang="ru">Помогите нам обустроить наше первое гнёздышко.</span></div></div>
-      <div class="gift-c fi"><div class="gift-ico">✈️</div><div class="gift-n"><span data-lang="en">Honeymoon Fund</span><span data-lang="ru">Медовый Месяц</span></div><div class="gift-d"><span data-lang="en">Help us create unforgettable memories on our honeymoon adventure.</span><span data-lang="ru">Помогите создать незабываемые воспоминания в свадебном путешествии.</span></div></div>
-      <div class="gift-c fi"><div class="gift-ico">🎁</div><div class="gift-n"><span data-lang="en">Wish List</span><span data-lang="ru">Список Желаний</span></div><div class="gift-d"><span data-lang="en">Browse our curated wish list for ideas big and small.</span><span data-lang="ru">Просмотрите наш список желаний — идеи на любой вкус.</span></div></div>
+      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">🏡</div><div class="gift-n"><span data-lang="en">Our New Home</span><span data-lang="ru">Наш Новый Дом</span></div><div class="gift-d"><span data-lang="en">Contribute to our home fund and help us build our first nest together.</span><span data-lang="ru">Помогите нам обустроить наше первое гнёздышко.</span></div></a>
+      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">✈️</div><div class="gift-n"><span data-lang="en">Honeymoon Fund</span><span data-lang="ru">Медовый Месяц</span></div><div class="gift-d"><span data-lang="en">Help us create unforgettable memories on our honeymoon adventure.</span><span data-lang="ru">Помогите создать незабываемые воспоминания в свадебном путешествии.</span></div></a>
+      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">🎁</div><div class="gift-n"><span data-lang="en">Wish List</span><span data-lang="ru">Список Желаний</span></div><div class="gift-d"><span data-lang="en">Browse our curated wish list for ideas big and small.</span><span data-lang="ru">Просмотрите наш список желаний — идеи на любой вкус.</span></div></a>
+    </div>
+
+    <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="hotel-cta fi" style="display:block;max-width:420px;margin:2.2rem auto 0;">
+      <span data-lang="en">Visit Our Registry ✦</span><span data-lang="ru">Наш Список Подарков ✦</span>
+    </a>
+    <p class="hotel-cta-note fi"><span data-lang="en">Gift by card or Venmo · A direct transfer or classic envelope is always welcome too ♥</span><span data-lang="ru">Оплата картой или Venmo · Также с радостью примем перевод или конверт ♥</span></p>
+
+    <div class="gift-or fi"><span data-lang="en">or by bank transfer 🇲🇽</span><span data-lang="ru">или переводом 🇲🇽</span></div>
+
+    <div class="bank-box fi">
+      <div class="bank-t"><span data-lang="en">Direct Transfer · SPEI</span><span data-lang="ru">Прямой Перевод · SPEI</span></div>
+      <div class="bank-row"><span class="bank-lbl"><span data-lang="en">Bank</span><span data-lang="ru">Банк</span></span><span class="bank-val">BBVA México</span></div>
+      <div class="bank-row"><span class="bank-lbl"><span data-lang="en">Name</span><span data-lang="ru">Получатель</span></span><span class="bank-val" style="font-size:0.8rem;">Miguel Angel Godinez De La Rosa</span></div>
+      <div class="bank-row"><span class="bank-lbl">CLABE</span><span class="bank-val">012 580 0019 5920 1674</span><button class="copy-b" onclick="copyDato('012580001959201674', this)"><span data-lang="en">Copy</span><span data-lang="ru">Копировать</span></button></div>
+      <div class="bank-row"><span class="bank-lbl"><span data-lang="en">Debit card</span><span data-lang="ru">Карта</span></span><span class="bank-val">4152 3143 7750 5337</span><button class="copy-b" onclick="copyDato('4152314377505337', this)"><span data-lang="en">Copy</span><span data-lang="ru">Копировать</span></button></div>
     </div>
   </div>
 </div>
@@ -2237,12 +2010,6 @@ function setPwLang(lang) {
   setLang(lang);
 }
 
-// End intro and scroll to top
-function endIntroAndScroll() {
-  endIntro();
-  setTimeout(() => { window.scrollTo({top: 0, behavior: 'smooth'}); }, 200);
-}
-
 // PASSWORD
 const PW = "berryme2026";
 function checkPw() {
@@ -2250,7 +2017,14 @@ function checkPw() {
   if (v === PW) {
     const s = document.getElementById('password-screen');
     s.classList.add('hidden');
-    setTimeout(() => { s.style.display = 'none'; }, 400);
+    setTimeout(() => {
+      s.style.display = 'none';
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && window.startAlmas) {
+        document.getElementById('almas-intro').style.display = 'block';
+        window.startAlmas();
+      }
+    }, 400);
   } else {
     const e = document.getElementById('pw-error');
     e.classList.add('show');
@@ -2291,6 +2065,18 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 
 // RSVP
+// ====== COPY BANK DATA ======
+function copyDato(txt, btn) {
+  navigator.clipboard.writeText(txt).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓';
+    btn.style.borderColor = 'var(--gold)';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor = ''; }, 1600);
+  }).catch(() => {
+    prompt(document.body.classList.contains('lang-ru') ? 'Скопируйте вручную:' : 'Copy manually:', txt);
+  });
+}
+
 // ====== RSVP DATABASE ======
 // Pega aquí la URL de tu Google Apps Script (ver INSTRUCCIONES-RSVP.md)
 const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwnY0RoBKRI9LjW0zt2ZIGew4z_Hgv0odxn7o59qpcps-WQaHbAwWqe-VplZw_D8wr6Gw/exec';
