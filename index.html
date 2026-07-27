@@ -5,6 +5,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miguel & Ekaterina — Wedding</title>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-21X2CGDWZE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-21X2CGDWZE');
+</script>
 <meta name="description" content="We're getting married! Details inside ♥">
 <!-- WhatsApp / Social preview -->
 <meta property="og:title" content="Miguel & Ekaterina 💍">
@@ -341,12 +349,11 @@
 
 <script>
 (function(){
-var cv, ctx, W, H, DPR, raf, t0, ended = false, burstT = null;
+var cv, ctx, W, H, raf, t0, ended = false, burstT = null;
 var stars = [], trailA = [], trailB = [], sparks = [];
 
-// geometry (fractions of viewport)
 var P_MX = [0.15, 0.74], P_RU = [0.86, 0.22], P_AX = [0.50, 0.42];
-var C_MX = [0.20, 0.34], C_RU = [0.68, 0.06]; // bezier control points
+var C_MX = [0.20, 0.34], C_RU = [0.68, 0.06];
 
 var TRAVEL_START = 700, TRAVEL_END = 3300, TEXT_AT = 3700, AUTO_END = 6200;
 
@@ -358,11 +365,10 @@ function qbez(p0,c,p1,t){
 function ease(t){ return t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
 
 function resize(){
-  DPR = Math.min(window.devicePixelRatio||1, 2);
+  var DPR = Math.min(window.devicePixelRatio||1, 2);
   W = window.innerWidth; H = window.innerHeight;
   cv.width = W*DPR; cv.height = H*DPR;
   ctx.setTransform(DPR,0,0,DPR,0,0);
-  // position labels near their points
   var m = px(P_MX), r = px(P_RU), a = px(P_AX);
   var lm = document.getElementById('al-lbl-mx');
   var lr = document.getElementById('al-lbl-ru');
@@ -393,12 +399,10 @@ function frame(now){
   var t = now - t0;
   ctx.clearRect(0,0,W,H);
 
-  // background vignette
   var bg = ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.75);
   bg.addColorStop(0,'#171008'); bg.addColorStop(1,'#0a0703');
   ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
 
-  // twinkling stars
   var fade = Math.min(1, t/900);
   for(var i=0;i<stars.length;i++){
     var s = stars[i];
@@ -408,12 +412,10 @@ function frame(now){
   }
   ctx.globalAlpha = 1;
 
-  // origin markers
   var m = px(P_MX), r = px(P_RU);
   orb(m[0],m[1],7,'rgba(217,178,106,0.8)');
   orb(r[0],r[1],7,'rgba(240,230,210,0.8)');
 
-  // traveling souls
   var tt = Math.min(1, Math.max(0,(t-TRAVEL_START)/(TRAVEL_END-TRAVEL_START)));
   var e = ease(tt);
   if(t >= TRAVEL_START){
@@ -423,7 +425,6 @@ function frame(now){
       trailA.push({x:pa[0], y:pa[1], life:1, c:'217,178,106'});
       trailB.push({x:pb[0], y:pb[1], life:1, c:'240,230,210'});
     }
-    // trails
     [trailA, trailB].forEach(function(tr){
       for(var j=tr.length-1;j>=0;j--){
         var p = tr[j]; p.life -= 0.016;
@@ -440,7 +441,6 @@ function frame(now){
     }
   }
 
-  // burst at meeting
   if(tt >= 1 && burstT === null){
     burstT = t;
     var ax = px(P_AX);
@@ -453,7 +453,6 @@ function frame(now){
   }
   if(burstT !== null){
     var bt = t - burstT, ax2 = px(P_AX);
-    // expanding rings
     [0, 220].forEach(function(d,ri){
       var rt = bt - d; if(rt<0) return;
       var rad = rt*0.42, al = Math.max(0, 0.55 - rt/1600);
@@ -464,7 +463,6 @@ function frame(now){
         ctx.beginPath(); ctx.arc(ax2[0],ax2[1],rad,0,6.29); ctx.stroke();
       }
     });
-    // sparks
     for(var q=sparks.length-1;q>=0;q--){
       var sp = sparks[q];
       sp.x += sp.vx; sp.y += sp.vy; sp.vx*=0.985; sp.vy*=0.985; sp.life -= 0.011;
@@ -474,7 +472,6 @@ function frame(now){
       ctx.beginPath(); ctx.arc(sp.x,sp.y,1.6,0,6.29); ctx.fill();
     }
     ctx.globalAlpha = 1;
-    // soft central light that stays behind the names
     var glowR = Math.min(Math.max(W,H)*0.55, 90 + bt*0.35);
     var ga = bt<500 ? 0.5*(bt/500) : Math.max(0.22, 0.5 - (bt-500)/6000);
     var gl = ctx.createRadialGradient(ax2[0],ax2[1],0,ax2[0],ax2[1],glowR);
@@ -1825,12 +1822,12 @@ window.endAlmas = function(){
       <p class="sec-note"><span data-lang="en">Your presence is the greatest gift. If you wish to give something, here are a few ideas.</span><span data-lang="ru">Ваше присутствие — лучший подарок. Если хотите что-то подарить, вот несколько идей.</span></p>
     </div>
     <div class="gifts-g">
-      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">🏡</div><div class="gift-n"><span data-lang="en">Our New Home</span><span data-lang="ru">Наш Новый Дом</span></div><div class="gift-d"><span data-lang="en">Contribute to our home fund and help us build our first nest together.</span><span data-lang="ru">Помогите нам обустроить наше первое гнёздышко.</span></div></a>
-      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">✈️</div><div class="gift-n"><span data-lang="en">Honeymoon Fund</span><span data-lang="ru">Медовый Месяц</span></div><div class="gift-d"><span data-lang="en">Help us create unforgettable memories on our honeymoon adventure.</span><span data-lang="ru">Помогите создать незабываемые воспоминания в свадебном путешествии.</span></div></a>
-      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">🎁</div><div class="gift-n"><span data-lang="en">Wish List</span><span data-lang="ru">Список Желаний</span></div><div class="gift-d"><span data-lang="en">Browse our curated wish list for ideas big and small.</span><span data-lang="ru">Просмотрите наш список желаний — идеи на любой вкус.</span></div></a>
+      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" onclick="try{gtag('event','registry_click')}catch(e){}" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">🏡</div><div class="gift-n"><span data-lang="en">Our New Home</span><span data-lang="ru">Наш Новый Дом</span></div><div class="gift-d"><span data-lang="en">Contribute to our home fund and help us build our first nest together.</span><span data-lang="ru">Помогите нам обустроить наше первое гнёздышко.</span></div></a>
+      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" onclick="try{gtag('event','registry_click')}catch(e){}" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">✈️</div><div class="gift-n"><span data-lang="en">Honeymoon Fund</span><span data-lang="ru">Медовый Месяц</span></div><div class="gift-d"><span data-lang="en">Help us create unforgettable memories on our honeymoon adventure.</span><span data-lang="ru">Помогите создать незабываемые воспоминания в свадебном путешествии.</span></div></a>
+      <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" onclick="try{gtag('event','registry_click')}catch(e){}" class="gift-c fi" style="text-decoration:none;"><div class="gift-ico">🎁</div><div class="gift-n"><span data-lang="en">Wish List</span><span data-lang="ru">Список Желаний</span></div><div class="gift-d"><span data-lang="en">Browse our curated wish list for ideas big and small.</span><span data-lang="ru">Просмотрите наш список желаний — идеи на любой вкус.</span></div></a>
     </div>
 
-    <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" class="hotel-cta fi" style="display:block;max-width:420px;margin:2.2rem auto 0;">
+    <a href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" onclick="try{gtag('event','registry_click')}catch(e){}" class="hotel-cta fi" style="display:block;max-width:420px;margin:2.2rem auto 0;">
       <span data-lang="en">Visit Our Registry ✦</span><span data-lang="ru">Наш Список Подарков ✦</span>
     </a>
     <p class="hotel-cta-note fi"><span data-lang="en">Gift by card or Venmo · A direct transfer or classic envelope is always welcome too ♥</span><span data-lang="ru">Оплата картой или Venmo · Также с радостью примем перевод или конверт ♥</span></p>
@@ -1883,7 +1880,7 @@ window.endAlmas = function(){
           <span class="rs-i">✈️ <span data-lang="en">63 km from Cancún Airport</span><span data-lang="ru">63 км от аэропорта Канкуна</span></span>
         </div>
       </div>
-      <a href="https://share-na2.hsforms.com/1MEsFXKg_RtqrYpHZwbNxlA40exb2" target="_blank" rel="noopener" class="hotel-cta">
+      <a href="https://share-na2.hsforms.com/1MEsFXKg_RtqrYpHZwbNxlA40exb2" target="_blank" rel="noopener" class="hotel-cta" onclick="try{gtag('event','hotel_reserve_click')}catch(e){}">
         <span data-lang="en">Reserve Your Room ✦</span><span data-lang="ru">Забронировать Номер ✦</span>
       </a>
       <p class="hotel-cta-note"><span data-lang="en">Fill out the form and the hotel's coordinator will personally contact you to confirm.</span><span data-lang="ru">Заполните форму — координатор отеля лично свяжется с вами для подтверждения.</span></p>
@@ -2020,17 +2017,86 @@ window.endAlmas = function(){
 <script>
 
 // Language picker on password screen
-function setPwLang(lang) {
+function setPwLang(lang, silent) {
+  if (!silent) { try { gtag('event', 'language_selected', { language: lang }); } catch(e){} }
   document.querySelectorAll('.pw-lang-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('pw-lang-' + lang).classList.add('active');
   setLang(lang);
 }
 
 // PASSWORD
-const PW = "berryme2026";
+const GUESTS = {
+  "berryme2026": {n: "Nikolai Arhipov", l: "en"},
+  "valentina2026": {n: "Valentina", l: "en"},
+  "elena2026": {n: "Elena", l: "en"},
+  "svetlana2026": {n: "Svetlana", l: "en"},
+  "miguel2026": {n: "Miguel Angel Godínez Peréz", l: "es"},
+  "luis2026": {n: "Luis Aldo Godínez de la Rosa", l: "es"},
+  "tomas2026": {n: "Tomas Gilberto Vega", l: "es"},
+  "tatiana2026": {n: "Tatiana Petrova", l: "ru"},
+  "victoria2026": {n: "Victoria Yakovleva", l: "en"},
+  "ekaterinab2026": {n: "Ekaterina Bohman", l: "en"},
+  "ekaterinag2026": {n: "Ekaterina Gregorev", l: "en"},
+  "cesar2026": {n: "Cesar Alejandro Ramos Ureña", l: "es"},
+  "elenau2026": {n: "Elena Uraganova", l: "en"},
+  "irina2026": {n: "Irina Schevchenko", l: "en"},
+  "yana2026": {n: "Yana Bogun", l: "en"},
+  "olga2026": {n: "Olga Ovcharenko", l: "en"},
+  "enriquet2026": {n: "Enrique Treviño", l: "es"},
+  "karym2026": {n: "Karym Giacoman", l: "es"},
+  "alejandra2026": {n: "Alejandra Vega", l: "es"},
+  "rafaelm2026": {n: "Rafael Martinez", l: "es"},
+  "carlost2026": {n: "Carlos Treviño", l: "es"},
+  "ernesto2026": {n: "Ernesto Escamilla", l: "es"},
+  "hector2026": {n: "Hector Montemayor", l: "es"},
+  "alejandro2026": {n: "Alejandro Padilla", l: "es"},
+  "eugenio2026": {n: "Eugenio Paez", l: "es"},
+  "gerardoe2026": {n: "Gerardo Elizondo", l: "es"},
+  "gerardor2026": {n: "Gerardo Rubio", l: "es"},
+  "rodrigo2026": {n: "Rodrigo Rubio", l: "es"},
+  "isidro2026": {n: "Isidro Sada", l: "es"},
+  "jaime2026": {n: "Jaime Morales", l: "es"},
+  "davida2026": {n: "David Alejandro Bazua", l: "es"},
+  "rodolfo2026": {n: "Rodolfo Junco", l: "es"},
+  "gilbertot2026": {n: "Gilberto Treviño", l: "es"},
+  "gilbertoc2026": {n: "Gilberto Crombe", l: "es"},
+  "laura2026": {n: "Laura Garza", l: "es"},
+  "jesus2026": {n: "Jesus de la Garza", l: "es"},
+  "mayan2026": {n: "Mayan Tuati", l: "es"},
+  "jorge2026": {n: "Jorge Martinez", l: "es"},
+  "rafaels2026": {n: "Rafael Sierra", l: "es"},
+  "sergio2026": {n: "Sergio Cueva", l: "es"},
+  "fernando2026": {n: "Dr Fernando Davalos", l: "es"},
+  "carlosg2026": {n: "Carlos Gomez", l: "es"},
+  "enriquep2026": {n: "Enrique Perez", l: "es"},
+  "gustavo2026": {n: "Gustavo Paras", l: "es"},
+  "carlosga2026": {n: "Carlos Garcia Perales", l: "es"},
+  "joaquin2026": {n: "Joaquin Guzman", l: "es"},
+  "aureliano2026": {n: "Aureliano Rivera", l: "es"},
+  "daniel2026": {n: "Daniel Hernandez", l: "es"},
+  "davids2026": {n: "David Sosa", l: "es"},
+  "jacobo2026": {n: "Jacobo Irizar", l: "es"},
+  "esteban2026": {n: "Esteban Benavides", l: "es"},
+  "andres2026": {n: "Andres Treviño", l: "es"},
+  "keno2026": {n: "Keno Martell", l: "es"},
+  "juan2026": {n: "Juan Pablo Flores", l: "es"},
+  "patricio2026": {n: "Patricio Garza", l: "es"},
+  "davidr2026": {n: "David Romero Morfin", l: "es"},
+  "novios2026": {n: "Miguel & Ekaterina (nosotros)", l: "en"}
+};
+window.GUEST = null;
 function checkPw() {
   const v = document.getElementById('pw-input').value.trim().toLowerCase();
-  if (v === PW) {
+  const g = GUESTS[v];
+  if (g) {
+    window.GUEST = { code: v, name: g.n };
+    try {
+      gtag('set', 'user_properties', { guest_name: g.n, invite_code: v });
+      gtag('event', 'guest_login', { guest: g.n, code: v, invite_lang: g.l });
+      gtag('event', 'password_unlocked');
+    } catch(e){}
+    // Auto-select site language from the invitation (es -> en, site is EN/RU)
+    setPwLang(g.l === 'ru' ? 'ru' : 'en', true);
     const s = document.getElementById('password-screen');
     s.classList.add('hidden');
     setTimeout(() => {
@@ -2083,6 +2149,7 @@ document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 // RSVP
 // ====== COPY BANK DATA ======
 function copyDato(txt, btn) {
+  try { gtag('event', 'bank_copy'); } catch(e){}
   navigator.clipboard.writeText(txt).then(() => {
     const orig = btn.innerHTML;
     btn.innerHTML = '✓';
@@ -2119,9 +2186,12 @@ function submitRsvp() {
     message: document.getElementById('r-msg').value.trim(),
     shuttle: shuttle ? shuttle.value : '',
     lang: document.body.classList.contains('lang-ru') ? 'ru' : 'en',
+    guest: window.GUEST ? window.GUEST.name : '',
+    inviteCode: window.GUEST ? window.GUEST.code : '',
     submittedAt: new Date().toISOString()
   };
 
+  try { gtag('event', 'rsvp_submitted', { attending: payload.attending, guests: payload.guests, lang: payload.lang }); } catch(e){}
   const btn = document.querySelector('.sub-btn');
   btn.disabled = true;
   btn.style.opacity = '0.6';
