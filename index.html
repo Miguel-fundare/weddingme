@@ -193,6 +193,13 @@
   .hotel-cta { display: block; text-align: center; background: var(--dark); color: var(--gold-light); text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.4em; text-transform: uppercase; padding: 1.15rem 2rem; transition: all 0.3s; }
   .hotel-cta:hover { background: var(--gold); color: var(--dark); }
   .hotel-cta-note { text-align: center; font-size: 0.78rem; color: var(--gray); margin-top: 0.9rem; font-style: italic; }
+  .tip-box { margin-top: 1.6rem; background: rgba(201,168,76,0.05); border-left: 3px solid var(--gold); padding: 1.1rem 1.2rem; }
+  .tip-t { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 0.6rem; }
+  .tip-p { font-size: 0.84rem; color: var(--gray); line-height: 1.55; margin-bottom: 0.8rem; }
+  .tip-c { font-size: 0.82rem; color: var(--dark); line-height: 1.7; }
+  .tip-c a { color: var(--gold-dark); text-decoration: none; border-bottom: 1px solid rgba(139,105,20,0.3); }
+  .tip-c a:hover { border-color: var(--gold); }
+  .tip-note { font-size: 0.72rem; color: var(--gray); font-style: italic; margin-top: 0.5rem; }
   .resort-strip { border-top: 1px solid var(--border); padding-top: 1.3rem; margin-bottom: 1.6rem; }
   .rs-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-dark); text-align: center; margin-bottom: 0.9rem; }
   .rs-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 0.6rem; }
@@ -1884,6 +1891,17 @@ window.endAlmas = function(){
         <span data-lang="en">Reserve Your Room ✦</span><span data-lang="ru">Забронировать Номер ✦</span>
       </a>
       <p class="hotel-cta-note"><span data-lang="en">Fill out the form and the hotel's coordinator will personally contact you to confirm.</span><span data-lang="ru">Заполните форму — координатор отеля лично свяжется с вами для подтверждения.</span></p>
+
+      <div class="tip-box">
+        <div class="tip-t"><span data-lang="en">💡 Smart Booking Tip</span><span data-lang="ru">💡 Совет для Экономных</span></div>
+        <p class="tip-p"><span data-lang="en">Our room block holds the <strong>flexible, 100% refundable</strong> rate. Barceló sometimes runs <strong>prepaid online promotions</strong> at a lower price — occasionally even with free airport transfer. Feel free to book any deal you find on barcelo.com, then contact Viviana to have your reservation added to our wedding block.</span><span data-lang="ru">В нашем блоке действует <strong>гибкий тариф со 100% возвратом</strong>. Иногда на barcelo.com бывают <strong>предоплаченные акции</strong> по сниженной цене — порой даже с бесплатным трансфером из аэропорта. Смело бронируйте выгодный тариф онлайн, а затем свяжитесь с Вивианой, чтобы вашу бронь добавили в наш свадебный блок.</span></p>
+        <div class="tip-c">
+          <strong>Viviana Walrond</strong> · <span data-lang="en">Reservations Specialist, Barceló Hotel Group</span><span data-lang="ru">Специалист по бронированию, Barceló Hotel Group</span><br>
+          📞 <a href="tel:+18002272356" onclick="try{gtag('event','viviana_contact',{method:'phone'})}catch(e){}">1-800-227-2356</a> &nbsp;·&nbsp; ✉️ <a href="mailto:Viviana.walrond@barcelo.com" onclick="try{gtag('event','viviana_contact',{method:'email'})}catch(e){}">Viviana.walrond@barcelo.com</a><br>
+          🕐 <span data-lang="en">Mon–Fri, 8am–5pm EST</span><span data-lang="ru">Пн–Пт, 8:00–17:00 (EST)</span>
+        </div>
+        <div class="tip-note"><span data-lang="en">The phone line covers USA &amp; Canada — from other countries, email works best.</span><span data-lang="ru">Телефонная линия — для США и Канады. Из других стран лучше писать на почту.</span></div>
+      </div>
     </div>
   </div>
 
