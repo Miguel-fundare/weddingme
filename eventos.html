@@ -200,6 +200,7 @@ h1 {
 /* Registry, set apart so nobody misses it, and footer */
 .registry { margin-top: 36px; text-align: center; }
 .gift { margin-top: 26px; padding: 24px 20px 26px; border: 1px solid var(--gold); border-radius: 16px; background: var(--card); }
+.gift .photo { margin: 0 0 18px; border-radius: 12px; }
 .gift h2 { margin: 0 0 6px; font-size: 30px; font-weight: 500; line-height: 1.15; }
 .gift p { margin: 0 auto; max-width: 42ch; }
 .gift .how { margin-top: 8px; font-size: 16px; color: var(--muted); }
@@ -314,6 +315,7 @@ footer p { margin: 0; }
   <section class="registry" aria-labelledby="r-title">
     <div class="orn" aria-hidden="true"><i></i></div>
     <div class="gift">
+      <figure class="photo" data-photo="regalos" hidden></figure>
       <h2 id="r-title" data-i18n="reg.title">Mesa de regalos</h2>
       <p data-i18n="reg.text">Lo más importante es tenerlos ahí. Si además quieren darnos algo, nuestra mesa de regalos está en Zola.</p>
       <p class="how" data-i18n="reg.how">Es una mesa en línea: entras al link, eliges el regalo que quieras y lo pagas ahí mismo con tarjeta. Nosotros nos encargamos del resto.</p>
@@ -386,7 +388,8 @@ footer p { margin: 0; }
     barco: 'images/preboda/barco.jpg',
     xcaret: 'images/preboda/xcaret.jpg',
     cena: 'images/preboda/cena.jpg',
-    boda: 'images/preboda/boda.jpg'
+    boda: 'images/preboda/boda.jpg',
+    regalos: 'images/preboda/regalos.jpg'
   };
 
   var ORDER = ['cocobongo', 'barco', 'xcaret', 'cena'];
