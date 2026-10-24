@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pre-boda Miguel &amp; Ekaterina</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Miguel &amp; Ekaterina, pre-boda">
+<meta property="og:description" content="Los planes de los días antes de la boda. Dinos a cuáles te apuntas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Imperial+Script&amp;display=swap">
+<style>
+/* Layout: one invitation-width column (max 560px) centered on ivory. The header is set like the printed
+   invitation (monogram seal, script names), then chronological day headers introduce each selectable event
+   card; the guest's details and the registry follow in the same column. Single theme by choice: the page
+   keeps the ivory and champagne gold of the invitation suite whatever the viewer's phone is set to.
+   Three languages (es/en/ru) share the same layout; Russian swaps the script face for Cormorant italic. */
+:root {
+  --paper: #F6F1E7;
+  --card: #FCFAF4;
+  --ink: #2B241D;
+  --muted: #7A6E61;
+  --gold: #B3924F;
+  --gold-text: #86692F;
+  --on-gold: #2B241D;
+  --line: rgba(179, 146, 79, .38);
+  --wash: rgba(179, 146, 79, .11);
+  --err: #9A3A2D;
+  --font-script: 'Imperial Script', 'Snell Roundhand', 'Brush Script MT', cursive;
+  --font-serif: 'Cormorant Garamond', Cormorant, Garamond, Georgia, 'Times New Roman', serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--paper); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+a { color: var(--gold-text); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* Language switch */
+.lang {
+  display: inline-grid; grid-template-columns: repeat(3, auto);
+  border: 1px solid var(--line); border-radius: 999px; overflow: hidden;
+  margin: 0 auto 26px;
+}
+.lang button { padding: 6px 14px; border: 0; background: transparent; font-size: 15px; color: var(--muted); }
+.lang button[aria-pressed="true"] { background: var(--wash); color: var(--ink); }
+
+/* Header, set like the invitation */
+.hero { text-align: center; }
+.seal { width: 78px; height: 78px; display: block; margin: 0 auto 16px; color: var(--gold); }
+.seal text { fill: var(--ink); }
+.kicker { margin: 0; font-style: italic; font-size: 20px; color: var(--muted); }
+h1 {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(48px, 13.5vw, 76px);
+  line-height: 1.1;
+}
+.intro { margin: 16px auto 0; max-width: 44ch; font-size: 19px; }
+.hero .photo { margin: 22px 0 0; aspect-ratio: 3 / 2; border-radius: 16px; }
+
+/* Ornament */
+.orn { display: flex; align-items: center; gap: 14px; margin: 34px 0 4px; }
+.orn::before, .orn::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.orn i { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); display: block; }
+
+/* Days and events */
+.day { display: flex; align-items: center; gap: 14px; margin: 30px 0 0; }
+.day h2 { margin: 0; font-size: 22px; font-weight: 500; font-style: italic; color: var(--gold-text); white-space: nowrap; }
+.day::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.event {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 20px 18px;
+  margin-top: 14px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.event.is-on { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+.photo { margin: -6px 0 14px; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: var(--wash); }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.time { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 18px; }
+.event h3 { margin: 4px 0 0; font-size: 26px; line-height: 1.15; font-weight: 600; }
+.place { margin: 2px 0 0; color: var(--muted); font-style: italic; }
+.desc { margin: 10px 0 0; }
+
+.pick {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; margin-top: 16px; padding: 11px 16px;
+  border: 1px solid var(--gold); border-radius: 999px; background: transparent;
+  font-size: 18px; font-weight: 500;
+  transition: background .15s ease, color .15s ease;
+}
+.pick .chk {
+  width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--gold);
+  display: inline-grid; place-items: center; flex: none;
+}
+.pick .chk svg { width: 11px; height: 11px; opacity: 0; stroke: var(--gold); }
+.pick[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); }
+.pick[aria-pressed="true"] .chk { background: var(--on-gold); border-color: var(--on-gold); }
+.pick[aria-pressed="true"] .chk svg { opacity: 1; }
+.pick .on { display: none; }
+.pick[aria-pressed="true"] .on { display: inline; }
+.pick[aria-pressed="true"] .off { display: none; }
+
+/* Deposit details for the boat */
+.deposit { margin-top: 14px; padding: 14px 16px 12px; background: var(--wash); border-radius: 12px; }
+.deposit h4 { margin: 0 0 6px; font-size: 18px; font-weight: 600; }
+.row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "lbl lbl" "val btn";
+  gap: 0 10px; align-items: center;
+  padding: 8px 0; border-top: 1px solid var(--line);
+}
+.row:first-of-type { border-top: 0; }
+.row .lbl { grid-area: lbl; color: var(--muted); font-size: 15px; }
+.row .val { grid-area: val; font-variant-numeric: tabular-nums; font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+.row .copy { grid-area: btn; }
+.copy { padding: 4px 12px; border: 1px solid var(--gold); background: transparent; border-radius: 999px; font-size: 15px; }
+.copy.did { background: var(--gold); color: var(--on-gold); }
+.note { margin: 10px 0 0; font-size: 15px; color: var(--muted); font-style: italic; }
+
+/* The wedding itself, not selectable */
+.finale { text-align: center; }
+.finale .photo { margin: 14px 0 0; border-radius: 16px; }
+.finale .script { margin: 10px 0 0; font-family: var(--font-script); font-size: 54px; line-height: 1.1; }
+.finale p { margin: 4px 0 0; }
+.finale .small { font-size: 16px; color: var(--muted); }
+
+/* Guest details */
+.section { margin-top: 44px; }
+.section h2 { margin: 0 0 4px; font-size: 30px; font-weight: 500; line-height: 1.15; }
+.lead { margin: 0; color: var(--muted); }
+.field { display: grid; gap: 6px; margin-top: 18px; }
+.field > label, .field > .label { font-size: 16px; color: var(--muted); }
+.field input, .field textarea {
+  width: 100%; padding: 12px 14px; font: inherit; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: .75; }
+.field textarea { min-height: 90px; resize: vertical; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--wash); }
+.seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--gold); border-radius: 999px; overflow: hidden; }
+.seg button { padding: 11px 12px; border: 0; background: transparent; font-size: 17px; font-weight: 500; }
+.seg button[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); }
+.summary { margin: 24px 0 0; text-align: center; font-style: italic; color: var(--muted); }
+.primary {
+  display: block; width: 100%; margin-top: 12px; padding: 14px 18px;
+  border: 0; border-radius: 999px; background: var(--ink); color: var(--paper);
+  font-size: 20px; font-weight: 500;
+}
+.primary:disabled { opacity: .6; cursor: default; }
+.err { margin: 10px 0 0; color: var(--err); text-align: center; }
+.confirm-none { margin-top: 14px; padding: 14px 16px; background: var(--wash); border-radius: 12px; text-align: center; }
+.confirm-none p { margin: 0; }
+.confirm-none .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.ghost { padding: 9px 16px; border: 1px solid var(--gold); border-radius: 999px; background: transparent; font-size: 17px; }
+
+/* After sending */
+.done { margin-top: 44px; text-align: center; }
+.done .script { margin: 0; font-family: var(--font-script); font-size: clamp(48px, 13vw, 64px); line-height: 1.1; font-weight: 400; }
+.done .lead-done { margin: 6px 0 0; font-size: 19px; }
+.list { margin: 18px 0 0; text-align: left; border-top: 1px solid var(--line); }
+.list .item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.list .when { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.done .deposit { text-align: left; margin-top: 18px; }
+.link-btn {
+  background: none; border: 0; padding: 0; margin-top: 20px;
+  color: var(--gold-text); text-decoration: underline; text-underline-offset: 3px; font-size: 17px;
+}
+.demo { margin: 14px 0 0; font-size: 15px; color: var(--muted); font-style: italic; }
+
+/* Imperial Script has no Cyrillic: in Russian the script lines use Cormorant italic, like the invitations. */
+.lang-ru .finale .script, .lang-ru .done .script {
+  font-family: var(--font-serif); font-style: italic; font-weight: 500;
+  font-size: clamp(34px, 9.5vw, 46px); line-height: 1.15;
+}
+
+/* Registry, set apart so nobody misses it, and footer */
+.registry { margin-top: 36px; text-align: center; }
+.gift { margin-top: 26px; padding: 24px 20px 26px; border: 1px solid var(--gold); border-radius: 16px; background: var(--card); }
+.gift h2 { margin: 0 0 6px; font-size: 30px; font-weight: 500; line-height: 1.15; }
+.gift p { margin: 0 auto; max-width: 42ch; }
+.gift .how { margin-top: 8px; font-size: 16px; color: var(--muted); }
+.btn-gold {
+  display: inline-block; margin-top: 18px; padding: 12px 26px;
+  border-radius: 999px; background: var(--gold); color: var(--on-gold);
+  text-decoration: none; font-size: 18px; font-weight: 600;
+}
+.btn-gold:hover { filter: brightness(1.05); }
+footer { margin-top: 48px; text-align: center; color: var(--muted); font-size: 16px; }
+footer p { margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="hero">
+    <div class="lang" role="group" aria-label="Idioma / Language / Язык">
+      <button type="button" data-lang="es" aria-pressed="true">Español</button>
+      <button type="button" data-lang="en" aria-pressed="false">English</button>
+      <button type="button" data-lang="ru" aria-pressed="false">Русский</button>
+    </div>
+    <svg class="seal" viewBox="0 0 80 80" aria-hidden="true">
+      <circle cx="40" cy="40" r="38.5" fill="none" stroke="currentColor" stroke-width="1"/>
+      <circle cx="40" cy="40" r="33.5" fill="none" stroke="currentColor" stroke-width=".75"/>
+      <text x="40" y="50" text-anchor="middle" font-family="Imperial Script, cursive" font-size="30">ME</text>
+    </svg>
+    <p class="kicker" data-i18n="kicker">Los días antes de la boda</p>
+    <h1>Miguel &amp; Ekaterina</h1>
+    <p class="intro" data-i18n="intro">Vamos a estar en la Riviera Maya desde el sábado 7 de noviembre y armamos algunos planes para quien quiera acompañarnos. Marca a cuáles te apuntas y déjanos tus datos para apartarte lugar.</p>
+    <figure class="photo" data-photo="hero" hidden></figure>
+  </header>
+
+  <div class="orn" aria-hidden="true"><i></i></div>
+
+  <section aria-labelledby="d1">
+    <div class="day"><h2 id="d1" data-i18n="d1">Sábado 7 de noviembre</h2></div>
+    <article class="event" data-id="cocobongo">
+      <figure class="photo" data-photo="cocobongo" hidden></figure>
+      <span class="time" data-i18n="e1.time">10:00 PM</span>
+      <h3 data-i18n="e1.title">Coco Bongo</h3>
+      <p class="place" data-i18n="e1.place">Cancún</p>
+      <p class="desc" data-i18n="e1.desc">Show y fiesta para arrancar la semana todos juntos.</p>
+      <button class="pick" type="button" aria-pressed="false" data-id="cocobongo">
+        <span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5 5 9.5 10 3"/></svg></span>
+        <span class="off" data-i18n="pick.off">Ahí estaré</span><span class="on" data-i18n="pick.on">¡Voy!</span>
+      </button>
+    </article>
+  </section>
+
+  <section aria-labelledby="d2">
+    <div class="day"><h2 id="d2" data-i18n="d2">Domingo 8 de noviembre</h2></div>
+    <article class="event" data-id="barco">
+      <figure class="photo" data-photo="barco" hidden></figure>
+      <span class="time" data-i18n="e2.time">12:00 a 7:00 PM</span>
+      <h3 data-i18n="e2.title">Barco privado a Isla Mujeres</h3>
+      <p class="place" data-i18n="e2.place">Sale de Cancún Centro</p>
+      <p class="desc" data-i18n="e2.desc">Una tarde en el mar, solo nosotros, con comida y bebidas incluidas. Cuesta $3,000 MXN por persona y tu lugar queda apartado con el depósito.</p>
+      <div class="deposit">
+        <h4 data-i18n="dep.title">Para apartar tu lugar</h4>
+        <div class="row"><span class="lbl" data-i18n="dep.holder">Titular</span><span class="val">Miguel Ángel Godinez de la Rosa</span></div>
+        <div class="row"><span class="lbl" data-i18n="dep.bank">Banco</span><span class="val">BBVA Bancomer</span></div>
+        <div class="row"><span class="lbl" data-i18n="dep.account">Cuenta</span><span class="val">019 592 0167</span><button type="button" class="copy" data-copy="0195920167">Copiar</button></div>
+        <div class="row"><span class="lbl" data-i18n="dep.clabe">CLABE</span><span class="val">012580001959201674</span><button type="button" class="copy" data-copy="012580001959201674">Copiar</button></div>
+        <p class="note" data-i18n="dep.note">Cuando deposites, mándanos tu comprobante por WhatsApp.</p>
+      </div>
+      <button class="pick" type="button" aria-pressed="false" data-id="barco">
+        <span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5 5 9.5 10 3"/></svg></span>
+        <span class="off" data-i18n="pick.off">Ahí estaré</span><span class="on" data-i18n="pick.on">¡Voy!</span>
+      </button>
+    </article>
+  </section>
+
+  <section aria-labelledby="d3">
+    <div class="day"><h2 id="d3" data-i18n="d3">Lunes 9 de noviembre</h2></div>
+    <article class="event" data-id="xcaret">
+      <figure class="photo" data-photo="xcaret" hidden></figure>
+      <span class="time" data-i18n="e3.time">10:00 AM</span>
+      <h3 data-i18n="e3.title">Desayuno y Parque Xcaret</h3>
+      <p class="place" data-i18n="e3.place">Occidental at Xcaret Destination</p>
+      <p class="desc" data-i18n="e3.desc">Nos vemos a desayunar en el restaurante de la playa del hotel y de ahí salimos al parque a las 10:00 AM. El día en Xcaret termina a las 5:00 PM.</p>
+      <button class="pick" type="button" aria-pressed="false" data-id="xcaret">
+        <span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5 5 9.5 10 3"/></svg></span>
+        <span class="off" data-i18n="pick.off">Ahí estaré</span><span class="on" data-i18n="pick.on">¡Voy!</span>
+      </button>
+    </article>
+    <article class="event" data-id="cena">
+      <figure class="photo" data-photo="cena" hidden></figure>
+      <span class="time" data-i18n="e4.time">8:00 PM</span>
+      <h3 data-i18n="e4.title">Cena rompehielos</h3>
+      <p class="place" data-i18n="e4.place">Playa del Carmen, lugar por confirmar</p>
+      <p class="desc" data-i18n="e4.desc">Para que nos conozcamos todos antes del gran día. El lugar lo avisamos por el grupo.</p>
+      <button class="pick" type="button" aria-pressed="false" data-id="cena">
+        <span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5 5 9.5 10 3"/></svg></span>
+        <span class="off" data-i18n="pick.off">Ahí estaré</span><span class="on" data-i18n="pick.on">¡Voy!</span>
+      </button>
+    </article>
+  </section>
+
+  <section class="finale" aria-labelledby="d4">
+    <div class="day"><h2 id="d4" data-i18n="d4">Martes 10 de noviembre</h2></div>
+    <figure class="photo" data-photo="boda" hidden></figure>
+    <p class="script" data-i18n="fin.script">La boda</p>
+    <p data-i18n="fin.line">Blue Venado Beach Club, 5:00 PM. Todos de blanco.</p>
+    <p class="small"><span data-i18n="fin.q">¿Todavía no confirmas tu asistencia a la boda?</span> <a href="https://miguelandekaterina.com/rsvp.html" data-i18n="fin.link">Confirma aquí</a>.</p>
+  </section>
+
+  <section class="registry" aria-labelledby="r-title">
+    <div class="orn" aria-hidden="true"><i></i></div>
+    <div class="gift">
+      <h2 id="r-title" data-i18n="reg.title">Mesa de regalos</h2>
+      <p data-i18n="reg.text">Lo más importante es tenerlos ahí. Si además quieren darnos algo, nuestra mesa de regalos está en Zola.</p>
+      <p class="how" data-i18n="reg.how">Es una mesa en línea: entras al link, eliges el regalo que quieras y lo pagas ahí mismo con tarjeta. Nosotros nos encargamos del resto.</p>
+      <a class="btn-gold" href="https://www.zola.com/registry/miguelandekaterina" target="_blank" rel="noopener" data-i18n="reg.btn">Ver la mesa de regalos</a>
+    </div>
+  </section>
+
+  <section class="section" id="form" aria-labelledby="f-title">
+    <h2 id="f-title" data-i18n="form.title">Tus datos</h2>
+    <p class="lead" data-i18n="form.lead">Con esto apartamos lugares y te avisamos cualquier cambio.</p>
+    <form id="rsvp" novalidate>
+      <div class="field">
+        <label for="nombre" data-i18n="f.name">Tu nombre y apellido</label>
+        <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Nombre y apellido" data-i18n-ph="f.namePh" required>
+      </div>
+      <div class="field">
+        <span class="label" id="pareja-label" data-i18n="f.who">¿Con quién vas?</span>
+        <div class="seg" role="group" aria-labelledby="pareja-label">
+          <button type="button" id="solo" aria-pressed="true" data-i18n="f.solo">Voy solo/a</button>
+          <button type="button" id="conpareja" aria-pressed="false" data-i18n="f.pareja">Voy con pareja</button>
+        </div>
+      </div>
+      <p class="summary" id="summary" aria-live="polite">Todavía no marcas ningún evento.</p>
+      <div class="confirm-none" id="confirm-none" hidden>
+        <p data-i18n="none.q">No marcaste ningún evento. ¿Nos vemos directo en la boda?</p>
+        <div class="actions">
+          <button type="button" class="ghost" id="only-wedding" data-i18n="none.yes">Sí, solo a la boda</button>
+          <button type="button" class="ghost" id="back-events" data-i18n="none.back">Volver a elegir</button>
+        </div>
+      </div>
+      <button class="primary" id="send" type="submit">Confirmar</button>
+      <p class="err" id="err" hidden></p>
+    </form>
+  </section>
+
+  <section class="done" id="done" hidden aria-live="polite">
+    <p class="script" data-i18n="done.script">Gracias</p>
+    <p class="lead-done" id="done-lead"></p>
+    <div class="list" id="done-list"></div>
+    <div class="deposit" id="done-deposit" hidden>
+      <h4 data-i18n="dep.doneTitle">Aparta tu lugar en el barco</h4>
+      <div class="row"><span class="lbl" data-i18n="dep.holder">Titular</span><span class="val">Miguel Ángel Godinez de la Rosa</span></div>
+      <div class="row"><span class="lbl" data-i18n="dep.bank">Banco</span><span class="val">BBVA Bancomer</span></div>
+      <div class="row"><span class="lbl" data-i18n="dep.account">Cuenta</span><span class="val">019 592 0167</span><button type="button" class="copy" data-copy="0195920167">Copiar</button></div>
+      <div class="row"><span class="lbl" data-i18n="dep.clabe">CLABE</span><span class="val">012580001959201674</span><button type="button" class="copy" data-copy="012580001959201674">Copiar</button></div>
+      <p class="note" data-i18n="dep.doneNote">$3,000 MXN por persona. Cuando deposites, mándanos tu comprobante por WhatsApp.</p>
+    </div>
+    <button type="button" class="link-btn" id="edit" data-i18n="edit">Cambiar mi respuesta</button>
+    <p class="demo" id="demo-note" hidden data-i18n="demo">Modo de prueba: esta respuesta todavía no se guarda.</p>
+  </section>
+
+  <footer>
+    <p><span data-i18n="foot">¿Dudas? Escríbenos por el grupo de WhatsApp.</span><br><a href="https://miguelandekaterina.com">miguelandekaterina.com</a></p>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  // Pega aquí la URL de tu Apps Script (la que termina en /exec).
+  // Mientras esté vacía, la página funciona en modo de prueba y no guarda nada.
+  var ENDPOINT = '';
+
+  // Fotos: rutas relativas dentro del sitio (o un data URI). Si una está vacía, su espacio no se muestra.
+  var PHOTOS = {
+    hero: 'images/preboda/hero.jpg',
+    cocobongo: 'images/preboda/cocobongo.jpg',
+    barco: 'images/preboda/barco.jpg',
+    xcaret: 'images/preboda/xcaret.jpg',
+    cena: 'images/preboda/cena.jpg',
+    boda: 'images/preboda/boda.jpg'
+  };
+
+  var ORDER = ['cocobongo', 'barco', 'xcaret', 'cena'];
+  var SHORT = { cocobongo: 'e1.short', barco: 'e2.short', xcaret: 'e3.short', cena: 'e4.short' };
+  var TITLE = { cocobongo: 'e1.title', barco: 'e2.title', xcaret: 'e3.title', cena: 'e4.title' };
+
+  var T = {
+    es: {
+      kicker: 'Los días antes de la boda',
+      intro: 'Vamos a estar en la Riviera Maya desde el sábado 7 de noviembre y armamos algunos planes para quien quiera acompañarnos. Marca a cuáles te apuntas y déjanos tus datos para apartarte lugar.',
+      d1: 'Sábado 7 de noviembre', d2: 'Domingo 8 de noviembre', d3: 'Lunes 9 de noviembre', d4: 'Martes 10 de noviembre',
+      'e1.time': '10:00 PM', 'e1.title': 'Coco Bongo', 'e1.place': 'Cancún',
+      'e1.desc': 'Show y fiesta para arrancar la semana todos juntos.', 'e1.short': 'Sábado 7, 10:00 PM',
+      'e2.time': '12:00 a 7:00 PM', 'e2.title': 'Barco privado a Isla Mujeres', 'e2.place': 'Sale de Cancún Centro',
+      'e2.desc': 'Una tarde en el mar, solo nosotros, con comida y bebidas incluidas. Cuesta $3,000 MXN por persona y tu lugar queda apartado con el depósito.', 'e2.short': 'Domingo 8, 12:00 PM',
+      'e3.time': '10:00 AM', 'e3.title': 'Desayuno y Parque Xcaret', 'e3.place': 'Occidental at Xcaret Destination',
+      'e3.desc': 'Nos vemos a desayunar en el restaurante de la playa del hotel y de ahí salimos al parque a las 10:00 AM. El día en Xcaret termina a las 5:00 PM.', 'e3.short': 'Lunes 9, 10:00 AM',
+      'e4.time': '8:00 PM', 'e4.title': 'Cena rompehielos', 'e4.place': 'Playa del Carmen, lugar por confirmar',
+      'e4.desc': 'Para que nos conozcamos todos antes del gran día. El lugar lo avisamos por el grupo.', 'e4.short': 'Lunes 9, 8:00 PM',
+      'dep.title': 'Para apartar tu lugar', 'dep.holder': 'Titular', 'dep.bank': 'Banco', 'dep.account': 'Cuenta', 'dep.clabe': 'CLABE',
+      'dep.note': 'Cuando deposites, mándanos tu comprobante por WhatsApp.',
+      'dep.doneTitle': 'Aparta tu lugar en el barco', 'dep.doneNote': '$3,000 MXN por persona. Cuando deposites, mándanos tu comprobante por WhatsApp.',
+      copy: 'Copiar', copied: 'Copiado',
+      'pick.off': 'Ahí estaré', 'pick.on': '¡Voy!',
+      'fin.script': 'La boda', 'fin.line': 'Blue Venado Beach Club, 5:00 PM. Todos de blanco.',
+      'fin.q': '¿Todavía no confirmas tu asistencia a la boda?', 'fin.link': 'Confirma aquí',
+      'form.title': 'Tus datos', 'form.lead': 'Con esto apartamos tu lugar.',
+      'f.name': 'Tu nombre y apellido', 'f.namePh': 'Nombre y apellido',
+      'f.who': '¿Con quién vas?', 'f.solo': 'Voy solo/a', 'f.pareja': 'Voy con pareja',
+      'none.q': 'No marcaste ningún evento. ¿Nos vemos directo en la boda?', 'none.yes': 'Sí, solo a la boda', 'none.back': 'Volver a elegir',
+      send: 'Confirmar', sending: 'Enviando…',
+      'err.name': 'Dinos tu nombre para poder apuntarte.', 'err.surname': 'Ponnos también tu apellido, porfa.',
+      'err.send': 'No se pudo enviar. Revisa tu conexión e intenta de nuevo.',
+      'done.script': 'Gracias', edit: 'Cambiar mi respuesta', demo: 'Modo de prueba: esta respuesta todavía no se guarda.',
+      'reg.title': 'Mesa de regalos', 'reg.text': 'Lo más importante es tenerlos ahí. Si además quieren darnos algo, nuestra mesa de regalos está en Zola.',
+      'reg.how': 'Es una mesa en línea: entras al link, eliges el regalo que quieras y lo pagas ahí mismo con tarjeta. Nosotros nos encargamos del resto.', 'reg.btn': 'Ver la mesa de regalos',
+      foot: '¿Dudas? Escríbenos por el grupo de WhatsApp.',
+      summary: function (n, p) { return n === 0 ? 'Todavía no marcas ningún evento.' : 'Te apuntas a ' + n + (n === 1 ? ' evento' : ' eventos') + (p ? ', con pareja.' : '.'); },
+      doneLead: function (first, n, p) { return n === 0 ? first + ', ya quedó anotado que nos vemos directo en la boda el martes 10. ¡Gracias por avisarnos!' : first + ', te apuntamos' + (p ? ' a ti y a tu pareja' : '') + ' a:'; }
+    },
+    en: {
+      kicker: 'The days before the wedding',
+      intro: "We'll be in the Riviera Maya from Saturday, November 7, and we've put together a few plans for anyone who wants to join us. Pick the ones you're in for and leave us your details so we can save you a spot.",
+      d1: 'Saturday, November 7', d2: 'Sunday, November 8', d3: 'Monday, November 9', d4: 'Tuesday, November 10',
+      'e1.time': '10:00 PM', 'e1.title': 'Coco Bongo', 'e1.place': 'Cancún',
+      'e1.desc': 'A show and a party to kick off the week together.', 'e1.short': 'Sat, Nov 7, 10:00 PM',
+      'e2.time': '12:00 to 7:00 PM', 'e2.title': 'Private boat to Isla Mujeres', 'e2.place': 'Departs from downtown Cancún',
+      'e2.desc': "An afternoon at sea, just us, with food and drinks included. It's MXN 3,000 per person, and your spot is confirmed with the deposit.", 'e2.short': 'Sun, Nov 8, 12:00 PM',
+      'e3.time': '10:00 AM', 'e3.title': 'Breakfast and Xcaret Park', 'e3.place': 'Occidental at Xcaret Destination',
+      'e3.desc': "We'll meet for breakfast at the hotel's beach restaurant and head to the park at 10:00 AM. The day at Xcaret ends at 5:00 PM.", 'e3.short': 'Mon, Nov 9, 10:00 AM',
+      'e4.time': '8:00 PM', 'e4.title': 'Icebreaker dinner', 'e4.place': 'Playa del Carmen, venue to be confirmed',
+      'e4.desc': "So we all get to know each other before the big day. We'll share the venue in the group chat.", 'e4.short': 'Mon, Nov 9, 8:00 PM',
+      'dep.title': 'To save your spot', 'dep.holder': 'Account holder', 'dep.bank': 'Bank', 'dep.account': 'Account', 'dep.clabe': 'CLABE',
+      'dep.note': "Once you've paid, send us the receipt on WhatsApp. No Mexican bank account? Message us and we'll sort it out.",
+      'dep.doneTitle': 'Save your spot on the boat', 'dep.doneNote': "MXN 3,000 per person. Once you've paid, send us the receipt on WhatsApp.",
+      copy: 'Copy', copied: 'Copied',
+      'pick.off': 'Count me in', 'pick.on': "I'm in!",
+      'fin.script': 'The wedding', 'fin.line': 'Blue Venado Beach Club, 5:00 PM. All white.',
+      'fin.q': "Haven't RSVP'd to the wedding yet?", 'fin.link': 'RSVP here',
+      'form.title': 'Your details', 'form.lead': 'This is how we save your spot.',
+      'f.name': 'Your first and last name', 'f.namePh': 'First and last name',
+      'f.who': "Who's coming?", 'f.solo': 'Just me', 'f.pareja': 'Me and my partner',
+      'none.q': "You didn't pick any events. See you straight at the wedding?", 'none.yes': 'Yes, just the wedding', 'none.back': 'Go back and pick',
+      send: 'Confirm', sending: 'Sending…',
+      'err.name': 'Tell us your name so we can sign you up.', 'err.surname': 'Please add your last name too.',
+      'err.send': "We couldn't send that. Check your connection and try again.",
+      'done.script': 'Thank you', edit: 'Change my answer', demo: "Test mode: this answer isn't saved yet.",
+      'reg.title': 'Gift registry', 'reg.text': "Having you there is what matters most. If you'd also like to give us something, our registry is on Zola.",
+      'reg.how': "It's an online registry: open the link, pick a gift and pay for it right there by card. We take care of the rest.", 'reg.btn': 'See the registry',
+      foot: 'Questions? Message us in the WhatsApp group.',
+      summary: function (n, p) { return n === 0 ? "You haven't picked any events yet." : "You're in for " + n + (n === 1 ? ' event' : ' events') + (p ? ', with your partner.' : '.'); },
+      doneLead: function (first, n, p) { return n === 0 ? first + ", noted: we'll see you straight at the wedding on Tuesday the 10th. Thanks for letting us know!" : first + ", we've signed you" + (p ? ' and your partner' : '') + ' up for:'; }
+    },
+    ru: {
+      kicker: 'Дни перед свадьбой',
+      intro: 'Мы будем на Ривьере-Майя с субботы, 7 ноября, и придумали несколько планов для всех, кто захочет к нам присоединиться. Отметьте, куда пойдёте с нами, и оставьте свои данные, чтобы мы забронировали вам место.',
+      d1: 'Суббота, 7 ноября', d2: 'Воскресенье, 8 ноября', d3: 'Понедельник, 9 ноября', d4: 'Вторник, 10 ноября',
+      'e1.time': '22:00', 'e1.title': 'Coco Bongo', 'e1.place': 'Канкун',
+      'e1.desc': 'Шоу и вечеринка, чтобы вместе открыть неделю.', 'e1.short': 'Сб, 7 ноября, 22:00',
+      'e2.time': '12:00–19:00', 'e2.title': 'Яхта на Исла-Мухерес', 'e2.place': 'Отправление из центра Канкуна',
+      'e2.desc': 'День в море только нашей компанией, еда и напитки включены. Стоимость 3 000 MXN (мексиканских песо) с человека, место бронируется после оплаты.', 'e2.short': 'Вс, 8 ноября, 12:00',
+      'e3.time': '10:00', 'e3.title': 'Завтрак и парк Шкарет', 'e3.place': 'Occidental at Xcaret Destination',
+      'e3.desc': 'Встречаемся на завтраке в пляжном ресторане отеля и в 10:00 отправляемся в парк. День в Шкарете заканчивается в 17:00.', 'e3.short': 'Пн, 9 ноября, 10:00',
+      'e4.time': '20:00', 'e4.title': 'Ужин-знакомство', 'e4.place': 'Плая-дель-Кармен, место уточняется',
+      'e4.desc': 'Чтобы все познакомились до главного дня. Место сообщим в общем чате.', 'e4.short': 'Пн, 9 ноября, 20:00',
+      'dep.title': 'Чтобы забронировать место', 'dep.holder': 'Получатель', 'dep.bank': 'Банк', 'dep.account': 'Счёт', 'dep.clabe': 'CLABE',
+      'dep.note': 'После оплаты пришлите нам чек в WhatsApp. Нет счёта в мексиканском банке? Напишите нам, и мы что-нибудь придумаем.',
+      'dep.doneTitle': 'Забронируйте место на яхте', 'dep.doneNote': '3 000 MXN с человека. После оплаты пришлите нам чек в WhatsApp.',
+      copy: 'Копировать', copied: 'Скопировано',
+      'pick.off': 'Я буду', 'pick.on': 'Иду!',
+      'fin.script': 'Свадьба', 'fin.line': 'Blue Venado Beach Club, 17:00. Дресс-код: всё белое.',
+      'fin.q': 'Ещё не подтвердили, что будете на свадьбе?', 'fin.link': 'Подтвердить здесь',
+      'form.title': 'Ваши данные', 'form.lead': 'Так мы забронируем вам место.',
+      'f.name': 'Ваши имя и фамилия', 'f.namePh': 'Имя и фамилия',
+      'f.who': 'Кто придёт?', 'f.solo': 'Только я', 'f.pareja': 'Я с парой',
+      'none.q': 'Вы ничего не отметили. Увидимся сразу на свадьбе?', 'none.yes': 'Да, только свадьба', 'none.back': 'Вернуться к выбору',
+      send: 'Подтвердить', sending: 'Отправляем…',
+      'err.name': 'Напишите своё имя, чтобы мы могли вас записать.', 'err.surname': 'Укажите, пожалуйста, и фамилию.',
+      'err.send': 'Не удалось отправить. Проверьте соединение и попробуйте ещё раз.',
+      'done.script': 'Спасибо', edit: 'Изменить ответ', demo: 'Тестовый режим: ответ пока не сохраняется.',
+      'reg.title': 'Список подарков', 'reg.text': 'Главное для нас — чтобы вы были рядом. Если захотите что-то подарить, наш список подарков на Zola.',
+      'reg.how': 'Это онлайн-список: откройте ссылку, выберите подарок и оплатите его там же картой. Обо всём остальном позаботимся мы.', 'reg.btn': 'Открыть список подарков',
+      foot: 'Вопросы? Напишите нам в группе WhatsApp.',
+      summary: function (n, p) { return n === 0 ? 'Вы пока ничего не отметили.' : 'Вы идёте на ' + n + (n === 1 ? ' событие' : ' события') + (p ? ' с парой.' : '.'); },
+      doneLead: function (first, n, p) { return n === 0 ? first + ', записали: увидимся сразу на свадьбе во вторник, 10 ноября. Спасибо, что предупредили!' : first + ', мы записали вас' + (p ? ' с парой' : '') + ' на:'; }
+    }
+  };
+
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var val = function (s) { return ($(s).value || '').trim(); };
+
+  var state = { lang: 'es', sel: {}, pareja: false, view: 'form', none: false, last: null };
+  var t = function (k) { return T[state.lang][k]; };
+
+  function detectLang() {
+    var h = (location.hash || '').replace('#', '').toLowerCase();
+    if (T[h]) return h;
+    var q = /[?&]lang=(es|en|ru)/i.exec(location.search);
+    if (q) return q[1].toLowerCase();
+    try { var s = localStorage.getItem('preboda-lang'); if (s && T[s]) return s; } catch (e) { /* sin memoria local */ }
+    return 'es';
+  }
+
+  function setLang(lang) {
+    if (!T[lang]) lang = 'es';
+    state.lang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.className = 'lang-' + lang;
+    $$('[data-i18n]').forEach(function (el) { var v = t(el.getAttribute('data-i18n')); if (typeof v === 'string') el.textContent = v; });
+    $$('[data-i18n-ph]').forEach(function (el) { var v = t(el.getAttribute('data-i18n-ph')); if (typeof v === 'string') el.placeholder = v; });
+    $$('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false'); });
+    $$('.copy').forEach(function (b) { b.classList.remove('did'); b.textContent = t('copy'); });
+    var send = $('#send'); if (!send.disabled) send.textContent = t('send');
+    try { localStorage.setItem('preboda-lang', lang); } catch (e) { /* sin memoria local */ }
+    render();
+  }
+
+  function count() { return ORDER.filter(function (id) { return state.sel[id]; }).length; }
+
+  function render() {
+    $$('.pick').forEach(function (b) {
+      var on = !!state.sel[b.getAttribute('data-id')];
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.closest('.event').classList.toggle('is-on', on);
+    });
+    $('#solo').setAttribute('aria-pressed', state.pareja ? 'false' : 'true');
+    $('#conpareja').setAttribute('aria-pressed', state.pareja ? 'true' : 'false');
+    $('#summary').textContent = t('summary')(count(), state.pareja);
+    $('#form').hidden = state.view !== 'form';
+    $('#done').hidden = state.view !== 'done';
+    if (state.view === 'done' && state.last) showDone(state.last);
+  }
+
+  function showErr(msg) { var e = $('#err'); e.textContent = msg; e.hidden = false; }
+  function hideErr() { $('#err').hidden = true; }
+
+  function payload() {
+    var personas = state.pareja ? 2 : 1;
+    var ev = {};
+    ORDER.forEach(function (id) { ev[id] = state.sel[id] ? personas : 0; });
+    return {
+      form: 'preboda',
+      nombre: val('#nombre'),
+      pareja: state.pareja,
+      personas: personas,
+      eventos: ev,
+      idioma: state.lang,
+      origen: location.hostname || 'archivo local'
+    };
+  }
+
+  function showDone(d) {
+    var first = (d.nombre || '').trim().split(/\s+/)[0] || '';
+    var ids = ORDER.filter(function (id) { return d.eventos[id] > 0; });
+    var list = $('#done-list');
+    list.innerHTML = '';
+    $('#done-lead').textContent = t('doneLead')(first, ids.length, d.pareja);
+    ids.forEach(function (id) {
+      var row = document.createElement('div'); row.className = 'item';
+      var a = document.createElement('span'); a.textContent = t(TITLE[id]);
+      var b = document.createElement('span'); b.className = 'when'; b.textContent = t(SHORT[id]);
+      row.appendChild(a); row.appendChild(b); list.appendChild(row);
+    });
+    $('#done-deposit').hidden = !d.eventos.barco;
+    $('#demo-note').hidden = !!ENDPOINT;
+  }
+
+  function doSubmit() {
+    hideErr();
+    if (!val('#nombre')) { showErr(t('err.name')); $('#nombre').focus(); return; }
+    if (val('#nombre').split(/\s+/).length < 2) { showErr(t('err.surname')); $('#nombre').focus(); return; }
+    if (count() === 0 && !state.none) {
+      var c = $('#confirm-none'); c.hidden = false;
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    var data = payload();
+    var btn = $('#send');
+    btn.disabled = true; btn.textContent = t('sending');
+
+    var send = ENDPOINT
+      ? fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
+          .then(function (r) { return r.json(); })
+          .then(function (out) { if (!out || !out.ok) throw new Error((out && out.error) || 'Respuesta inválida'); })
+      : new Promise(function (r) { setTimeout(r, 600); });
+
+    send.then(function () {
+      state.last = data; state.view = 'done'; state.none = false;
+      $('#confirm-none').hidden = true;
+      render();
+      $('#done').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }).catch(function () {
+      showErr(t('err.send'));
+    }).then(function () {
+      btn.disabled = false; btn.textContent = t('send');
+    });
+  }
+
+  function wire() {
+    $$('.lang button').forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+    });
+    $$('.pick').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var id = b.getAttribute('data-id');
+        state.sel[id] = !state.sel[id];
+        state.none = false;
+        $('#confirm-none').hidden = true;
+        render();
+      });
+    });
+    $('#solo').addEventListener('click', function () { state.pareja = false; render(); });
+    $('#conpareja').addEventListener('click', function () { state.pareja = true; render(); });
+
+    $('#rsvp').addEventListener('submit', function (e) { e.preventDefault(); doSubmit(); });
+    $('#only-wedding').addEventListener('click', function () { state.none = true; doSubmit(); });
+    $('#back-events').addEventListener('click', function () {
+      $('#confirm-none').hidden = true;
+      $('#d1').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    $('#edit').addEventListener('click', function () {
+      state.view = 'form'; render();
+      $('#f-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    $$('.copy').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var text = b.getAttribute('data-copy');
+        var did = function () {
+          b.classList.add('did'); b.textContent = t('copied');
+          setTimeout(function () { b.classList.remove('did'); b.textContent = t('copy'); }, 1800);
+        };
+        var fallback = function () {
+          try {
+            var el = b.parentElement.querySelector('.val');
+            var r = document.createRange(); r.selectNodeContents(el);
+            var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+          } catch (e) { /* nada que hacer */ }
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(did, fallback);
+        } else { fallback(); }
+      });
+    });
+
+    $$('.photo').forEach(function (f) {
+      var src = PHOTOS[f.getAttribute('data-photo')];
+      if (!src) return;
+      var img = document.createElement('img'); img.alt = ''; img.loading = 'lazy'; img.src = src;
+      f.appendChild(img); f.hidden = false;
+    });
+  }
+
+  function boot(saved) {
+    var lang = detectLang();
+    try {
+      if (saved && saved.sel) {
+        state.sel = saved.sel; state.pareja = !!saved.pareja;
+        state.view = saved.view || 'form'; state.last = saved.last || null;
+        if (saved.lang && T[saved.lang]) lang = saved.lang;
+      }
+    } catch (e) { /* estado nuevo */ }
+    wire();
+    if (!(state.view === 'done' && state.last)) state.view = 'form';
+    setLang(lang);
+  }
+
+  // Si la página se vuelve a publicar mientras alguien la tiene abierta, conserva lo que llevaba marcado.
+  try {
+    var hot = window.claude && window.claude.hot;
+    if (hot && typeof hot.snapshot === 'function') {
+      hot.snapshot(function () { return { lang: state.lang, sel: state.sel, pareja: state.pareja, view: state.view, last: state.last }; });
+    }
+    if (hot && typeof hot.ready === 'function') hot.ready(boot);
+    else boot(hot && hot.data ? hot.data : {});
+  } catch (e) { boot({}); }
+})();
+</script>
+</body>
+</html>
